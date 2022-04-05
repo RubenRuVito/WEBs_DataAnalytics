@@ -10,7 +10,7 @@ from matplotlib.figure import Figure
 
 st.write("My First Streamlit Web App")
 
-iris_data = sns.datasets.load_iris()
+iris_data = sns.load_dataset('iris')
 df = pd.DataFrame(iris_data)
 st.write(df).head()
 
