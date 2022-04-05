@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import matplotlib
+import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 
 
@@ -25,6 +26,22 @@ st.write(df)
 #sns.pairplot(iris)
 #plt.show()
 
-fig = Figure()
-sns.pairplot(df)
-st.pyplot(fig)
+df.plot(kind='bar')
+st.pyplot()
+
+# Show Plots
+#if st.checkbox("Simple Correlation Plot with Matplotlib "):
+plt.matshow(df.corr())
+st.pyplot()
+
+# Show Plots
+# if st.checkbox("Simple Correlation Plot with Seaborn "):
+	st.write(sns.heatmap(df.corr(),annot=True))
+	# Use Matplotlib to render seaborn
+	st.pyplot()
+
+# Show Plots
+#if st.checkbox("Bar Plot of Groups or Counts"):
+	v_counts = df.groupby('species')
+	st.bar_chart(v_counts)
+
