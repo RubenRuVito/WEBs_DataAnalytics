@@ -13,10 +13,10 @@ import seaborn as sns
 st.write("My First Streamlit Web App")
 
 iris_data = datasets.load_iris()
-df = pd.DataFrame(iris_data})
+df = pd.DataFrame(iris_data)
 st.write(df).head()
 
-st.subheader("Book Age")
+st.subheader("Iris - Sepal Length")
 fig = Figure()
 ax = fig.subplots()
 sns.histplot(pd.to_numeric(df['Sepal.length'], errors='coerce').dropna().astype(np.int64), ax=ax, kde=True)
