@@ -1,6 +1,6 @@
 # https://programmerclick.com/article/56071642020/
 
-import seaborn  as sns
+import seaborn as sns
 import numpy as np
 import pandas as pd
 import streamlit as st
