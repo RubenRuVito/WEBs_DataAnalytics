@@ -12,7 +12,7 @@ st.write("My First Streamlit Web App")
 
 iris_data = sns.load_dataset('iris')
 df = pd.DataFrame(iris_data)
-st.write(df).head()
+st.write(df)
 
 #st.subheader("Iris - Sepal Length")
 #fig = Figure()
