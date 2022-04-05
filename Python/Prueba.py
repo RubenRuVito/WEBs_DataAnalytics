@@ -1,14 +1,13 @@
 # https://programmerclick.com/article/56071642020/
 
-from sklearn import datasets
-import streamlit as st
-import pandas as pd
-from collections import Counter, defaultdict
-import matplotlib
 import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
+import seaborn  as sns
 import numpy as np
-import seaborn as sns
+import pandas as pd
+import streamlit as st
+import matplotlib
+from matplotlib.figure import Figure
+
 
 st.write("My First Streamlit Web App")
 
