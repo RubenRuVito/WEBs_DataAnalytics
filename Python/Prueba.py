@@ -29,6 +29,13 @@ st.write(df)
 df.plot(kind='bar')
 st.pyplot()
 
+fig, ax = plt.subplots()
+st.write(sns.lmplot(
+    data=df,
+    x="Sepal.Length", y="Sepal.Width", hue="species",
+    height=5))
+st.pyplot(fig)
+
 # Show Plots
 #if st.checkbox("Simple Correlation Plot with Matplotlib "):
 plt.matshow(df.corr())
