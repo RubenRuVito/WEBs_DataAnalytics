@@ -43,8 +43,15 @@ def get_scaler():
 
 scaler = get_scaler()
 
+# Create Model
+model = keras.Sequential([
+  keras.layers.Dense(10, activation=tf.nn.relu, input_shape=(4,)),  # input shape required
+  keras.layers.Dense(10, activation=tf.nn.relu),
+  keras.layers.Dense(3)
+])
+
 # Load model
-model = keras.models.load_model(iris_model)
+#model = keras.models.load_model(iris_model)
 
 # App title and description
 st.title('Iris Flower Classifier')
