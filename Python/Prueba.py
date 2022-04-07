@@ -25,12 +25,12 @@ def get_scaler():
     X = df.iloc[:, :4]
     y = np.zeros(shape=(X.shape[0], 3))
 
-    for i, val in enumerate(df['variety']):
-        if val=='Virginica':
+    for i, val in enumerate(df['species']):
+        if val=='virginica':
             y[i,:] = np.array([1, 0, 0])
-        elif val=='Versicolor':
+        elif val=='versicolor':
             y[i,:] = np.array([0, 1, 0])
-        elif val=='Setosa':
+        elif val=='setosa':
             y[i,:] = np.array([0, 0, 1])
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -115,7 +115,7 @@ def run_pca():
     X_pca = pca.fit(X).transform(X)
     df_pca = pd.DataFrame(pca.transform(X))
     df_pca.columns = ['PC1', 'PC2']
-    df_pca = pd.concat([df_pca, df['variety']], axis=1)
+    df_pca = pd.concat([df_pca, df['species']], axis=1)
     
     return pca, df_pca
 
@@ -125,8 +125,8 @@ pca_fig = px.scatter(
     df_pca, 
     x='PC1', 
     y='PC2', 
-    color='variety', 
-    hover_name='variety', 
+    color='species', 
+    hover_name='species', 
     width=500, 
     height=350)
 
