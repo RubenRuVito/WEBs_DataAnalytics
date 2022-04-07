@@ -45,8 +45,8 @@ scaler = get_scaler()
 
 # Create Model
 model = keras.Sequential([
-  keras.layers.Dense(10, activation=tf.nn.relu, input_shape=(4,)),  # input shape required
-  keras.layers.Dense(10, activation=tf.nn.relu),
+  keras.layers.Dense(10, activation=keras.nn.relu, input_shape=(4,)),  # input shape required
+  keras.layers.Dense(10, activation=keras.nn.relu),
   keras.layers.Dense(3)
 ])
 
