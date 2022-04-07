@@ -44,7 +44,7 @@ def get_scaler():
 scaler = get_scaler()
 
 # Load model
-model = keras.models.load_model('/iris_model')
+model = keras.models.load_model('iris_model/')
 
 # App title and description
 st.title('Iris Flower Classifier')
