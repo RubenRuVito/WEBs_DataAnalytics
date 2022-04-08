@@ -8,6 +8,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import plotly.graph_objects as go
 import plotly.express as px
+import tensorflow as tf
 from tensorflow import keras
 
 # Read data
@@ -44,11 +45,19 @@ def get_scaler():
 scaler = get_scaler()
 
 # Create Model
-model = keras.Sequential([
-  keras.layers.Dense(10, activation=keras.nn.relu, input_shape=(4,)),  # input shape required
-  keras.layers.Dense(10, activation=keras.nn.relu),
-  keras.layers.Dense(3)
+# x_train, x_test, y_train, y_test = train_test_split(data.data, data.target, test_size=0.33, random_state=42)
+
+model = tf.keras.models.Sequential([
+  tf.keras.layers.Flatten(),
+  tf.keras.layers.Dense(512, activation=tf.nn.relu),
+  tf.keras.layers.Dropout(0.2),
+  tf.keras.layers.Dense(10, activation=tf.nn.softmax)
 ])
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+model.fit(X_train, y_train, epochs=50)
 
 # Load model
 #model = keras.models.load_model(iris_model)
