@@ -42,8 +42,10 @@ def main():
     @st.cache(persist=True)
     def explore_data(dataset):
     	#df = pd.read_csv(os.path.join(dataset))
-      df = sns.data_load('iris')
-    	return df 
+        #df = sns.data_load('iris')
+        iris_data = sns.load_dataset('iris')
+        return pd.DataFrame(iris_data)
+    	#return df 
 
     # Load Our Dataset
     data = explore_data(my_dataset)
