@@ -46,6 +46,7 @@ def get_scaler():
     #model.compile(optimizer='adam',
     #              loss='sparse_categorical_crossentropy',
     #              metrics=['accuracy'])
+    model.compile(optimizer, loss)
 
     model.fit(X_train, y_train, epochs=50)
     
