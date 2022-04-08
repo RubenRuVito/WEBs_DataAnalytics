@@ -24,7 +24,7 @@ df = load_data()
 def get_scaler():
     # Clean data
     X = df.iloc[:, :4]
-    #y = np.zeros(shape=(X.shape[0], 3))
+    y = np.zeros(shape=(X.shape[0], 3))
 
     for i, val in enumerate(df['species']):
         if val=='virginica':
