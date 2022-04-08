@@ -21,7 +21,7 @@ df = load_data()
 
 # scaler will be used to scale user input.
 @st.cache
-def get_scaler():{
+def get_scaler():
     # Clean data
     X = df.iloc[:, :4]
     y = np.zeros(shape=(X.shape[0], 3))
@@ -41,7 +41,6 @@ def get_scaler():{
     scaler = StandardScaler()
     scaler.fit(x_train)
     return scaler
-}
 
 scaler = get_scaler()
 
