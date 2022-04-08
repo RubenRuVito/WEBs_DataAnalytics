@@ -44,9 +44,11 @@ def get_scaler():
       tf.keras.layers.Dense(10, activation=tf.nn.softmax)
     ])
     #model.compile(optimizer='adam',
-    #              loss='sparse_categorical_crossentropy',
+    #              loss='categorical_crossentropy',
     #              metrics=['accuracy'])
-    model.compile(optimizer, loss)
+    
+    opt = keras.optimizers.Adam(learning_rate=0.01)
+    model.compile(optimizer=opt, loss='categorical_crossentropy')
 
     model.fit(X_train, y_train, epochs=50)
     
