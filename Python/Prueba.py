@@ -33,31 +33,28 @@ def get_scaler():
             y[i,:] = np.array([0, 1, 0])
         elif val=='setosa':
             y[i,:] = np.array([0, 0, 1])
-           
-       
-    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=100)
+            
+    X_train, Y_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=100)
+    
+    # Create Model
+    model = tf.keras.models.Sequential([
+      tf.keras.layers.Flatten(),
+      tf.keras.layers.Dense(512, activation=tf.nn.relu),
+      tf.keras.layers.Dropout(0.2),
+      tf.keras.layers.Dense(10, activation=tf.nn.softmax)
+    ])
+    model.compile(optimizer='adam',
+                  loss='sparse_categorical_crossentropy',
+                  metrics=['accuracy'])
 
+    model.fit(X_train, y_train, epochs=50)
+    
     # Scale data
     scaler = StandardScaler()
-    scaler.fit(x_train)
-    return scaler
+    scaler.fit(X_train)
+    return scaler, model
 
-scaler = get_scaler()
-
-# Create Model
-# x_train, x_test, y_train, y_test = train_test_split(data.data, data.target, test_size=0.33, random_state=42)
-
-model = tf.keras.models.Sequential([
-  tf.keras.layers.Flatten(),
-  tf.keras.layers.Dense(512, activation=tf.nn.relu),
-  tf.keras.layers.Dropout(0.2),
-  tf.keras.layers.Dense(10, activation=tf.nn.softmax)
-])
-model.compile(optimizer='adam',
-              loss='sparse_categorical_crossentropy',
-              metrics=['accuracy'])
-
-model.fit(x_train, y_train, epochs=50)
+scaler, model = get_scaler()
 
 # Load model
 #model = keras.models.load_model(iris_model)
