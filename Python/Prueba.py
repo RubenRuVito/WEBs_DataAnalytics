@@ -41,7 +41,7 @@ def get_scaler():
       tf.keras.layers.Flatten(),
       tf.keras.layers.Dense(512, activation=tf.nn.relu),
       tf.keras.layers.Dropout(0.2),
-      tf.keras.layers.Dense(10, activation=tf.nn.softmax)
+      tf.keras.layers.Dense(10, activation='sigmoid')
     ])
     #model.compile(optimizer='adam',
     #              loss='categorical_crossentropy',
