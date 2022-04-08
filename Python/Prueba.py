@@ -24,7 +24,7 @@ df = load_data()
 def get_scaler():
     # Clean data
     X = df.iloc[:, :4]
-    y = np.zeros(shape=(X.shape[0], 3))
+    #y = np.zeros(shape=(X.shape[0], 3))
 
     for i, val in enumerate(df['species']):
         if val=='virginica':
@@ -34,8 +34,7 @@ def get_scaler():
         elif val=='setosa':
             y[i,:] = np.array([0, 0, 1])
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=100)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=100)
 
     # Scale data
     scaler = StandardScaler()
