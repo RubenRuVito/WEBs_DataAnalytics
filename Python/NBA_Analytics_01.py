@@ -117,33 +117,33 @@ def main():
 
 
     # Iris Image Manipulation
-    @st.cache
-    def load_image(img):
-    	im =Image.open(os.path.join(img))
-    	return im
+#    @st.cache
+#    def load_image(img):
+#    	im =Image.open(os.path.join(img))
+#    	return im
 
     # Select Image Type using Radio Button
-    species_type = st.radio('What is the Iris Species do you want to see?',('Setosa','Versicolor','Virginica'))
+ #   species_type = st.radio('What is the Iris Species do you want to see?',('Setosa','Versicolor','Virginica'))
 
-    if species_type == 'Setosa':
-    	st.text("Showing Setosa Species")
-    	st.image(load_image('imgs/iris_setosa.jpg'))
-    elif species_type == 'Versicolor':
-    	st.text("Showing Versicolor Species")
-    	st.image(load_image('imgs/iris_versicolor.jpg'))
-    elif species_type == 'Virginica':
-    	st.text("Showing Virginica Species")
-    	st.image(load_image('imgs/iris_virginica.jpg'))
+#    if species_type == 'Setosa':
+#    	st.text("Showing Setosa Species")
+#    	st.image(load_image('imgs/iris_setosa.jpg'))
+#    elif species_type == 'Versicolor':
+#    	st.text("Showing Versicolor Species")
+#    	st.image(load_image('imgs/iris_versicolor.jpg'))
+#    elif species_type == 'Virginica':
+#    	st.text("Showing Virginica Species")
+#    	st.image(load_image('imgs/iris_virginica.jpg'))
 
 
 
     # Show Image or Hide Image with Checkbox
-    if st.checkbox("Show Image/Hide Image"):
-    	my_image = load_image('iris_setosa.jpg')
-    	enh = ImageEnhance.Contrast(my_image)
-    	num = st.slider("Set Your Contrast Number",1.0,3.0)
-    	img_width = st.slider("Set Image Width",300,500)
-    	st.image(enh.enhance(num),width=img_width)
+#    if st.checkbox("Show Image/Hide Image"):
+#    	my_image = load_image('iris_setosa.jpg')
+#    	enh = ImageEnhance.Contrast(my_image)
+#    	num = st.slider("Set Your Contrast Number",1.0,3.0)
+#    	img_width = st.slider("Set Image Width",300,500)
+#    	st.image(enh.enhance(num),width=img_width)
 
 
     # About
