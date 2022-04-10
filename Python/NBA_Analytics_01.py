@@ -1,16 +1,9 @@
 """
-## App: Iris EDA App
-Author: [Jesse E.Agbe(JCharis)](https://github.com/Jcharis))\n
-Source: [Github](https://github.com/Jcharis/Machine-Learning-Web-Apps/tree/master/Iris_EDA_Web_App)
-Credits: Streamlit Team,Marc Skov Madsen(For Awesome-streamlit gallery)
+## App: NBA EDA App
+## Autor: RGA
 Description
-This is a simple Exploratory Data Analysis of the Iris Dataset depicting the various 
-species built with Streamlit.
-We can preview the dataset,column names as well as show some basic plot with matplotlib and
-seaborn.
-There is also an image manipulation of a specie with changeable contrast and width using st.slider()
-Purpose
-To show a simple EDA of Iris using Streamlit framework. 
+- EDA sobre estadisticas avanzadas de la NBA
+- "basketball_reference_scraper" API para recuperar los conjuntos de datos
 """
 import streamlit as st
 
@@ -24,14 +17,17 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from PIL import Image,ImageFilter,ImageEnhance
 
+# Api Data NBA
+import basketball_reference_scraper as brs
+
 def main():
-    st.title("Iris EDA App")
+    st.title("NBA EDA App")
     st.subheader("EDA Web App with Streamlit ")
     st.markdown("""
     	#### Description
-    	+ This is a simple Exploratory Data Analysis  of the Iris Dataset depicting the various species built with Streamlit.
+    	+ This is a simple Exploratory Data Analysis of the NBA tables stats built with Streamlit.
     	#### Purpose
-    	+ To show a simple EDA of Iris using Streamlit framework. 
+    	+ To show a simple EDA of NBA using Streamlit framework. 
     	""")
 
     # Your code goes below
@@ -40,82 +36,83 @@ def main():
 
     # To Improve speed and cache data
     @st.cache(persist=True)
-    def explore_data(dataset):
+    def data_teams_misc(year):
     	#df = pd.read_csv(os.path.join(dataset))
         #df = sns.data_load('iris')
-        iris_data = sns.load_dataset('iris')
-        return pd.DataFrame(iris_data)
-    	#return df 
+        df_teams = brs.get_team_misc('',year)
+        return pd.DataFrame(df_teams)
+    	
 
     # Load Our Dataset
-    data = explore_data(my_dataset)
+    df = data_teams_misc(2022)
 
     # Show Dataset
     if st.checkbox("Preview DataFrame"):
     	if st.button("Head"):
-    		st.write(data.head())
+    		st.write(df.head())
     	if st.button("Tail"):
-    		st.write(data.tail())
+    		st.write(df.tail())
     	else:
-    		st.write(data.head(2))
+    		st.write(df.head(2))
 
     # Show Entire Dataframe
     if st.checkbox("Show All DataFrame"):
-    	st.dataframe(data)
+    	st.dataframe(df)
 
     # Show All Column Names
     if st.checkbox("Show All Column Name"):
     	st.text("Columns:")
-    	st.write(data.columns)
+    	st.write(df.columns)
 
     # Show Dimensions and Shape of Dataset
     data_dim = st.radio('What Dimension Do You Want to Show',('Rows','Columns'))
     if data_dim == 'Rows':
     	st.text("Showing Length of Rows")
-    	st.write(len(data))
+    	st.write(len(df))
     if data_dim == 'Columns':
     	st.text("Showing Length of Columns")
-    	st.write(data.shape[1])
+    	st.write(df.shape[1])
 
     # Show Summary of Dataset
     if st.checkbox("Show Summary of Dataset"):
-    	st.write(data.describe())
+    	st.write(df.describe())
 
     # Selection of Columns
-    species_option = st.selectbox('Select Columns',('sepal_length','sepal_width','petal_length','petal_width','species'))
-    if species_option == 'sepal_length':
-    	st.write(data['sepal_length'])
-    elif species_option == 'sepal_width':
-    	st.write(data['sepal_width'])
-    elif species_option == 'petal_length':
-    	st.write(data['petal_length'])
-    elif species_option == 'petal_width':
-    	st.write(data['petal_width'])
-    elif species_option == 'species':
-    	st.write(data['species'])
-    else:
-    	st.write("Select A Column")
+#    species_option = st.selectbox('Select Columns',('W', 'L', 'PW', 'PL', 'MOV', 'SOS', 'SRS', 'ORtg', 'DRtg', 'Pace', 'FTr', '3PAr', 'eFG%', 'TOV%', 'ORB%', 
+# 'FT/FGA', 'eFG%', 'TOV%', 'DRB%', 'FT/FGA', 'Arena', 'Attendance'))
+#   if species_option == 'sepal_length':
+#    	st.write(df['sepal_length'])
+#    elif species_option == 'sepal_width':
+#    	st.write(df['sepal_width'])
+#    elif species_option == 'petal_length':
+#    	st.write(df['petal_length'])
+#    elif species_option == 'petal_width':
+#   	st.write(df['petal_width'])
+#    elif species_option == 'species':
+#    	st.write(df['species'])
+#    else:
+#    	st.write("Select A Column")
 
     # Show Plots
     if st.checkbox("Simple Bar Plot with Matplotlib "):
-    	data.plot(kind='bar')
+    	df.plot(kind='bar')
     	st.pyplot()
 
 
     # Show Correlation Plots
     if st.checkbox("Simple Correlation Plot with Matplotlib "):
-    	plt.matshow(data.corr())
+    	plt.matshow(df.corr())
     	st.pyplot()
 
     # Show Correlation Plots with Sns
     if st.checkbox("Simple Correlation Plot with Seaborn "):
-    	st.write(sns.heatmap(data.corr(),annot=True))
+    	st.write(sns.heatmap(df.corr(),annot=True))
     	# Use Matplotlib to render seaborn
     	st.pyplot()
 
     # Show Plots
     if st.checkbox("Bar Plot of Groups or Counts"):
-    	v_counts = data.groupby('species')
+    	v_counts = df.groupby('')
     	st.bar_chart(v_counts)
 
 
