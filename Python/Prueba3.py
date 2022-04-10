@@ -6,6 +6,9 @@ from sklearn.datasets import load_wine
 import warnings
 warnings.filterwarnings("ignore")
 
+# Adaptar este codigo a la api de la NBA
+# https://github.com/vishaalagartha/basketball_reference_scraper
+
 ####### Load Dataset #####################
 
 wine = load_wine()
