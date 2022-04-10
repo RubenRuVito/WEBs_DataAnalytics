@@ -39,7 +39,7 @@ def main():
     def data_teams_misc(year):
     	#df = pd.read_csv(os.path.join(dataset))
         #df = sns.data_load('iris')
-        df_teams = get_team_misc('',year)
+        df_teams = get_team_misc('GSW',year)
         return pd.DataFrame(df_teams)
     	
 
