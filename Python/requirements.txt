@@ -5,6 +5,7 @@ streamlit
 sklearn
 plotly
 tensorflow
+cufflinks
 
 #seaborn==0.11.0
 #numpy == 1.22.0
