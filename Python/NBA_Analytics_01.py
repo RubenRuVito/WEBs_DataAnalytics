@@ -18,7 +18,7 @@ import seaborn as sns
 from PIL import Image,ImageFilter,ImageEnhance
 
 # Api Data NBA
-import basketball_reference_scraper as brs
+from basketball_reference_scraper.teams import * as brs_teams
 
 def main():
     st.title("NBA EDA App")
@@ -39,7 +39,7 @@ def main():
     def data_teams_misc(year):
     	#df = pd.read_csv(os.path.join(dataset))
         #df = sns.data_load('iris')
-        df_teams = brs.get_team_misc('',year)
+        df_teams = brs_teams.get_team_misc('',year)
         return pd.DataFrame(df_teams)
     	
 
