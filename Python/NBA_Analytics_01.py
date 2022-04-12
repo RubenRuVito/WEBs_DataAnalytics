@@ -67,7 +67,7 @@ def get_players_stats(season: int, stat_type: str, header: int = 0, filter_games
     return player_stats
 
 # https://www.basketball-reference.com/leagues/NBA_2022_ratings.html#ratings
-def get_teams_stats(season: int, stat_type: str, header: int = 0, filter_games=True, remove_duplicates=True):
+def get_teams_stats(season: int, stat_type: str, header: int = 1, filter_games=True, remove_duplicates=True):
     
     url = f'{BASE_URL}leagues/NBA_{str(season)}_{stat_type}.html#ratings'
     print(f'GET {url}')
@@ -132,11 +132,11 @@ def main():
     	st.write(df_teams.columns)
 
     # Show Dimensions and Shape of Dataset
-    data_dim = st.radio('What Dimension Do You Want to Show',('Rows','Columns'))
-    if data_dim == 'Rows':
+    data_dim_teams = st.radio('What Dimension Do You Want to Show',('Rows','Columns'))
+    if data_dim_teams == 'Rows':
     	st.text("Showing Length of Rows")
     	st.write(len(df_teams))
-    if data_dim == 'Columns':
+    if data_dim_teams == 'Columns':
     	st.text("Showing Length of Columns")
     	st.write(df_teams.shape[1])
 
