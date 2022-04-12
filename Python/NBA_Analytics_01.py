@@ -11,6 +11,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+from os import remove
+import base64
 
 # Plotting Pkgs
 import matplotlib.pyplot as plt
@@ -18,7 +20,7 @@ import seaborn as sns
 from PIL import Image,ImageFilter,ImageEnhance
 
 # Api Data NBA
-from basketball_reference_scraper.teams import get_roster, get_team_stats, get_opp_stats, get_roster_stats, get_team_misc
+# from basketball_reference_scraper.teams import get_roster, get_team_stats, get_opp_stats, get_roster_stats, get_team_misc
 
 # Funciones y variables para scrappear datos..
 
