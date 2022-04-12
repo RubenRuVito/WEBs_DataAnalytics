@@ -85,7 +85,6 @@ def main():
     	+ This is a simple Exploratory Data Analysis of the NBA tables stats built with Streamlit.
     	#### Purpose
     	+ To show a simple EDA of NBA using Streamlit framework. 
-        ## TEAMS - Stats Ratings:
     	""")
 
     # Your code goes below
@@ -113,6 +112,8 @@ def main():
     #df = data_teams_misc(2022)
     df_teams = data_teams(2022, 'ratings')
     df = data_players(2022, 'totals')
+    
+    st.markdown(""" ## TEAMS - Stats Ratings: """)
     
     # Show Dataset Teams
     if st.checkbox("Preview DataFrame Teams"):
