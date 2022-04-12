@@ -6,8 +6,9 @@ sklearn
 plotly
 tensorflow
 cufflinks
-basketball_reference_scraper
+lxml
 
+#basketball_reference_scraper
 #seaborn==0.11.0
 #numpy == 1.22.0
 #pandas == 1.0.5
