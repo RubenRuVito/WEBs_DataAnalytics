@@ -66,7 +66,16 @@ def get_players_stats(season: int, stat_type: str, header: int = 0, filter_games
         
     return player_stats
 
-
+# https://www.basketball-reference.com/leagues/NBA_2022_ratings.html#ratings
+def get_teams_stats(season: int, stat_type: str, header: int = 0, filter_games=True, remove_duplicates=True):
+    
+    url = f'{BASE_URL}leagues/NBA_{str(season)}_{stat_type}.html#ratings'
+    print(f'GET {url}')
+    html = pd.read_html(url, header = header)
+    df = html[0]
+    
+    return df
+    
 
 def main():
     st.title("NBA EDA App")
@@ -91,16 +100,53 @@ def main():
         playerstats = load_data(selected_year, selected_stat)
         return pd.DataFrame(df_teams)
     
+    def data_teams(year: int, stats_type: str):
+        df_teams_stats = get_teams_stats(year, stats_type)
+        return pd.DataFrame(df_teams_stats)
+    
     def data_players(year: int, stats_type: str):
         df_players_stats = get_players_stats(year, stats_type)
         return pd.DataFrame(df_players_stats)
 
     # Load Our Dataset
     #df = data_teams_misc(2022)
+    df_teams = data_teams(2022, 'ratings')
     df = data_players(2022, 'totals')
     
-    # Show Dataset
-    if st.checkbox("Preview DataFrame"):
+    # Show Dataset Teams
+    if st.checkbox("Preview DataFrame Teams"):
+    	if st.button("Head"):
+    		st.write(df_teams.head())
+    	if st.button("Tail"):
+    		st.write(df_teams.tail())
+    	else:
+    		st.write(df_teams.head(2))
+
+    # Show Entire Dataframe
+    if st.checkbox("Show All DataFrame Teams"):
+    	st.dataframe(df_teams)
+
+    # Show All Column Names
+    if st.checkbox("Show All Column Name Teams"):
+    	st.text("Columns:")
+    	st.write(df_teams.columns)
+
+    # Show Dimensions and Shape of Dataset
+    data_dim = st.radio('What Dimension Do You Want to Show',('Rows','Columns'))
+    if data_dim == 'Rows':
+    	st.text("Showing Length of Rows")
+    	st.write(len(df_teams))
+    if data_dim == 'Columns':
+    	st.text("Showing Length of Columns")
+    	st.write(df_teams.shape[1])
+
+    # Show Summary of Dataset
+    if st.checkbox("Show Summary of Dataset Teams"):
+    	st.write(df_teams.describe())
+
+# --------------------------
+    # Show Dataset Players
+    if st.checkbox("Preview DataFrame Players"):
     	if st.button("Head"):
     		st.write(df.head())
     	if st.button("Tail"):
@@ -109,11 +155,11 @@ def main():
     		st.write(df.head(2))
 
     # Show Entire Dataframe
-    if st.checkbox("Show All DataFrame"):
+    if st.checkbox("Show All DataFrame Players"):
     	st.dataframe(df)
 
     # Show All Column Names
-    if st.checkbox("Show All Column Name"):
+    if st.checkbox("Show All Column Name Players"):
     	st.text("Columns:")
     	st.write(df.columns)
 
@@ -127,7 +173,7 @@ def main():
     	st.write(df.shape[1])
 
     # Show Summary of Dataset
-    if st.checkbox("Show Summary of Dataset"):
+    if st.checkbox("Show Summary of Dataset Players"):
     	st.write(df.describe())
 
     # Selection of Columns
