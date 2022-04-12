@@ -28,7 +28,7 @@ BASE_URL = 'https://www.basketball-reference.com/'
 STAT_TYPES = ['per_game', 'totals', 'per_minute', 'advanced', 'per_poss', 'play-by-play', 'advanced_box_score']
 ADVANCED_BOX_SCORE_COLS = ['Player','Pos','Tm','Scoring Rate','Efficiency(TS%)','Spacing','Creation','Offensive Load']
 
-@cache
+#@cache
 def get_players_stats(season, stat_type):
     
     url = f'{BASE_URL}leagues/NBA_{str(season)}_{stat_type}.html'
