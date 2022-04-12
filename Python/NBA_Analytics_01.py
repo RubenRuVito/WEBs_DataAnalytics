@@ -132,11 +132,11 @@ def main():
     	st.write(df_teams.columns)
 
     # Show Dimensions and Shape of Dataset
-    data_dim_teams = st.radio('What Dimension Do You Want to Show',('Rows','Columns'))
-    if data_dim_teams == 'Rows':
+    data_dim_teams = st.radio('What Dimension Do You Want to Show Teams',('Rowst','Columnst'))
+    if data_dim_teams == 'Rowst':
     	st.text("Showing Length of Rows")
     	st.write(len(df_teams))
-    if data_dim_teams == 'Columns':
+    if data_dim_teams == 'Columnst':
     	st.text("Showing Length of Columns")
     	st.write(df_teams.shape[1])
 
