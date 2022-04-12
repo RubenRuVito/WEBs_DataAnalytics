@@ -162,7 +162,16 @@ def main():
     	st.write(sns.heatmap(df.corr(),annot=True))
     	# Use Matplotlib to render seaborn
     	st.pyplot()
+    
+    if st.checkbox("Correlations by RGA"):
+        corr = df.corr()
+        mask = np.zeros_like(corr)
+        mask[np.triu_indices_from(mask)] = True
+        with sns.axes_style("white"):
+            f, ax = plt.subplots(figsize=(7, 5))
+            ax = sns.heatmap(corr, mask=mask, vmax=1, square=True)
 
+      
     # Show Plots
     if st.checkbox("Bar Plot of Groups or Counts"):
     	v_counts = df.groupby('')
