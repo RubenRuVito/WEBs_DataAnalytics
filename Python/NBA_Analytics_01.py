@@ -20,6 +20,51 @@ from PIL import Image,ImageFilter,ImageEnhance
 # Api Data NBA
 from basketball_reference_scraper.teams import get_roster, get_team_stats, get_opp_stats, get_roster_stats, get_team_misc
 
+# Funciones y variables para scrappear datos..
+
+BASE_URL = 'https://www.basketball-reference.com/'
+STAT_TYPES = ['per_game', 'totals', 'per_minute', 'advanced', 'per_poss', 'play-by-play', 'advanced_box_score']
+ADVANCED_BOX_SCORE_COLS = ['Player','Pos','Tm','Scoring Rate','Efficiency(TS%)','Spacing','Creation','Offensive Load']
+
+@cache
+def get_players_stats(season, stat_type):
+    
+    url = f'{BASE_URL}leagues/NBA_{str(season)}_{stat_type}.html'
+    print(f'GET {url}')
+    html = pd.read_html(url, header = header)
+    df = html[0]
+
+    raw = None
+    if 'Age' in df:
+        raw = df.drop(df[df.Age == 'Age'].index)
+        raw = raw.fillna(0)
+    
+    player_stats = raw.drop(['Rk'], axis=1) if raw is not None else df.drop(['Rk'])
+
+    cols=[i for i in player_stats.columns if i not in ['Player','Pos', 'Tm']]
+    for col in cols:
+        try:
+            player_stats[col]=pd.to_numeric(player_stats[col])
+        except ValueError:
+            player_stats[col]=player_stats[col]
+    
+    if filter_games:
+        max_games_played = player_stats['G'].max()
+        threshold = max_games_played // 2   
+        player_stats = player_stats[player_stats['G'] >= threshold]
+
+    if remove_duplicates:
+        player_stats.drop_duplicates(subset=['Player'], inplace=True)
+        player_stats['Pos'].replace(['SG-PG','SG-SF','SG-PF','SG-C'], 'SG', inplace=True)        
+        player_stats['Pos'].replace(['PG-SG','PG-SF','PG-PF','PG-C'], 'PG', inplace=True)
+        player_stats['Pos'].replace(['SF-PG','SF-SG','SF-PF','SF-C'], 'SF', inplace=True)
+        player_stats['Pos'].replace(['PF-PG','PF-SF','PF-SF','PF-C'], 'PF', inplace=True)
+        player_stats['Pos'].replace(['C-PG','C-SF','C-PF','C-SG'], 'C', inplace=True)        
+        
+    return player_stats
+
+
+
 def main():
     st.title("NBA EDA App")
     st.subheader("EDA Web App with Streamlit ")
@@ -39,13 +84,18 @@ def main():
     def data_teams_misc(year):
     	#df = pd.read_csv(os.path.join(dataset))
         #df = sns.data_load('iris')
-        df_teams = get_team_misc('GSW',year)
+        #df_teams = get_team_misc('GSW',year)
+        playerstats = load_data(selected_year, selected_stat)
         return pd.DataFrame(df_teams)
-    	
+    
+    def data_players(year: int, stats_type: str):
+        df_players_stats = get_players_stats(year, stats_type)
+        return pd.DataFrame(df_players_stats)
 
     # Load Our Dataset
-    df = data_teams_misc(2022)
-
+    #df = data_teams_misc(2022)
+    df = data_players(2022, 'totals')
+    
     # Show Dataset
     if st.checkbox("Preview DataFrame"):
     	if st.button("Head"):
