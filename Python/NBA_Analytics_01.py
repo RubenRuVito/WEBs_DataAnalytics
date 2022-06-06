@@ -185,7 +185,7 @@ def main():
     st.markdown(""" ## PLAYERS - Stats ADVANCED: """)
     
     # Show Dataset Players
-    if st.checkbox("Preview DataFrame Players"):
+    if st.checkbox("Preview DataFrame Players 2"):
     	if st.button("Head"):
     		st.write(df2.head())
     	if st.button("Tail"):
@@ -194,11 +194,11 @@ def main():
     		st.write(df2.head(2))
 
     # Show Entire Dataframe
-    if st.checkbox("Show All DataFrame Players"):
+    if st.checkbox("Show All DataFrame Players 2"):
     	st.dataframe(df2)
 
     # Show All Column Names
-    if st.checkbox("Show All Column Name Players"):
+    if st.checkbox("Show All Column Name Players 2"):
     	st.text("Columns:")
     	st.write(df2.columns)
 
@@ -212,7 +212,7 @@ def main():
     	st.write(df2.shape[1])
 
     # Show Summary of Dataset
-    if st.checkbox("Show Summary of Dataset Players"):
+    if st.checkbox("Show Summary of Dataset Players 2"):
     	st.write(df2.describe())
 
     # Selection of Columns
