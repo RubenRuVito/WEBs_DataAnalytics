@@ -112,6 +112,7 @@ def main():
     #df = data_teams_misc(2022)
     df_teams = data_teams(2022, 'ratings')
     df = data_players(2022, 'totals')
+    df2 = data_players(2022, 'advanced')
     
     st.markdown(""" ## TEAMS - Stats Ratings: """)
     
@@ -179,6 +180,40 @@ def main():
     # Show Summary of Dataset
     if st.checkbox("Show Summary of Dataset Players"):
     	st.write(df.describe())
+        
+ # --------------------------
+    st.markdown(""" ## PLAYERS - Stats ADVANCED: """)
+    
+    # Show Dataset Players
+    if st.checkbox("Preview DataFrame Players"):
+    	if st.button("Head"):
+    		st.write(df2.head())
+    	if st.button("Tail"):
+    		st.write(df2.tail())
+    	else:
+    		st.write(df2.head(2))
+
+    # Show Entire Dataframe
+    if st.checkbox("Show All DataFrame Players"):
+    	st.dataframe(df2)
+
+    # Show All Column Names
+    if st.checkbox("Show All Column Name Players"):
+    	st.text("Columns:")
+    	st.write(df2.columns)
+
+    # Show Dimensions and Shape of Dataset
+    data_dim = st.radio('What Dimension Do You Want to Show',('Rows','Columns'))
+    if data_dim == 'Rows':
+    	st.text("Showing Length of Rows")
+    	st.write(len(df2))
+    if data_dim == 'Columns':
+    	st.text("Showing Length of Columns")
+    	st.write(df2.shape[1])
+
+    # Show Summary of Dataset
+    if st.checkbox("Show Summary of Dataset Players"):
+    	st.write(df2.describe())
 
     # Selection of Columns
 #    species_option = st.selectbox('Select Columns',('W', 'L', 'PW', 'PL', 'MOV', 'SOS', 'SRS', 'ORtg', 'DRtg', 'Pace', 'FTr', '3PAr', 'eFG%', 'TOV%', 'ORB%', 
