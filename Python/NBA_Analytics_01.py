@@ -203,7 +203,7 @@ def main():
     	st.write(df2.columns)
 
     # Show Dimensions and Shape of Dataset
-    data_dim = st.radio('What Dimension Do You Want to Show',('Rows','Columns'))
+    data_dim = st.radio('What Dimension Do You Want to Show 2',('Rows','Columns'))
     if data_dim == 'Rows':
     	st.text("Showing Length of Rows")
     	st.write(len(df2))
