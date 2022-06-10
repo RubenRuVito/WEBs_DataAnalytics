@@ -37,8 +37,8 @@ There is also an image manipulation of a specie with changeable contrast and wid
 Purpose
 To show a simple EDA of Iris using Streamlit framework. 
 """
-from pickle import TRUE
-from turtle import width
+#from pickle import TRUE
+#from turtle import width
 from urllib.request import urlopen
 import streamlit as st
 
