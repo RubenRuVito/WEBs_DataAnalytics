@@ -3,6 +3,7 @@
 
 # Importando librerias
 import streamlit as st
+import nba_api
 import pandas as pd
 import numpy as np
 # from sklearn import linear_model
