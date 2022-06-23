@@ -22,7 +22,7 @@ def main():
 
 def teams_stats():
     # Estadisticas generales por equipos en la tempRegular actual..
-    data_teams = endpoints.LeagueDashTeamStats().get_data_frames()
+    data_teams = endpoints.LeagueDashTeamStats(timeout=600).get_data_frames()
     df_teams = pd.DataFrame(data_teams[0])
 
     st.markdown("ESTADISTICAS POR EQUIPOS - Temporada Regular (21/22).")
@@ -30,7 +30,7 @@ def teams_stats():
 
 def players_stats():
 
-    data_players = endpoints.leaguedashplayerstats.LeagueDashPlayerStats().get_data_frames()
+    data_players = endpoints.leaguedashplayerstats.LeagueDashPlayerStats(timeout=600).get_data_frames()
     df_players = pd.DataFrame(data_players[0])
 
     st.markdown("ESTADISTICAS POR JUGADORES - Temporada Regular (21/22).")
