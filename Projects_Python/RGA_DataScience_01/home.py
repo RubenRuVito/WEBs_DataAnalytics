@@ -18,7 +18,8 @@ import base64
 # from lxml import etree
 
 # Plotting Pkgs
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
 import seaborn as sns
 from PIL import Image,ImageFilter,ImageEnhance
 
