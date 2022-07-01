@@ -1,6 +1,6 @@
 numpy
 pandas
-math
+# math
 cufflinks
 lxml
 matplotlib
