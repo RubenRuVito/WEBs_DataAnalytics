@@ -1,6 +1,7 @@
 numpy
 pandas
 math
+cufflinks
 lxml
 matplotlib
 seaborn
