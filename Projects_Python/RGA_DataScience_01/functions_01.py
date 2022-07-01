@@ -8,8 +8,8 @@ def players_eda():
   st.line_chart(st.session_state.df_players['PTS'])
   
   fig, ax = plt.subplots()
-  ax = sns.scatterplot(data=st.session_state.df_players, x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'],
-                       hue=st.session_state.df_players['Player'])
+  sns.scatterplot(data=st.session_state.df_players, x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'],
+                  hue=st.session_state.df_players['Player'], ax=ax)
   st.pyplot(fig)
   
   mod_lr = LinearReggresion(fit_intercept=True)
