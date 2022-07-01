@@ -78,7 +78,7 @@ if __name__ == "__main__":
         df_players_totals = get_players_stats(2022,'totals')
         df_players_advanced = get_players_stats(2022,'advanced')
         
-        df_players = pd.concat(df_players_totals, df_players_advanced['PER'])
+        df_players = pd.concat([df_players_totals, df_players_advanced['PER']], axis=1)
         st.session_state.df_players = df_players
     
     page = st.sidebar.selectbox(
