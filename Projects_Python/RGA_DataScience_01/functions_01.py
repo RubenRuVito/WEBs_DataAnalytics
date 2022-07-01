@@ -1,5 +1,5 @@
 import streamlit as st
-from sklearn.linear_model import LinnearRegression
+from sklearn.linear_model import LinearRegression
 
 def players_eda():
   st.markdown("ESTADISTICAS POR JUGADORES - Temporada Regular (21/22).")
@@ -7,4 +7,9 @@ def players_eda():
   
   st.line_chart(st.session_state.df_players['PTS'])
   
-  mod_lr = LinnearReggresion(fit_intercept=True)
+  fig, ax = plt.subplots()
+  ax = sns.scatterplot(data=st.session_state.df_players, x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'],
+                       hue=st.session_state.df_players['Players'])
+  st.pyplot(fig)
+  
+  mod_lr = LinearReggresion(fit_intercept=True)
