@@ -15,7 +15,7 @@ import numpy as np
 import os
 from os import remove
 import base64
-from lxml import etree
+# from lxml import etree
 
 # Plotting Pkgs
 import matplotlib.pyplot as plt
