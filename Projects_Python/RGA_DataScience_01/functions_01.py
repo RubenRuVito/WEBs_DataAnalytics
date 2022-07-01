@@ -1,6 +1,6 @@
 import streamlit as st
-import seaborn as sns
-from matplotlib.pyplot as plt
+#import seaborn as sns
+#from matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
 def players_eda():
