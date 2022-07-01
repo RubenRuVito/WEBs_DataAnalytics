@@ -1,6 +1,7 @@
 numpy
 pandas
 math
+lxml
 matplotlib
 seaborn
 plotly
