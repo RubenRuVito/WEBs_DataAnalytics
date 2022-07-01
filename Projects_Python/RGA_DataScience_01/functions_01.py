@@ -9,7 +9,7 @@ def players_eda():
   
   fig, ax = plt.subplots()
   ax = sns.scatterplot(data=st.session_state.df_players, x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'],
-                       hue=st.session_state.df_players['Players'])
+                       hue=st.session_state.df_players['Player'])
   st.pyplot(fig)
   
   mod_lr = LinearReggresion(fit_intercept=True)
