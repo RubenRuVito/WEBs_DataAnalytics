@@ -1,6 +1,6 @@
 import streamlit as st
-import seaborn as sns
-from matplotlib.pyplot as plt
+#import seaborn as sns
+#from matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
 def players_eda():
@@ -9,9 +9,9 @@ def players_eda():
   
   st.line_chart(st.session_state.df_players['PTS'])
   
-  fig = plt.figure(figsize=(10, 4))
-  sns.scatterplot(data=st.session_state.df_players, x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'],
-                  hue=st.session_state.df_players['Player'])
-  st.pyplot(fig)
+  #fig = plt.figure(figsize=(10, 4))
+  st.write(sns.scatterplot(data=st.session_state.df_players, x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'],
+                           hue=st.session_state.df_players['Player']))
+  st.pyplot()
   
   mod_lr = LinearRegression(fit_intercept=True)
