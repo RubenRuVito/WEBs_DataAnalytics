@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from PIL import Image,ImageFilter,ImageEnhance
 
-import functions_01
+import functions_01 as f01
 
 def get_players_stats(season: int, stat_type: str, header: int = 0, filter_games=True, remove_duplicates=True):
     
@@ -102,7 +102,7 @@ if __name__ == "__main__":
         st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
         st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
         # players_stats()
-        players_eda()
+        f01.players_eda()
 
     if page == "Players - Scouting":
         st.title("Players - Scouting.")
