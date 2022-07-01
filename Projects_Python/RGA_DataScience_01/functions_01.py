@@ -17,8 +17,8 @@ def players_eda():
                            hue=st.session_state.df_players['Player']), legend="False")
   st.pyplot()
   
-  fig = plypgo.Figure(data=plygo.scatter(x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'], mode='markers',
-                                         marker_color=st.session_state.df_players['Player'], text=st.session_state.df_players['Player'])
+  fig = plygo.Figure(data=plygo.scatter(x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'], mode='markers',
+                                        marker_color=st.session_state.df_players['Player'], text=st.session_state.df_players['Player'])
   st.plotly_chart(fig)
   
   mod_lr = LinearRegression(fit_intercept=True)
