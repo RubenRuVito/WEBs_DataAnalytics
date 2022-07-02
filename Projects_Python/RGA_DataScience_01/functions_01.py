@@ -19,7 +19,7 @@ def players_eda():
   
   fig = plygo.Figure(data=plygo.Scatter(x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'], mode='markers', \
                                         marker_color=st.session_state.df_players['Player'].index, text=st.session_state.df_players['Player']))
-  fig.update_layout(figsize=(14,8))
+  fig.update_layout(width=1200, height=500)
   st.plotly_chart(fig)
   
   mod_lr = LinearRegression(fit_intercept=True)
