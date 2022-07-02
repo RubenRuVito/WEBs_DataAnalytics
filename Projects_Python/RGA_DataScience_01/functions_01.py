@@ -21,8 +21,8 @@ def players_eda():
                                         marker_color=st.session_state.df_players['Player'].index, text=st.session_state.df_players['Player']))
   fig.update_layout(width=1200, height=500, title='Relación Puntos y Minutos por Jugadores')
   fig.update_traces(textposition="bottom right") # Para poner el Parametro "text" fijo en la grafica
-  fig.update_xaxes(title_text='MP - Minutos Jugados Totales (Temp.Regular'))
-  fig.update_yaxes(title_text='PTS - Puntos Totales (Temp.Regular'))
+  fig.update_xaxes(title_text='MP - Minutos Jugados Totales (Temp.Regular)')
+  fig.update_yaxes(title_text='PTS - Puntos Totales (Temp.Regular)')
   st.plotly_chart(fig)
   
   mod_lr = LinearRegression(fit_intercept=True)
