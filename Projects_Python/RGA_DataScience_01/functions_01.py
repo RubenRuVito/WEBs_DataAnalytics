@@ -19,7 +19,7 @@ def players_eda():
   
   fig = plygo.Figure(data=plygo.Scatter(x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'], mode='markers', \
                                         marker_color=st.session_state.df_players['Player'].index, text=st.session_state.df_players['Player']))
-  fig.update_layout(width=1200, height=500, title='Relación Puntos y Minutos x Partido por Jugadores)
+  fig.update_layout(width=1200, height=500, title='Relación Puntos y Minutos x Partido por Jugadores')
   fig.update_traces(textposition="bottom right") # Para poner el Parametro "text" fijo en la grafica
   fig.update_xaxes(title_text='MP - Minutos x Partido (Media)')
   fig.update_yaxes(title_text='PTS - Puntos Temp.Regular')
