@@ -14,7 +14,7 @@ def players_eda():
   
   #fig = plt.figure(figsize=(10, 4))
   st.write(sns.scatterplot(data=st.session_state.df_players, x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'],
-                           hue=st.session_state.df_players['Player'], legend=False))
+                           hue=st.session_state.df_players['Player'], legend=False, figsize=(12,8))
   st.pyplot()
   
   fig = plygo.Figure(data=plygo.Scatter(x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'], mode='markers', \
