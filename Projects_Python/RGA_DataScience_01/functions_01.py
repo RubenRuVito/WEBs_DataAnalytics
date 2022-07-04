@@ -17,7 +17,7 @@ def players_eda():
   
   st.write(type(st.session_state.df_players))
   st.write(st.session_state.df_players.loc[:,['Player','PTS']])
-  plot_line_chart = alt.Chart(st.session_state.df_players.loc[:,['Player','PTS']].sort_values(by='PTS', axis=1)).mark_line(interpolate='basis').encode(alt.X('Player', title='Players'), \
+  plot_line_chart = alt.Chart(st.session_state.df_players.loc[:,['Player','PTS']].sort_values(by=['PTS'], ascending=False)).mark_line(interpolate='basis').encode(alt.X('Player', title='Players'), \
                                                                                                  alt.Y('PTS', title='Puntos (Temp.Regular)')). \
   properties(title='Puntos Juagadores Temporada Regular', width=1400, height=500)
 
