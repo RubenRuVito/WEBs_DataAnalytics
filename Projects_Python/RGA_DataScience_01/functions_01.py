@@ -23,7 +23,7 @@ def players_eda():
   df_players.reset_index(inplace=True)
   st.write(df_players)
   # Pinta el grafico ordenando por el nombre de jugador "Player", por muchas transformaciones que se hagan..
-  plot_line_chart = alt.Chart(df_players).sort_values(by='PTS').mark_line(interpolate='basis').encode(alt.X('Player', title='Players'), \
+  plot_line_chart = alt.Chart(df_players).mark_line(interpolate='basis').encode(alt.X('Player', title='Players'), \
                                                                                 alt.Y('PTS', title='Puntos (Temp.Regular)')). \
                                           properties(title='Puntos Juagadores Temporada Regular', width=1400, height=500)
 
