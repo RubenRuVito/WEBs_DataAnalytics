@@ -1,6 +1,7 @@
 import streamlit as st
 import seaborn as sns
 import plotly.graph_objects as plygo
+import altair as alt # Para editar los graficos de streamlit
 #from matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
