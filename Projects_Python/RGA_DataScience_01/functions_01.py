@@ -21,7 +21,7 @@ def players_eda():
                                                                                                  alt.Y('PTS', title='Puntos (Temp.Regular)')). \
   properties(title='Puntos Juagadores Temporada Regular', width=1200, height=500)
 
-  st.altair_chart(plot_line_chart, use_container_width=True) # use_container_width=True
+  st.altair_chart(plot_line_chart) # use_container_width=True
 
   #fig = plt.figure(figsize=(10, 4))
   # st.write(sns.scatterplot(data=st.session_state.df_players, x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'],
