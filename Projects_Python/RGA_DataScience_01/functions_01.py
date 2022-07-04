@@ -12,12 +12,13 @@ def players_eda():
   
   st.line_chart(st.session_state.df_players['PTS'])
   
-  c = alt.Chart(st.session_state.df_players, title='measure of different elements over time').mark_line().encode(
-    x='Player', y='PTS', color='parameter')
+  plot_line_chart = alt.Chart(st.session_state.df_players) \
+                      .mark_line(interpolate='basis').encode(alt.X('Player', title='Players'), \
+                      alt.Y('PTS', title='Puntos (Temp.Regular)'), color='').properties( \ # category:N
+                        title='Puntos Juagadores Temporada Regular', width=1200, height=600)
 
-  st.altair_chart(c, use_container_width=True)
+  st.altair_chart(plot_line_chart) # use_container_width=True
 
-  
   #fig = plt.figure(figsize=(10, 4))
   # st.write(sns.scatterplot(data=st.session_state.df_players, x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'],
   #                         hue=st.session_state.df_players['Player'], legend=False))
