@@ -13,8 +13,8 @@ def players_eda():
   
   st.line_chart(st.session_state.df_players['PTS'])
   
-  # category:N
-  # plot_line_chart = alt.Chart(st.session_state.df_players).mark_line(interpolate='basis').encode(alt.X('Player', title='Players'), \
+  st.write(st.session_state.df_players.loc[:,['Player','PTS'])
+  # plot_line_chart = alt.Chart(st.session_state.df_players.loc[:,[).mark_line(interpolate='basis').encode(alt.X('Player', title='Players'), \
   #                                                                                               alt.Y('PTS', title='Puntos (Temp.Regular)'), color='parameter'). \
   # properties(title='Puntos Juagadores Temporada Regular', width=1200, height=500)
 
