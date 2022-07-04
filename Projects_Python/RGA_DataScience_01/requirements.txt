@@ -6,6 +6,7 @@ lxml
 matplotlib
 seaborn
 plotly
+altair
 sklearn
 statsmodels
 streamlit
