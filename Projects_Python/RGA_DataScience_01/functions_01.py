@@ -19,7 +19,7 @@ def players_eda():
   st.write(st.session_state.df_players.loc[:,['Player','PTS']])
   plot_line_chart = alt.Chart(st.session_state.df_players.loc[:,['Player','PTS']]).mark_line(interpolate='basis').encode(alt.X('Player', title='Players'), \
                                                                                                  alt.Y('PTS', title='Puntos (Temp.Regular)')). \
-  properties(title='Puntos Juagadores Temporada Regular', width=1200, height=500)
+  properties(title='Puntos Juagadores Temporada Regular', width=1400, height=500)
 
   st.altair_chart(plot_line_chart) # use_container_width=True
 
