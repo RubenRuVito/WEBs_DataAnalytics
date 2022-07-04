@@ -1,4 +1,6 @@
 import streamlit as st
+import pandas as pd
+import numpy as np
 import seaborn as sns
 import plotly.graph_objects as plygo
 import altair as alt # Para editar los graficos de streamlit
@@ -14,7 +16,7 @@ def players_eda():
   st.line_chart(st.session_state.df_players['PTS'])
   
   st.write(type(st.session_state.df_players))
-  st.write(st.session_state.df_players['Player','PTS'])
+  st.write(st.session_state.df_players.loc[:,['Player','PTS'])
   # plot_line_chart = alt.Chart(st.session_state.df_players.loc[:,[).mark_line(interpolate='basis').encode(alt.X('Player', title='Players'), \
   #                                                                                               alt.Y('PTS', title='Puntos (Temp.Regular)'), color='parameter'). \
   # properties(title='Puntos Juagadores Temporada Regular', width=1200, height=500)
