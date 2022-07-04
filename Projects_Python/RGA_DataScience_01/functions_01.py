@@ -17,12 +17,15 @@ def players_eda():
   
   st.write(type(st.session_state.df_players))
   st.write(st.session_state.df_players.loc[:,['Player','PTS']].sort_values(by=['PTS']))
+  
+  # Ordenando por PTS y reseteando el indice
   df_players = st.session_state.df_players.loc[:,['Player','PTS']].sort_values(by=['PTS'])
   df_players.reset_index(inplace=True)
   st.write(df_players)
+  # Pinta el grafico ordenando por el nombre de jugador "Player", por muchas transformaciones que se hagan..
   plot_line_chart = alt.Chart(df_players).mark_line(interpolate='basis').encode(alt.X('Player', title='Players'), \
                                                                                 alt.Y('PTS', title='Puntos (Temp.Regular)')). \
-                                          properties(title='Puntos Juagadores Temporada Regular', width=1400, height=500)
+                                          properties(title='Puntos Juagadores Temporada Regular', width=1400, height=500).sort_values(by='PTS')
 
   st.altair_chart(plot_line_chart) # use_container_width=True
 
