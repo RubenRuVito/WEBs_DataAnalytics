@@ -12,6 +12,12 @@ def players_eda():
   
   st.line_chart(st.session_state.df_players['PTS'])
   
+  c = alt.Chart(st.session_state.df_players, title='measure of different elements over time').mark_line().encode(
+    x='Player', y='PTS', color='parameter')
+
+  st.altair_chart(c, use_container_width=True)
+
+  
   #fig = plt.figure(figsize=(10, 4))
   # st.write(sns.scatterplot(data=st.session_state.df_players, x=st.session_state.df_players['MP'], y=st.session_state.df_players['PTS'],
   #                         hue=st.session_state.df_players['Player'], legend=False))
