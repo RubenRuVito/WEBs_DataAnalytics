@@ -16,7 +16,6 @@ import os
 from os import remove
 import base64
 # from lxml import etree
-
 # Plotting Pkgs
 import matplotlib.pyplot as plt
 # from matplotlib import pyplot as plt
@@ -25,6 +24,7 @@ from PIL import Image,ImageFilter,ImageEnhance
 
 import functions_01 as f01
 
+# Función de github, para scrapear las tablas de estadisticas de Players de "basketball_reference.com"
 def get_players_stats(season: int, stat_type: str, header: int = 0, filter_games=True, remove_duplicates=True):
     
     url = f'{BASE_URL}leagues/NBA_{str(season)}_{stat_type}.html'
@@ -46,6 +46,7 @@ def get_players_stats(season: int, stat_type: str, header: int = 0, filter_games
         except ValueError:
             player_stats[col]=player_stats[col]
     
+    # Se filtran los jugadores con un minimo de partidos jugados..
     if filter_games:
         max_games_played = player_stats['G'].max()
         threshold = max_games_played // 2   
@@ -67,9 +68,9 @@ if __name__ == "__main__":
         
     st.set_page_config(layout="wide") # NO se puede configurar este parametro varias veces..solo una.
     # main()
-        
-    # Recuperando los datos de players "totals","Advanced" para la temporada actual, y unir la col "PER" a tabla "totals"
     
+    # DATA (Scrapping con funciones que raspan de "basketball-reference.com")
+    # Recuperando los datos de players "totals","Advanced" para la temporada actual, y unir la col "PER" a tabla "totals"
     if 'df_players' not in st.session_state:
         BASE_URL = 'https://www.basketball-reference.com/'
         STAT_TYPES = ['per_game', 'totals', 'per_minute', 'advanced', 'per_poss', 'play-by-play', 'advanced_box_score']
@@ -86,7 +87,8 @@ if __name__ == "__main__":
         [
             "Home",
             "Players - EDA",
-            "Players - Scouting"
+            "Players - Scouting",
+            "Teams - EDA"
         ]
     )
     
@@ -108,4 +110,10 @@ if __name__ == "__main__":
         st.title("Players - Scouting.")
         st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
         st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
-    
+   
+    if page == "Teams - EDA":
+        st.title("Teams - EDA.")
+        st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
+        st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
+        
+        f01.teams_eda()
