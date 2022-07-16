@@ -55,6 +55,6 @@ def players_eda():
   
 def teams_eda():
   st.write(os.getcwd())
-  df_games_full = pd.read_csv('/Projects_Python/RGA_DataScience_01/data/df_games_qpoints_2021-22.csv', index_col=0)
+  df_games_full = pd.read_csv('Projects_Python/RGA_DataScience_01/data/df_games_qpoints_2021-22.csv', index_col=0)
   st.write(df_games_full)
   
