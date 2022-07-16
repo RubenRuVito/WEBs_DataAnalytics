@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 #import numpy as np
+import os
 import seaborn as sns
 import plotly.graph_objects as plygo
 import altair as alt # Para editar los graficos de streamlit
