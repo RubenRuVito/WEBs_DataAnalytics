@@ -53,5 +53,5 @@ def players_eda():
   mod_lr = LinearRegression(fit_intercept=True)
   
 def teams_eda():
-  df_games_full = pd.DataFrame('/data/df_games_qpoints_2021-22.csv')
+  df_games_full = pd.read_csv('/data/df_games_qpoints_2021-22.csv')
   st.write(df_games_full)
