@@ -59,6 +59,11 @@ def teams_eda():
   df_games_full = pd.read_csv('Projects_Python/RGA_DataScience_01/data/df_games_qpoints_2021-22.csv', index_col=0)
   st.write(df_games_full)
   
+  fig = px.line(df_games_full, x='TEAM_NICKNAME', y='PTS')
+  # https://plotly.com/python/figure-labels/
+  fig.update_layout(width=1200, height=500, font=dict(size=15), title='Puntuaciones por partido Temp.Regular(2021-22)')
+  st.plotly_chart(fig)
+  
   # NUevo objet DF agrupado por equipos y utilizar el método de agregación del promedio o media de puntos en cada quarto y OT
   df_games_full_01 = df_games_full.loc[:,['TEAM_ABBREVIATION','PTS_QTR1','PTS_QTR2','PTS_QTR3','PTS_QTR4','PTS_OT1','PTS_OT2','PTS_OT3','PTS']]. \
                                   groupby('TEAM_ABBREVIATION').mean()
