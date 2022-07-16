@@ -51,3 +51,7 @@ def players_eda():
   st.plotly_chart(fig)
   
   mod_lr = LinearRegression(fit_intercept=True)
+  
+def teams_eda():
+  df_games_full = pd.DataFrame('/data/df_games_qpoints_2021-22.csv')
+  st.write(df_games_full)
