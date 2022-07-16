@@ -1,5 +1,5 @@
 import streamlit as st
-#import pandas as pd
+import pandas as pd
 #import numpy as np
 import seaborn as sns
 import plotly.graph_objects as plygo
@@ -53,5 +53,5 @@ def players_eda():
   mod_lr = LinearRegression(fit_intercept=True)
   
 def teams_eda():
-  df_games_full = pd.read_csv('/data/df_games_qpoints_2021-22.csv')
+  df_games_full = pd.read_csv('/data/df_games_qpoints_2021-22.csv', index_col=0)
   st.write(df_games_full)
