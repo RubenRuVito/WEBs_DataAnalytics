@@ -59,7 +59,7 @@ def teams_eda():
   df_games_full = pd.read_csv('Projects_Python/RGA_DataScience_01/data/df_games_qpoints_2021-22.csv', index_col=0)
   st.write(df_games_full)
   
-  fig = px.line(df_games_full, x='GAME_ID', y='PTS', color='TEAM_NICKNAME')
+  fig = px.line(df_games_full, x='GAME_DATE_EST', y='PTS', color='TEAM_NICKNAME')
   # https://plotly.com/python/figure-labels/
   fig.update_layout(width=1200, height=500, font=dict(size=15), title='Puntuaciones por partido Temp.Regular(2021-22)')
   st.plotly_chart(fig)
