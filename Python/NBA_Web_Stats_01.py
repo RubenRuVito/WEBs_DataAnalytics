@@ -34,11 +34,11 @@ def main():
         #time.sleep(5)
     #my_bar = st.progress(0)
 
-    for percent_complete in range(50):
+    for percent_complete2 in range(50):
         st.spinner('Wait for it2...')
         time.sleep(0.1)
         #my_bar.progress(percent_complete + 1)
-        percent_complete += 1
+        percent_complete2 =+ 1
 
 
 def teams_stats():
