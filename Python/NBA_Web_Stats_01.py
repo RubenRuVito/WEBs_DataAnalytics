@@ -28,12 +28,8 @@ def main():
     
     with st.spinner('Wait for it...'):
         time.sleep(3)
-    #st.success('Done!')
     
-    #with st.spinner('Wait for it2...'):
-        #time.sleep(5)
-    #my_bar = st.progress(0)
-    
+    # Pinta un Spinner de carga mientras se esta ejecutando el "for", una vez termina el for desaparece y pasa a la siguiente instrucción..
     with st.spinner('Wait for it2...'):
         for percent_complete2 in range(50):
             #st.spinner('Wait for it2...')
