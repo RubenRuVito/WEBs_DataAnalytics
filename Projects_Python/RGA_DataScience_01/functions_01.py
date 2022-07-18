@@ -73,7 +73,7 @@ def teams_eda():
   # Gráfica de Radar con 2 Equipos
   
   # Preparar 2 muestras(filas de datos con en PlayerName en el index del DF) xa incluir en el metodo de grafica..
-  df_teams_radar = df_games_full.iloc[3:5,(3,7,8,9,10)]
+  df_teams_radar = df_games_full.iloc[3:5,[3,7,8,9,10]]
 
   # df_teams_radar.columns
   # df_teams_radar.index.values
