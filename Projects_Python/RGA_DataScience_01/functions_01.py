@@ -74,7 +74,7 @@ def teams_eda():
   
   # Preparar 2 muestras de los Games, xa incluir en el metodo de grafica..
   # Muestra las puntuaciones por cuarto para ese partido
-  df_teams_radar = df_games_full.iloc[df_games_full.GAME_ID = 22100001, [4,8,9,10,11]] # filas en posición 3 y 4 y columnas "8..11"
+  df_teams_radar = df_games_full.iloc[df_games_full.GAME_ID == 22100001, [4,8,9,10,11]] # filas en posición 3 y 4 y columnas "8..11"
 
   # df_teams_radar.columns
   # df_teams_radar.index.values
