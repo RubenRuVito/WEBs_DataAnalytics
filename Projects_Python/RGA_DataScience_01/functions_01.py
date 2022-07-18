@@ -89,7 +89,7 @@ def teams_eda():
                                       theta=df_teams_radar.iloc[:,[8,9,10,11].columns,
                                       fill='toself',
                                       #name="TypeWine-%s"%datasets.load_wine().target_names[ind],
-                                      name="Team-%s"%df_teams_radar.iloc[:,4].index[ind], # Recupera los rownames del dataframe..
+                                      name="Team-%s"%df_teams_radar.index[ind].iloc[:,4], # Recupera los rownames del dataframe..
                                       showlegend=True,)
                                       )
 
