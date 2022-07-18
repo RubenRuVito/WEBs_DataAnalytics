@@ -119,7 +119,7 @@ def teams_eda():
   st.plotly_chart(fig)
   
   # Gráfica de Radar con el DF agrupado por Team para obtener los promedios de cada uno de los Teams
-  df_teams_radar = df_games_full_01.iloc[3:5,] # filas en posición 3 y 4
+  df_teams_radar = df_games_full_01.iloc[3:5,[0,1,2,3]] # filas en posición 3 y 4
 
   # df_teams_radar.columns
   # df_teams_radar.index.values
