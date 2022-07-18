@@ -79,11 +79,11 @@ def teams_eda():
   # df_teams_radar.index.values
   # df_teams_radar.iloc[0].values # Retorna los valores de cada atributo/columna de la fila con indice "n"
 
-  fig = pgo.Figure()
+  fig = plygo.Figure()
 
   for ind in range(len(df_teams_radar.index.values)):
       print(ind)
-      fig.add_trace(pgo.Scatterpolar(r=df_teams_radar.iloc[ind].values,
+      fig.add_trace(plygo.Scatterpolar(r=df_teams_radar.iloc[ind].values,
                                       theta=df_teams_radar.columns,
                                       fill='toself',
                                       #name="TypeWine-%s"%datasets.load_wine().target_names[ind],
