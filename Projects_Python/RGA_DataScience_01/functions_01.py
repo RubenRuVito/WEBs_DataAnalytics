@@ -72,8 +72,9 @@ def teams_eda():
   
   # Gráfica de Radar con 2 Equipos
   
-  # Preparar 2 muestras(filas de datos con en PlayerName en el index del DF) xa incluir en el metodo de grafica..
-  df_teams_radar = df_games_full.iloc[3:5,[4,8,9,10,11]] # filas en posición 3 y 4 y columnas "8..11"
+  # Preparar 2 muestras de los Games, xa incluir en el metodo de grafica..
+  # Muestra las puntuaciones por cuarto para ese partido
+  df_teams_radar = df_games_full.iloc[df_games_full.GAME_ID = 22100001, [4,8,9,10,11]] # filas en posición 3 y 4 y columnas "8..11"
 
   # df_teams_radar.columns
   # df_teams_radar.index.values
@@ -84,10 +85,10 @@ def teams_eda():
   for ind in range(len(df_teams_radar.index.values)):
       print(ind)
       fig.add_trace(plygo.Scatterpolar(r=df_teams_radar.iloc[ind].values,
-                                      theta=df_teams_radar.columns,
+                                      theta=df_teams_radar.iloc[:,[8,9,10,11].columns,
                                       fill='toself',
                                       #name="TypeWine-%s"%datasets.load_wine().target_names[ind],
-                                      name="Team-%s"%df_teams_radar.index[ind], # Recupera los rownames del dataframe..
+                                      name="Team-%s"%df_teams_radar.iloc[:,4].index[ind], # Recupera los rownames del dataframe..
                                       showlegend=True,)
                                       )
 
@@ -114,6 +115,29 @@ def teams_eda():
   fig = px.bar(df_games_full_01.iloc[:,7])
   fig.update_layout(width=1200, height=500, font=dict(size=19),
                   title='Promedio Puntos por Cuarto de cada Team en Temp.Regular(2021-2022)')
+  st.plotly_chart(fig)
+  
+  # Gráfica de Radar con el DF agrupado por Team para obtener los promedios de cada uno de los Teams
+  df_teams_radar = df_games_full_01.iloc[3:5,] # filas en posición 3 y 4
+
+  # df_teams_radar.columns
+  # df_teams_radar.index.values
+  # df_teams_radar.iloc[0].values # Retorna los valores de cada atributo/columna de la fila con indice "n"
+
+  fig = plygo.Figure()
+
+  for ind in range(len(df_teams_radar.index.values)):
+      print(ind)
+      fig.add_trace(plygo.Scatterpolar(r=df_teams_radar.iloc[ind].values,
+                                      theta=df_teams_radar.columns,
+                                      fill='toself',
+                                      #name="TypeWine-%s"%datasets.load_wine().target_names[ind],
+                                      name="Team-%s"%df_teams_radar.index[ind], # Recupera los rownames del dataframe..
+                                      showlegend=True,)
+                                      )
+
+  fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 40])),
+                               title="Promedio Puntos por Cuartos y OT")
   st.plotly_chart(fig)
   
   
