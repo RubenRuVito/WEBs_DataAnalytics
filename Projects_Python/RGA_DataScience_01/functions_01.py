@@ -120,8 +120,8 @@ def teams_eda():
   
   fig = px.bar(df_games_full_01.iloc[:,0:4], orientation='h')
   fig.update_layout(width=1200, height=500, font=dict(size=19),
-                  title='Promedio Puntos por Cuarto de cada Team en Temp.Regular(2021-2022)',
-                  barmode='stack', yaxis={'categoryorder':'total descending')
+                  title='Promedio Puntos por Cuarto de cada Team en Temp.Regular(2021-2022)')
+  fig.update_yaxes(categoryorder='total descending')
   st.plotly_chart(fig)
   
   # Gráfica de Radar con el DF agrupado por Team para obtener los promedios de cada uno de los Teams
