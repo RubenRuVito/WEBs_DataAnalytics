@@ -66,6 +66,8 @@ def teams_eda():
   st.plotly_chart(fig)
   
   st.write(print(df_games_full.info()))
+  st.write(df_games_full.info())
+  st.write(type(df_games_full.GAME_ID)
   fig = px.line(df_games_full, x='GAME_ID', y='PTS', color='TEAM_NICKNAME')
   fig.update_layout(width=1200, height=500, font=dict(size=15), title='Puntuaciones por partido Temp.Regular(2021-22)')
   st.plotly_chart(fig)
