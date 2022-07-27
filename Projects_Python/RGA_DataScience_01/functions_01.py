@@ -118,7 +118,7 @@ def teams_eda():
                   title='Promedio Puntos por Cuarto de cada Team en Temp.Regular(2021-2022)')
   st.plotly_chart(fig)
   
-  fig = px.bar(df_games_full_01.iloc[:,0:4].sort_values(ascending=True))
+  fig = px.barh(df_games_full_01.iloc[:,0:4])
   fig.update_layout(width=1200, height=500, font=dict(size=19),
                   title='Promedio Puntos por Cuarto de cada Team en Temp.Regular(2021-2022)')
   st.plotly_chart(fig)
