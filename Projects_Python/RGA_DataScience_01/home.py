@@ -34,7 +34,7 @@ def get_players_stats(season: int, stat_type: str, header: int = 0, filter_games
     url = f'{BASE_URL}leagues/NBA_{str(season)}_{stat_type}.html'
     print(f'GET {url}')
     st.text(url)
-    html = pd.read_html(url, header = header)
+    html = pd.read_html(str(url), header = header)
     df = html[0]
 
     raw = None
