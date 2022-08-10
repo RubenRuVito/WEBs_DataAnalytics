@@ -29,7 +29,7 @@ STAT_TYPES = ['per_game', 'totals', 'per_minute', 'advanced', 'per_poss', 'play-
 ADVANCED_BOX_SCORE_COLS = ['Player','Pos','Tm','Scoring Rate','Efficiency(TS%)','Spacing','Creation','Offensive Load']
 
 # Función de github, para scrapear las tablas de estadisticas de Players de "basketball_reference.com"
-def get_players_stats(season: int, stat_type: str, header: int = 0, filter_games=True, remove_duplicates=True):
+def get_players_stats(season: int, stat_type: str, header: int = 1, filter_games=True, remove_duplicates=True):
     
     url = f'{BASE_URL}leagues/NBA_{str(season)}_{stat_type}.html'
     print(f'GET {url}')
