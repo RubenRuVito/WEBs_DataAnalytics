@@ -36,8 +36,8 @@ if __name__ == "__main__":
         STAT_TYPES = ['per_game', 'totals', 'per_minute', 'advanced', 'per_poss', 'play-by-play', 'advanced_box_score']
         ADVANCED_BOX_SCORE_COLS = ['Player','Pos','Tm','Scoring Rate','Efficiency(TS%)','Spacing','Creation','Offensive Load']
         
-        df_players_totals = get_players_stats(2022,'totals')
-        df_players_advanced = get_players_stats(2022,'advanced')
+        df_players_totals = f01.get_players_stats(2022,'totals')
+        df_players_advanced = f01.get_players_stats(2022,'advanced')
         
         df_players = pd.concat([df_players_totals, df_players_advanced['PER']], axis=1)
         st.session_state.df_players = df_players
