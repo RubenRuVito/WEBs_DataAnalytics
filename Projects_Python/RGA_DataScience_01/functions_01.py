@@ -13,6 +13,7 @@ from sklearn.linear_model import LinearRegression
 st.set_option('deprecation.showPyplotGlobalUse', False) # Para que no visualice los Warning de Visualización de graficos..
 
 # Función de github, para scrapear las tablas de estadisticas de Players de "basketball_reference.com"
+# https://github.com/tta13/NBA-Stats-Explorer/blob/main/nbanalyzer/basketball_reference_api.py
 def get_players_stats(season: int, stat_type: str, header: int = 0, filter_games=True, remove_duplicates=True):
   
     BASE_URL = 'https://www.basketball-reference.com/'
