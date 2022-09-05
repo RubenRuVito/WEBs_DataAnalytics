@@ -24,6 +24,13 @@ from PIL import Image,ImageFilter,ImageEnhance
 
 import functions_01 as f01
 
+def add_logo(logo_path, width, height):
+    """Read and return a resized logo"""
+    logo = Image.open(logo_path)
+    modified_logo = logo.resize((width, height))
+    return modified_logo
+
+
 if __name__ == "__main__":
         
     st.set_page_config(layout="wide") # NO se puede configurar este parametro varias veces..solo una.
@@ -42,6 +49,12 @@ if __name__ == "__main__":
         df_players = pd.concat([df_players_totals, df_players_advanced['PER']], axis=1)
         st.session_state.df_players = df_players
     
+    my_logo = add_logo(logo_path="Projects_Python/RGA_DataScience_01/image/Nba_logo_PNG3-1.png", width=160, height=80)
+    st.sidebar.image(my_logo)
+
+    st.sidebar.markdown("<h2 style='text-align: left; color: white; font-family:commanders'>SPORTS ANALYTICS.</h2>",unsafe_allow_html=True)
+
+
     page = st.sidebar.selectbox(
         "Navegador de paginas:",
         [
