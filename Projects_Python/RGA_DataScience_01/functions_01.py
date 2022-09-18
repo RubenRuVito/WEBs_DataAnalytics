@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import time
 from PIL import Image
 import urllib.request as urlreq
 import os
@@ -92,7 +93,8 @@ def get_players_stats(season: str, stat_type: str, header: int = 0, filter_games
 
 def players_stats():
 
-    data_players = endpoints.leaguedashplayerstats.LeagueDashPlayerStats(season=st.session_state.temporada, timeout=50).get_data_frames()
+    time.sleep(1)
+    data_players = endpoints.leaguedashplayerstats.LeagueDashPlayerStats(season=st.session_state.temporada, timeout=40).get_data_frames()
     df_players = pd.DataFrame(data_players[0])
 
     # st.markdown(f"ESTADISTICAS POR JUGADORES - Temporada Regular ({st.session_state.temporada}).")
