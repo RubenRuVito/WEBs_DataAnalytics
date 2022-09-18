@@ -10,3 +10,4 @@ altair
 sklearn
 statsmodels
 streamlit
+nba_api
