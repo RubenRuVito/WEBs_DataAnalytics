@@ -44,7 +44,7 @@ def get_players_stats(season: str, stat_type: str, header: int = 0, filter_games
         except ValueError:
             player_stats[col]=player_stats[col]
     
-    # Se filtran los jugadores con un minimo de partidos jugados..
+    # Se filtran los jugadores con un minimo de partidos jugados.."Un minimo de maxGameplay dividido 2 'G' "..
     if filter_games:
         max_games_played = player_stats['G'].max()
         threshold = max_games_played // 2   
@@ -61,7 +61,7 @@ def get_players_stats(season: str, stat_type: str, header: int = 0, filter_games
     return player_stats
 
 def players_stats_compare():
-    st.markdown("ESTADISTICAS POR JUGADORES - Temporada Regular (21/22).")
+    st.markdown(f"ESTADISTICAS POR JUGADORES - Temporada Regular ({st.session_state.temporada}).")
 
     # DATA (Scrapping con funciones que raspan de "basketball-reference.com")
     # Recuperando los datos de players "totals","Advanced" para la temporada actual, y unir la col "PER" a tabla "totals"
