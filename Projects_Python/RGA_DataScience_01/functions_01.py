@@ -92,7 +92,7 @@ def get_players_stats(season: str, stat_type: str, header: int = 0, filter_games
 
 def players_stats():
 
-    data_players = endpoints.leaguedashplayerstats.LeagueDashPlayerStats(season=st.session_state.temporada).get_data_frames()
+    data_players = endpoints.leaguedashplayerstats.LeagueDashPlayerStats(season=st.session_state.temporada, timeout=50).get_data_frames()
     df_players = pd.DataFrame(data_players[0])
 
     # st.markdown(f"ESTADISTICAS POR JUGADORES - Temporada Regular ({st.session_state.temporada}).")
