@@ -35,58 +35,68 @@ if __name__ == "__main__":
         
     st.set_page_config(layout="wide") # NO se puede configurar este parametro varias veces..solo una.
     # main()
-    
-    # DATA (Scrapping con funciones que raspan de "basketball-reference.com")
-    # Recuperando los datos de players "totals","Advanced" para la temporada actual, y unir la col "PER" a tabla "totals"
-    if 'df_players' not in st.session_state:
-        BASE_URL = 'https://www.basketball-reference.com/'
-        STAT_TYPES = ['per_game', 'totals', 'per_minute', 'advanced', 'per_poss', 'play-by-play', 'advanced_box_score']
-        ADVANCED_BOX_SCORE_COLS = ['Player','Pos','Tm','Scoring Rate','Efficiency(TS%)','Spacing','Creation','Offensive Load']
-        
-        df_players_totals = f01.get_players_stats(2022,'totals')
-        df_players_advanced = f01.get_players_stats(2022,'advanced')
-        
-        df_players = pd.concat([df_players_totals, df_players_advanced['PER']], axis=1)
-        st.session_state.df_players = df_players
-    
+
     my_logo = add_logo(logo_path="Projects_Python/RGA_DataScience_01/image/Nba_logo_PNG3-1.png", width=160, height=80)
     st.sidebar.image(my_logo)
 
     st.sidebar.markdown("<h2 style='text-align: left; color: white; font-family:commanders'>SPORTS ANALYTICS.</h2>",unsafe_allow_html=True)
 
+    st.session_state.temporada = st.sidebar.selectbox('Temporada',('2022-23','2021-22','2020-21'))
 
     page = st.sidebar.selectbox(
         "Navegador de paginas:",
         [
-            "Home",
-            "Players - EDA",
-            "Players - Scouting",
-            "Teams - EDA"
+            "Intro. 'Sports Analytics'.",
+            "Equipos - Stats.",
+            "Comparando Equipos.",
+            "Jugadores - Stats.",
+            "Comparando Jugadores."
+            "Jugadores - Scouting.",
+            "Estadísticas Historicas."
         ]
     )
     
-    if page == "Home": 
-        st.title("HOME.")
+    if page == "Intro. 'Sports Analytics'.": 
+        st.title("Introducción al análisis de datos deportivos.")
         st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
         st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
         # teams_stats()
 
     #Second Page
-    if page == "Players - EDA":
-        st.title("Players - EDA.")
+    if page == "Equipos - Stats.":
+        st.title("Estadisticas Equipos.")
         st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
         st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
-        # players_stats()
-        f01.players_eda()
 
-    if page == "Players - Scouting":
-        st.title("Players - Scouting.")
+        f01.teams_stats()
+    
+    if page == "Comparando Equipos.":
+        st.title("Análisis gráficos de comparación de las medidas de cada Equipo.")
         st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
         st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
-   
-    if page == "Teams - EDA":
-        st.title("Teams - EDA.")
+
+        f01.teams_stats_compare()
+
+    if page == "Jugadores - Stats.":
+        st.title("Players - Stats.")
+        st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
+        st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
+
+        f01.players_stats()
+
+    if page == "Comparando Jugadores.":
+        st.title("Análisis gráficos de comparación de las medidas de cada Jugador.")
+        st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
+        st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
+
+        f01.players_stats_compare()
+
+    if page == "Jugadores - Scouting.":
+        st.title("Análisis de Jugadores con tñecnocas de Machine Learning")
         st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
         st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
         
-        f01.teams_eda()
+    if page == "Análisis Historicos.":
+        st.title("Análisis de los datos generados por la NBA a lo largo de su historia.")
+        st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
+        st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
