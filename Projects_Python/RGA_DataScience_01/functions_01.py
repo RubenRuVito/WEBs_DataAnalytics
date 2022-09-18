@@ -136,8 +136,8 @@ def players_stats():
         m1, m2, m3, m4, m5, m6 = st.columns((1,1,1,1,1,1))
 
         m1.metric("Edad:", df_player_bio[df_player_bio.PLAYER_NAME == player_select].AGE.values)
-        m2.metric("Estatura:", str(df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_HEIGHT.values.split("-")[0] \
-            + "'" + df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_HEIGHT.values.split("-")[1] + "''"))
+        m2.metric("Estatura:", str(df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_HEIGHT.values.split("-")[0])) # \
+            # + "'" + df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_HEIGHT.values.split("-")[1] + "''"))
         m3.metric("Embergadura:", str(df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_HEIGHT_INCHES.values + "''"))
         m4.metric("Peso:", str(df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_WEIGHT.values))
         m5.metric("Universidad:", df_player_bio[df_player_bio.PLAYER_NAME == player_select].COLLEGE.values)
