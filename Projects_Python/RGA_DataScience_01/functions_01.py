@@ -130,7 +130,7 @@ def players_stats():
 
         df_player_bio = endpoints.leaguedashplayerbiostats.LeagueDashPlayerBioStats().get_data_frames()[0]
         
-        if st.checkbox("Ver Tabla de Datos:"):
+        if st.checkbox("Ver Tabla de Datos2:"):
             st.dataframe(df_player_bio)
         
         m1, m2, m3, m4, m5, m6 = st.columns((1,1,1,1,1,1))
