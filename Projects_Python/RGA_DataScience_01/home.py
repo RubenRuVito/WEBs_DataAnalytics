@@ -48,8 +48,8 @@ if __name__ == "__main__":
         [
             "Intro. 'Sports Analytics'.",
             "Equipos - Stats.",
-            "Comparando Equipos.",
             "Jugadores - Stats.",
+            "Comparando Equipos.",
             "Comparando Jugadores.",
             "Jugadores - Scouting.",
             "Estadísticas Historicas."

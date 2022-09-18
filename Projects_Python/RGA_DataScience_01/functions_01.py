@@ -63,18 +63,24 @@ def get_players_stats(season: str, stat_type: str, header: int = 0, filter_games
 def players_stats_compare():
     st.markdown("ESTADISTICAS POR JUGADORES - Temporada Regular (21/22).")
 
-# DATA (Scrapping con funciones que raspan de "basketball-reference.com")
+    # DATA (Scrapping con funciones que raspan de "basketball-reference.com")
     # Recuperando los datos de players "totals","Advanced" para la temporada actual, y unir la col "PER" a tabla "totals"
-    if 'df_players' not in st.session_state:
-        BASE_URL = 'https://www.basketball-reference.com/'
-        STAT_TYPES = ['per_game', 'totals', 'per_minute', 'advanced', 'per_poss', 'play-by-play', 'advanced_box_score']
-        ADVANCED_BOX_SCORE_COLS = ['Player','Pos','Tm','Scoring Rate','Efficiency(TS%)','Spacing','Creation','Offensive Load']
+    # if 'df_players' not in st.session_state:
+    #     BASE_URL = 'https://www.basketball-reference.com/'
+    #     STAT_TYPES = ['per_game', 'totals', 'per_minute', 'advanced', 'per_poss', 'play-by-play', 'advanced_box_score']
+    #     ADVANCED_BOX_SCORE_COLS = ['Player','Pos','Tm','Scoring Rate','Efficiency(TS%)','Spacing','Creation','Offensive Load']
         
-        df_players_totals = get_players_stats(st.session_state.temporada,'totals')
-        df_players_advanced = get_players_stats(st.session_state.temporada,'advanced')
+    #     df_players_totals = get_players_stats(st.session_state.temporada,'totals')
+    #     df_players_advanced = get_players_stats(st.session_state.temporada,'advanced')
         
-        df_players = pd.concat([df_players_totals, df_players_advanced['PER']], axis=1)
-        st.session_state.df_players = df_players
+    #     df_players = pd.concat([df_players_totals, df_players_advanced['PER']], axis=1)
+    #     st.session_state.df_players = df_players
+
+    df_players_totals = get_players_stats(st.session_state.temporada,'totals')
+    df_players_advanced = get_players_stats(st.session_state.temporada,'advanced')
+        
+    df_players = pd.concat([df_players_totals, df_players_advanced['PER']], axis=1)
+    st.session_state.df_players = df_players
 
     st.write(st.session_state.df_players)
     
