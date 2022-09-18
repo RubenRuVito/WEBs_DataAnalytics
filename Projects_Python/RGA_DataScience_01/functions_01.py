@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from PIL import Image
+import urllib.request as urlreq
 import os
 import base64
 import seaborn as sns
@@ -9,8 +11,36 @@ import plotly.graph_objects as plygo
 import altair as alt # Para editar los graficos de streamlit
 #from matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+from nba_api.stats import endpoints
+from nba_api.stats.static import players
+from nba_api.stats.static import teams
 
 st.set_option('deprecation.showPyplotGlobalUse', False) # Para que no visualice los Warning de Visualización de graficos..
+
+def add_logo(logo_path, width, height):
+    """Read and return a resized logo"""
+    logo = Image.open(logo_path)
+    modified_logo = logo.resize((width, height))
+    return modified_logo
+
+def add_logo2(logo_path, width, height):
+    """Read and return a resized logo"""
+    urlreq.urlretrieve(logo_path, "logo_team.png")
+    # svg_code = open("logo_svg.svg", 'rt').read()
+    # svg2png(bytestring=svg_code, write_to="logo_svg.png")
+    logo = Image.open("logo_team.png")
+    modified_logo = logo.resize((width, height))
+    return modified_logo
+
+def add_logo3(logo_path, width, height):
+    """Read and return a resized logo"""
+    urlreq.urlretrieve(logo_path, "player_image.png")
+    # svg_code = open("logo_svg.svg", 'rt').read()
+    # svg2png(bytestring=svg_code, write_to="logo_svg.png")
+    logo = Image.open("player_image.png")
+    modified_logo = logo.resize((width, height))
+    return modified_logo
+
 
 # Función de github, para scrapear las tablas de estadisticas de Players de "basketball_reference.com"
 # Streamlit NBA Analyzer..
@@ -59,6 +89,155 @@ def get_players_stats(season: str, stat_type: str, header: int = 0, filter_games
         player_stats['Pos'].replace(['C-PG','C-SF','C-PF','C-SG'], 'C', inplace=True)        
         
     return player_stats
+
+def players_stats():
+
+    data_players = endpoints.leaguedashplayerstats.LeagueDashPlayerStats(season=st.session_state.temporada).get_data_frames()
+    df_players = pd.DataFrame(data_players[0])
+
+    # st.markdown(f"ESTADISTICAS POR JUGADORES - Temporada Regular ({st.session_state.temporada}).")
+    if st.checkbox("Ver Tabla de Datos:"):
+            st.dataframe(df_players)
+    
+    # st.write(df_players)
+
+    players = df_players.PLAYER_NAME.tolist()
+    # team_abbrev = df_players.TEAM_ABBREVIATION.tolist()
+    player_select = st.sidebar.selectbox("Player", players)
+
+    # df_players.PLAYER_NAME
+    # df_players.W_PCT.tolist()
+
+    if player_select:
+
+        st.text(int(df_players[df_players.PLAYER_NAME == player_select].PLAYER_ID.values))
+        # player_img = add_logo3(logo_path="https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png", width=150, height=160)
+        player_img = add_logo3(logo_path=f"https://cdn.nba.com/headshots/nba/latest/1040x760/{int(df_players[df_players.PLAYER_NAME == player_select].PLAYER_ID.values)}.png", width=150, height=160)
+        # st.sidebar.image(player_img)
+
+        col1, col2, col3 = st.sidebar.columns([1,3,1])
+        with col1:
+            st.write("")
+        with col2:
+            st.image(player_img)
+        with col3:
+            st.write("")
+        
+        st.markdown(f"<h2 style='text-align: left; color: white; font-family:commanders'>{player_select} STATS (KPIs) -\
+            {df_players[df_players.PLAYER_NAME == player_select].TEAM_ABBREVIATION.values}</h2>", unsafe_allow_html=True)
+
+        df_player_bio = endpoints.leaguedashplayerbiostats.LeagueDashPlayerBioStats().get_data_frames()[0]
+        
+        m1, m2, m3, m4, m5, m6 = st.columns((1,1,1,1,1,1))
+
+        m1.metric("Edad:", df_player_bio[df_player_bio.PLAYER_NAME == player_select].AGE.values)
+        m2.metric('Estatura:', df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_HEIGHT.values)
+        m3.metric('Embergadura:', df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_HEIGHT_INCHES.values)
+        m4.metric('Peso:', df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_WEIGHT.values)
+        m5.metric('Universidad:', df_player_bio[df_player_bio.PLAYER_NAME == player_select].COLLEGE.values)
+        m6.metric('Año Draft:', df_player_bio[df_player_bio.PLAYER_NAME == player_select].DRAFT_YEAR.values)
+
+        st.text("--------------------------------------")
+
+        m1, m2, m3, m4, m5, m6 = st.columns((1,1,1,1,1,1))
+    
+        # m1.metric(label='PTS', value=df_teams[df_teams.TEAM_NAME == team_select].PTS.values)
+        m1.metric("PTS", df_players[df_players.PLAYER_NAME == player_select].PTS.values, int(df_players[df_players.PLAYER_NAME == player_select].PTS.values)-int((df_players.PTS.mean())))
+        
+        m2.metric("Wins",str(int(df_players[df_players.PLAYER_NAME == player_select].W.values))+" Victorias", int(df_players[df_players.PLAYER_NAME == player_select].W.values)-int((df_players.W.mean())))
+        
+        m3.metric("Lost", str(int(df_players[df_players.PLAYER_NAME == player_select].L.values))+" Derrotas", int(df_players[df_players.PLAYER_NAME == player_select].L.values)-int((df_players.L.mean())))
+        
+        m4.metric('WL_PCT', str(float(df_players[df_players.PLAYER_NAME == player_select].W_PCT.values)), float(df_players[df_players.PLAYER_NAME == player_select].W_PCT.values)-float((df_players.W_PCT.mean())))
+        
+        m5.metric('FG_PCT', float(df_players[df_players.PLAYER_NAME == player_select].FG_PCT.values), float(df_players[df_players.PLAYER_NAME == player_select].FG_PCT.values)-float((df_players.FG_PCT.mean())))
+        
+        m6.metric('FG3_PCT', float(df_players[df_players.PLAYER_NAME == player_select].FG3_PCT.values), float(df_players[df_players.PLAYER_NAME == player_select].FG3_PCT.values)-float((df_players.FG3_PCT.mean())))
+
+        st.text("--------------------------------------")
+
+        c1,c2,c3 = st.columns([1,4,1]) # Entre corchetes se define que tamaño en ancho tendrá la columna, con 
+                                       # respecto a las demás..
+        
+        with c1:
+            # m1, m2, m3, m4, m5, m6 = st.columns()
+    
+            # m1.metric(label='PTS', value=df_teams[df_teams.TEAM_NAME == team_select].PTS.values)
+            st.metric(f"PTS [Media->{int(df_players.PTS.mean())}]", df_players[df_players.PLAYER_NAME == player_select].PTS.values, int(df_players[df_players.PLAYER_NAME == player_select].PTS.values)-int((df_players.PTS.mean())))
+            
+            st.metric("Wins",str(int(df_players[df_players.PLAYER_NAME == player_select].W.values))+" Victorias", int(df_players[df_players.PLAYER_NAME == player_select].W.values)-int((df_players.W.mean())))
+            
+            st.metric("Lost", str(int(df_players[df_players.PLAYER_NAME == player_select].L.values))+" Derrotas", int(df_players[df_players.PLAYER_NAME == player_select].L.values)-int((df_players.L.mean())))
+
+        with c2:
+            # st.write(int(df_players[df_players.PLAYER_NAME == player_select].PLAYER_ID.values))
+            # df_player_stsyears = endpoints.PlayerGameLogs(player_id_nullable=int(df_players[df_players.PLAYER_NAME == player_select].PLAYER_ID.values), season_nullable=st.session_state.temporada).get_data_frames()[0]
+            df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=str(int(df_players[df_players.PLAYER_NAME == player_select].PLAYER_ID.values))).get_data_frames()[1]
+            
+            if st.checkbox("Ver Tabla de Datos del Jugador."):
+                st.dataframe(df_player_stsyears)
+
+            # Preparamos los datos para el input del tipo de gráficas "Altair"..
+            # ***Los jugadores que juegan en 2 o más equipos en una tempo (valor = "TOT"),
+            # - Se filtra la fila con el valor "TOT", xa no contabilizarla y en función de las metricas se SUM(), o MEAN()
+            # - Para estas graficas de métricas de cantidad en acciones defensivas u ofensivas, se utiliza el Sumarizar
+            # para la temporada que el jugador ha jugado en 2 o más equipo (Debido a un traspaso..evidentemente)
+            
+            # Métricas Ofensivas.
+            df_psy = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','FGM','FG3M','FTM','OREB','AST','PTS']].set_index('GROUP_VALUE')
+            df_psy = df_psy.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
+            df_psy_plot_altair = df_psy.reset_index().melt(df_psy.index.names, var_name='Offensive Measure', value_name='y')
+            
+            # st.dataframe(df_psy_plot_altair)
+
+            plot_line_chart = alt.Chart(df_psy_plot_altair) \
+                      .mark_line().encode(alt.X('GROUP_VALUE', title='Temporada'), \
+                      alt.Y('y', title='Count'), color='Offensive Measure:N', \
+                      tooltip=[alt.Tooltip("GROUP_VALUE", title='Temporada'),"Offensive Measure", \
+                      alt.Tooltip("y", title='Count')]).properties( \
+                        title='Métricas Ofensivas por Temporadas.').interactive()
+
+            st.altair_chart(plot_line_chart, use_container_width=True)
+
+            # Métricas Defensivas.
+            df_psy = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','DREB','TOV','STL','BLK','PLUS_MINUS']].set_index('GROUP_VALUE')
+            df_psy = df_psy.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
+            df_psy_plot_altair = df_psy.reset_index().melt(df_psy.index.names, var_name='Defensive Measure', value_name='y')
+            
+            # st.dataframe(df_psy_plot_altair)
+
+            plot_line_chart = alt.Chart(df_psy_plot_altair) \
+                      .mark_line().encode(alt.X('GROUP_VALUE', title='Temporada'), \
+                      alt.Y('y', title='Count'), color='Defensive Measure:N', \
+                      tooltip=[alt.Tooltip("GROUP_VALUE", title='Temporada'),"Defensive Measure", \
+                      alt.Tooltip("y", title='Count')]).properties( \
+                        title='Métricas Defensivas por Temporadas.').interactive()
+
+            st.altair_chart(plot_line_chart, use_container_width=True)
+
+            # Probando Gráficas..
+            # st.dataframe(df_psy.reset_index())
+
+            # fig = px.line(df_psy.loc[:,['GROUP_VALUE','DREB','TOV','STL','BLK','PLUS_MINUS']], x=df_psy.index, y=df_psy.loc[:,['DREB','TOV','STL','BLK','PLUS_MINUS']].columns.values,
+            fig = px.line(df_psy.reset_index(), x=df_psy.reset_index().index, y=df_psy.columns.values, \
+              title='Métricas Defensivas por Temporadas.', template='plotly_dark')
+            fig.update_layout(width=1000, height=400, font=dict(size=15), xaxis_title='Temporada', xaxis = dict(
+                    tickmode = 'array',
+                    tickvals = df_psy.reset_index().index,
+                    ticktext = df_psy.reset_index()['GROUP_VALUE']), \
+                yaxis_title = "Count", \
+                legend_title = "Defensive Measure")
+            fig.update_traces(line=dict(width=3)) # Grosor de la linea
+            fig.update_traces(mode="markers+lines", hovertemplate=None)
+            fig.update_layout(hovermode="x unified")
+            st.plotly_chart(fig, use_container_width=True)
+
+        with c3:  
+            st.metric('WL_PCT', str(float(df_players[df_players.PLAYER_NAME == player_select].W_PCT.values)), float(df_players[df_players.PLAYER_NAME == player_select].W_PCT.values)-float((df_players.W_PCT.mean())))
+            
+            st.metric('FG_PCT', float(df_players[df_players.PLAYER_NAME == player_select].FG_PCT.values), float(df_players[df_players.PLAYER_NAME == player_select].FG_PCT.values)-float((df_players.FG_PCT.mean())))
+            
+            st.metric('FG3_PCT', float(df_players[df_players.PLAYER_NAME == player_select].FG3_PCT.values), float(df_players[df_players.PLAYER_NAME == player_select].FG3_PCT.values)-float((df_players.FG3_PCT.mean())))
 
 def players_stats_compare():
     st.markdown(f"ESTADISTICAS POR JUGADORES - Temporada Regular ({st.session_state.temporada}).")
