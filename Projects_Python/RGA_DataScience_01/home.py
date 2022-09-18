@@ -50,7 +50,7 @@ if __name__ == "__main__":
             "Equipos - Stats.",
             "Comparando Equipos.",
             "Jugadores - Stats.",
-            "Comparando Jugadores."
+            "Comparando Jugadores.",
             "Jugadores - Scouting.",
             "Estadísticas Historicas."
         ]
