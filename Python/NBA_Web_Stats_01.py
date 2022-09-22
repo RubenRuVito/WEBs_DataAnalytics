@@ -40,7 +40,7 @@ def main():
 
 def teams_stats():
     # Estadisticas generales por equipos en la tempRegular actual..
-    time.sleep(0.5)
+    time.sleep(1)
     df_teams = endpoints.LeagueDashTeamStats().get_data_frames()[0]
     # df_teams = pd.DataFrame(data_teams[0])
 
@@ -48,8 +48,8 @@ def teams_stats():
     st.write(df_teams)
 
 def players_stats():
-    
-    time.sleep(0.5)
+
+    time.sleep(1)
     df_players = endpoints.LeagueDashPlayerStats().get_data_frames()[0]
     # df_players = pd.DataFrame(data_players[0])
 
