@@ -22,7 +22,7 @@ def main():
     
     my_bar = st.progress(0)
 
-    for percent_complete in range(100):
+    for percent_complete in range(30):
          time.sleep(0.1)
          my_bar.progress(percent_complete + 1)
     
@@ -31,7 +31,7 @@ def main():
     
     # Pinta un Spinner de carga mientras se esta ejecutando el "for", una vez termina el for desaparece y pasa a la siguiente instrucción..
     with st.spinner('Wait for it2...'):
-        for percent_complete2 in range(50):
+        for percent_complete2 in range(30):
             #st.spinner('Wait for it2...')
             time.sleep(0.1)
             #my_bar.progress(percent_complete + 1)
@@ -41,7 +41,8 @@ def main():
 def teams_stats():
     # Estadisticas generales por equipos en la tempRegular actual..
     time.sleep(1)
-    df_teams = endpoints.leaguedashteamstats.LeagueDashTeamStats(timeout=40).get_data_frames()[0]
+    df_teams = endpoints.leaguedashteamstats.LeagueDashTeamStats(timeout=20).get_data_frames()[0]
+    time.sleep(1)
     # df_teams = pd.DataFrame(data_teams[0])
 
     st.markdown("ESTADISTICAS POR EQUIPOS - Temporada Regular (21/22).")
@@ -50,7 +51,8 @@ def teams_stats():
 def players_stats():
 
     time.sleep(1)
-    df_players = endpoints.leaguedashplayerstats.LeagueDashPlayerStats(timeout=40).get_data_frames()[0]
+    df_players = endpoints.leaguedashplayerstats.LeagueDashPlayerStats(timeout=20).get_data_frames()[0]
+    time.sleep(1)
     # df_players = pd.DataFrame(data_players[0])
 
     st.markdown("ESTADISTICAS POR JUGADORES - Temporada Regular (21/22).")
