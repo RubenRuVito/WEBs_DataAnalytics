@@ -717,7 +717,7 @@ def teams_stats():
 
 
         # Otra manera de visualizar las estadisticas medias del TEAM..
-        m1, m11, m2, m3, m4, m5, m6, m7 = st.columns((1,1,1,1,1,1,1,1))
+        m1, m11, m12, m2, m3, m4, m41, m42, m43, m5, m6, m7 = st.columns((1,1,1,1,1,1,1,1,1,1,1,1))
 
         # todf = pd.read_excel('DataforMock.xlsx',sheet_name = 'metrics')
         # to = todf[(todf['Hospital Attended']==hosp) & (todf['Metric']== 'Total Outstanding')]   
@@ -727,16 +727,30 @@ def teams_stats():
         # m1.metric(label='PTS', value=df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values)
         m1.metric("PTS Anotados", df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values, round(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values)-float(df_teams_stats.PTS.mean()),2))
 
+        # Pruebas para formular en .ipynb de Puntos totales y por Cuartos de los GAMES..
         m11.metric("PTS Recibidos", round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values - df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values),2), \
             round(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values - df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values)-float((df_teams_stats.PTS - df_teams_stats.PLUS_MINUS).mean()),2))
+        
+        m12.metric("NET_RATING(+/-)", df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values, round(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values)-float(df_teams_stats.PLUS_MINUS.mean()),2))
+
         # m2.metric(label='Wins',value=str(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W.values))+" Victorias") #, delta = str(int(ch['Previous']))+' Compared to 1 hour ago', delta_color = 'inverse')
-        m2.metric("Wins",str(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W.values))+" Victorias", int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W.values)-int((df_teams_stats.W.mean())))
+        m2.metric("WINS",str(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W.values)), int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W.values)-int((df_teams_stats.W.mean())))
         # m3.metric(label='Lost',value=str(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].L.values)) +" Derrotas") #, delta = str(int(hl['Previous']))+' Compared to yesterday')
-        m3.metric("Lost", str(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].L.values))+" Derrotas", int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].L.values)-int((df_teams_stats.L.mean())))
+        m3.metric("LOST", str(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].L.values)), int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].L.values)-int((df_teams_stats.L.mean())))
         # m4.metric(label='WL_PCT',value=str(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W_PCT.values))) #, delta = str(int(to['Previous']))+' Compared to 1 hour ago', delta_color = 'inverse')
         m4.metric('WL_PCT', str(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W_PCT.values * 100),2))+'%', \
             str(round((float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W_PCT.values)-float(df_teams_stats.W_PCT.mean()))*100,2))+'%')
         # m5.metric(label='FG_PCT',value=str(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG_PCT.values)))
+        
+        m41.metric("PACE", str(float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].PACE.values)), \
+            str(round((float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].PACE.values)-float(df_teams_stats_adv.PACE.mean())) *100,2)))
+
+        m42.metric("EFG_PCT(F)", str(round(float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].EFG_PCT.values *100),2))+'%', \
+            str(round((float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].EFG_PCT.values)-float(df_teams_stats_adv.EFG_PCT.mean())) *100,2))+'%')
+        
+        m43.metric("PIE(F)", str(round(float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].PIE.values *100),2))+'%', \
+            str(round((float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].PIE.values)-float(df_teams_stats_adv.PIE.mean())) *100,2))+'%')
+        
         m5.metric('FG_PCT', str(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG_PCT.values * 100),2))+'%', \
             str(round((float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG_PCT.values)-float(df_teams_stats.FG_PCT.mean()))*100,2))+'%')
         #  m6.metric(label='FG3_PCT',value=str(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG3_PCT.values)))
