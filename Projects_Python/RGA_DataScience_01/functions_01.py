@@ -123,7 +123,7 @@ def players_stats():
         
         # st.markdown(f"<h2 style='text-align: left; color: white; font-family:commanders'>{player_select} STATS (KPIs) -\
         #     {df_players_stats[df_players_stats.PLAYER_ID == id_player].TEAM_ABBREVIATION.values}</h2>", unsafe_allow_html=True)
-        st.markdown(f"<h2 style='text-align: left; color: #1569C7; font-family:commanders'>{player_select} STATS (KPIs) -\
+        st.markdown(f"<h2 style='text-align: left; color: #1569C7; font-family:commanders'>{player_select} -\
             {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'TEAM_CITY') + ' ' + df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'TEAM_NAME')} \
              - #{df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'JERSEY')} \
              - {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'POSITION')}</h2>", unsafe_allow_html=True)
@@ -176,7 +176,7 @@ def players_stats():
         m5.write(f'<h3>Universidad: </h3>{df_player_bio[df_player_bio.PLAYER_ID == id_player].COLLEGE.values}', unsafe_allow_html=True)
         m6.write(f'<h3>Año Draft: </h3>{df_player_bio[df_player_bio.PLAYER_ID == id_player].DRAFT_YEAR.values}', unsafe_allow_html=True)
 
-        st.text("--------------------------------------")
+        st.text("------------------------------------------------------------------")
 
         df_players_stats_adv = endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, measure_type_detailed_defense="Advanced").get_data_frames()[0]
 
@@ -219,7 +219,7 @@ def players_stats():
         m7.metric('FT_PCT', str(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FT_PCT.values * 100),2))+'%', \
             str(round((float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FT_PCT.values)-float(df_players_stats.FT_PCT.mean())) * 100,2))+'%')
 
-        st.text("--------------------------------------")
+        st.text("------------------------------------------------------------------")
 
         c1,c2,c3 = st.columns([0.5,4,0.5]) # Entre corchetes se define que tamaño en ancho tendrá la columna, con 
                                        # respecto a las demás..
@@ -709,6 +709,7 @@ def teams_stats():
         m1.write(f"<h3>Manager General: {df_team_details._get_value(0, 'GENERALMANAGER')}</h3>", unsafe_allow_html=True)
         m1.write(f"<h3>Entrenador: {df_team_details._get_value(0, 'HEADCOACH')}</h3>", unsafe_allow_html=True)
 
+        st.text("------------------------------------------------------------------")
         # type_stats = st.radio("",("Totals","Per Game"), horizontal=True)
         
         # Pruebas..
@@ -767,7 +768,7 @@ def teams_stats():
         # data_team = endpoints.teamyearbyyearstats.TeamYearByYearStats(team_id=df_teams_stats[df_teams_stats.TEAM_ID == id_team].TEAM_ID.values) # ID Team Seleccionado
         # df_team = data_team.team_stats.get_data_frame() # Se utiliza uno de los metodos de la libreria xa convertirlo en DFrame..
 
-        st.text("--------------------------------------")
+        st.text("------------------------------------------------------------------")
 
         c1,c2,c3 = st.columns([0.5,4,0.5]) # Entre corchetes se define que tamaño en ancho tendrá la columna, con 
                                        # respecto a las demás..
