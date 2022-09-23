@@ -177,25 +177,35 @@ def players_stats():
 
         df_players_stats_adv = endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, measure_type_detailed_defense="Advanced").get_data_frames()[0]
 
-        m1, m11,m12, m2, m3, m4, m5, m6, m7 = st.columns((1,1,1,1,1,1,1,1,1))
+        m1, m11, m12, m13, m2, m3, m31, m32, m33, m5, m6, m7 = st.columns((1,1,1,1,1,1,1,1,1,1,1,1))
     
         m1.metric("PTS", df_players_stats[df_players_stats.PLAYER_ID == id_player].PTS.values, \
             int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PTS.values)-int(df_players_stats.PTS.mean()))
-        
-        m11.metric("MAS_MENOS", df_players_stats[df_players_stats.PLAYER_ID == id_player].PLUS_MINUS.values, \
+
+        # format(int(df_team_details._get_value(0, 'ARENACAPACITY')), ',d')
+        m11.metric("MINUTS", format(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].MIN.values), ',d'), \
+            int(df_players_stats[df_players_stats.PLAYER_ID == id_player].MIN.values)-int(df_players_stats.MIN.mean()))
+
+        m12.metric("+ / -", df_players_stats[df_players_stats.PLAYER_ID == id_player].PLUS_MINUS.values, \
             int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLUS_MINUS.values)-int(df_players_stats.PLUS_MINUS.mean()))
         
-        m12.metric("NET_RATING", df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].NET_RATING.values, \
+        m13.metric("NET_RATING", df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].NET_RATING.values, \
             int(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].NET_RATING.values)-int(df_players_stats_adv.NET_RATING.mean()))
 
-        m2.metric("Wins",str(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].W.values))+" Victorias", \
+        m2.metric("WINS",str(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].W.values)), \
             int(df_players_stats[df_players_stats.PLAYER_ID == id_player].W.values)-int(df_players_stats.W.mean()))
             
-        m3.metric("Lost", str(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].L.values))+" Derrotas", \
+        m3.metric("LOST", str(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].L.values)), \
             int(df_players_stats[df_players_stats.PLAYER_ID == id_player].L.values)-int(df_players_stats.L.mean()))
-        
-        m4.metric('WL_PCT', str(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].W_PCT.values * 100),2))+'%', \
+
+        m31.metric('WL_PCT', str(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].W_PCT.values * 100),2))+'%', \
             str(round((float(df_players_stats[df_players_stats.PLAYER_ID == id_player].W_PCT.values)-float(df_players_stats.W_PCT.mean())) * 100,2))+'%')
+
+        m32.metric("EFG_PCT(F)", str(round(float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].EFG_PCT.values *100),2))+'%', \
+            str(round((float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].EFG_PCT.values)-float(df_players_stats_adv.EFG_PCT.mean())) *100,2))+'%')
+        
+        m33.metric("PIE(F)", str(round(float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].PIE.values *100),2))+'%', \
+            str(round((float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].PIE.values)-float(df_players_stats_adv.PIE.mean())) *100,2))+'%')
         
         m5.metric('FG_PCT', str(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG_PCT.values * 100),2))+'%', \
             str(round((float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG_PCT.values)-float(df_players_stats.FG_PCT.mean())) * 100,2))+'%')
@@ -687,7 +697,8 @@ def teams_stats():
         # m2.write(f'<h3>Estatura: </h3>{str(df_player_bio.loc[df_player_bio.PLAYER_ID == id_player, "PLAYER_HEIGHT"].values), estatura, estatura2}', unsafe_allow_html=True)
         m1.write(f"<h3>Ciudad: {df_team_details._get_value(0, 'CITY')}</h3>", unsafe_allow_html=True)
         m1.write(f"<h3>Estadio: {df_team_details._get_value(0, 'ARENA')}</h3>", unsafe_allow_html=True)
-        m1.write(f"<h3>Capacidad: {format(int(df_team_details._get_value(0, 'ARENACAPACITY')), ',d')} asientos</h3>", unsafe_allow_html=True)
+        # m1.write(f"<h3>Capacidad: {format(int(df_team_details._get_value(0, 'ARENACAPACITY')), ',d')} asientos</h3>", unsafe_allow_html=True)
+        m1.write(f"<h3>Capacidad: {'NoData' if df_team_details._get_value(0, 'ARENACAPACITY') is None else format(int(df_team_details._get_value(0, 'ARENACAPACITY')), ',d') } asientos</h3>", unsafe_allow_html=True)
 
         # m4, m5, m6 = st.sidebar.columns((1,1,1))
 
