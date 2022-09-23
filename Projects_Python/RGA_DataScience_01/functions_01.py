@@ -555,7 +555,7 @@ def players_stats_compare():
     
     mod_lr = LinearRegression(fit_intercept=True)
 
-def team_stats():
+def teams_stats():
 
     # Estadisticas generales por equipos en la tempRegular seleccionadal..
     st.text(st.session_state.temporada)
