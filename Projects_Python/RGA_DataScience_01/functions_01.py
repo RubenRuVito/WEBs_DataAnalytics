@@ -94,31 +94,21 @@ def get_players_stats(season: str, stat_type: str, header: int = 0, filter_games
 
 def players_stats():
 
-    type_stats = st.radio("",("Totales","Por Game", "Por 100 Posesiones", "Por 36 Posesiones"), horizontal=True)
-    if type_stats == "Totales":
-        df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada).get_data_frames()[0])
-    if type_stats == "Por Game":
-        df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="PerGame").get_data_frames()[0])
-    if type_stats == "Por 100 Posesiones":
-        df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="Per100Possessions").get_data_frames()[0])
-    if type_stats == "Por 36 Posesiones":
-        df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="Per36").get_data_frames()[0])
-
+    df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada).get_data_frames()[0])
     players_names = df_players_stats.PLAYER_NAME.tolist()
     # team_abbrev = df_players.TEAM_ABBREVIATION.tolist()
     players_names.sort()
     player_select = st.sidebar.selectbox("Player", players_names)
 
-    st.markdown(f"ESTADISTICAS POR JUGADORES - Temporada Regular ({st.session_state.temporada}).")
-    st.write(df_players_stats)
+    # st.markdown(f"ESTADISTICAS POR JUGADORES - Temporada Regular ({st.session_state.temporada}).")
 
     if player_select:
 
         id_player = int(df_players_stats[df_players_stats.PLAYER_NAME == player_select].PLAYER_ID.values)
+        # st.text(int(df_players_stats[df_players_stats.PLAYER_NAME == player_select].PLAYER_ID.values))
 
         df_player_info = endpoints.CommonPlayerInfo(player_id=id_player).get_data_frames()[0]
         
-        st.text(int(df_players_stats[df_players_stats.PLAYER_NAME == player_select].PLAYER_ID.values))
         # player_img = add_logo3(logo_path="https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png", width=150, height=160)
         player_img = add_logo3(logo_path=f"https://cdn.nba.com/headshots/nba/latest/1040x760/{int(df_players_stats[df_players_stats.PLAYER_NAME == player_select].PLAYER_ID.values)}.png", width=150, height=160)
         # st.sidebar.image(player_img)
@@ -138,6 +128,19 @@ def players_stats():
              - #{df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'JERSEY')} \
              - {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'POSITION')}</h2>", unsafe_allow_html=True)
 
+        type_stats = st.radio("",("Totales","Por Game", "Por 100 Posesiones", "Por 36 Minutos"), horizontal=True)
+        # if type_stats == "Totales":
+            # df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada).get_data_frames()[0])
+        if type_stats == "Por Game":
+            df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="PerGame").get_data_frames()[0])
+        if type_stats == "Por 100 Posesiones":
+            df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="Per100Possessions").get_data_frames()[0])
+        if type_stats == "Por 36 Minutos":
+            df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="Per36").get_data_frames()[0])
+
+        if st.checkbox("Ver Tabla de Datos de Jugadores."):
+            st.write(df_players_stats)
+
         df_player_bio = endpoints.LeagueDashPlayerBioStats(season=st.session_state.temporada).get_data_frames()[0]
 
         # st.write(int(id_player))
@@ -147,18 +150,18 @@ def players_stats():
         # Instrucciones para tranformar el valor de la estatura de "['6-10']" a "6' Pies 10'' Pulgadas"...
         # Y tb obtener la medida en mtros y centimetros..
         estatura = str(df_player_bio.loc[df_player_bio.PLAYER_ID == id_player, "PLAYER_HEIGHT"].values)
-        st.text(estatura)
-        st.text([int(s) for s in re.findall(r'-?\d+\.?\d*', estatura)][0])
-        st.text([int(s) for s in re.findall(r'-?\d+\.?\d*', estatura)][1]*-1)
+        # st.text(estatura)
+        # st.text([int(s) for s in re.findall(r'-?\d+\.?\d*', estatura)][0])
+        # st.text([int(s) for s in re.findall(r'-?\d+\.?\d*', estatura)][1]*-1)
 
         pies = [int(s) for s in re.findall(r'-?\d+\.?\d*', estatura)][0]
         pulgadas = [int(s) for s in re.findall(r'-?\d+\.?\d*', estatura)][1] * -1
 
         estatura = str(pies) + "'" + str(pulgadas) + "''"
         estatura2 = (pies * 30.48) + (pulgadas * 2.54)
-        st.text(estatura)
-        st.text(83*2.54)
-        st.text(int(df_player_bio[df_player_bio.PLAYER_ID == id_player].PLAYER_WEIGHT.values))
+        # st.text(estatura)
+        # st.text(83*2.54)
+        # st.text(int(df_player_bio[df_player_bio.PLAYER_ID == id_player].PLAYER_WEIGHT.values))
 
         m1, m2, m3 = st.sidebar.columns((1,1,1))
 
@@ -177,20 +180,20 @@ def players_stats():
 
         df_players_stats_adv = endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, measure_type_detailed_defense="Advanced").get_data_frames()[0]
 
-        m1, m11, m12, m13, m2, m3, m31, m32, m33, m5, m6, m7 = st.columns((1,1,1,1,1,1,1,1,1,1,1,1))
+        m1, m11, m12, m13, m2, m3, m31, m32, m33, m5, m6, m7 = st.columns((1.2,1.2,1,1,0.5,0.5,1,1,1,1,1,1))
     
-        m1.metric("PTS", df_players_stats[df_players_stats.PLAYER_ID == id_player].PTS.values, \
-            int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PTS.values)-int(df_players_stats.PTS.mean()))
-
+        m1.metric("PTS", "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].PTS.values),2)), \
+            "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].PTS.values)-float(df_players_stats.PTS.mean()),2)))
+            
         # format(int(df_team_details._get_value(0, 'ARENACAPACITY')), ',d')
-        m11.metric("MINUTS", format(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].MIN.values), ',d'), \
-            int(df_players_stats[df_players_stats.PLAYER_ID == id_player].MIN.values)-int(df_players_stats.MIN.mean()))
+        m11.metric("MINUTS", "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].MIN.values),2)), \
+            "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].MIN.values)-float(df_players_stats.MIN.mean()),2)))
 
-        m12.metric("+ / -", df_players_stats[df_players_stats.PLAYER_ID == id_player].PLUS_MINUS.values, \
-            int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLUS_MINUS.values)-int(df_players_stats.PLUS_MINUS.mean()))
+        m12.metric("+ / -", "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLUS_MINUS.values),2)), \
+            "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLUS_MINUS.values)-int(df_players_stats.PLUS_MINUS.mean()),2)))
         
-        m13.metric("NET_RATING", df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].NET_RATING.values, \
-            int(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].NET_RATING.values)-int(df_players_stats_adv.NET_RATING.mean()))
+        m13.metric("NET_RATING", "{:,}".format(round(float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].NET_RATING.values),2)), \
+            "{:,}".format(round(float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].NET_RATING.values)-int(df_players_stats_adv.NET_RATING.mean()),2)))
 
         m2.metric("WINS",str(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].W.values)), \
             int(df_players_stats[df_players_stats.PLAYER_ID == id_player].W.values)-int(df_players_stats.W.mean()))
@@ -249,7 +252,7 @@ def players_stats():
                 df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=id_player, per_mode_detailed="PerGame").get_data_frames()[1]
             if type_stats == "Por 100 Posesiones":
                 df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=id_player, per_mode_detailed="Per100Possessions").get_data_frames()[1]
-            if type_stats == "Por 36 Posesiones":
+            if type_stats == "Por 36 Minutos":
                 df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=id_player, per_mode_detailed="Per36").get_data_frames()[1]
 
             if st.checkbox("Ver Tabla de Datos del Jugador."):
@@ -568,7 +571,7 @@ def players_stats_compare():
 def teams_stats():
 
     # Estadisticas generales por equipos en la tempRegular seleccionadal..
-    st.text(st.session_state.temporada)
+    # st.text(st.session_state.temporada)
   
     # data_teams =  teams.get_teams()# Lista de Objetos Json, con los Equipos de la Temp Actual
     df_teams = pd.DataFrame(teams.get_teams()) # Conviertes en Dframe el objeto data
@@ -595,7 +598,7 @@ def teams_stats():
     #             """, unsafe_allow_html=True)
 
     if team_select:
-        st.text(team_select)
+        # st.text(team_select)
         id_team = int(df_teams[df_teams.full_name == team_select].id.values)
         # Intrucciones para visualizar el logo de cada team en función de la seleccion en el sidebar..
         # Esto puede cambiar en cualquier momento ya que la imagen esta en la red, y no en local..
@@ -610,7 +613,7 @@ def teams_stats():
         # st.text(teams_abbre.get(team_select))
         # A partir de DF general de equipos acceder al valor del Nick y convertirlo en minusculas..
         # st.text(df_teams[df_teams.full_name == team_select]._get_value(0,"abbreviation").lower())
-        st.text(df_teams.loc[df_teams.id == id_team].abbreviation.values[0].lower())
+        # st.text(df_teams.loc[df_teams.id == id_team].abbreviation.values[0].lower())
         # team_nick_lower = df_teams[df_teams.full_name == team_select]._get_value(0,"abbreviation").lower()
 
         # my_logo2 = add_logo2(logo_path=f"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/{teams_abbre.get(team_select)}.png", width=150, height=150)
@@ -717,7 +720,7 @@ def teams_stats():
 
 
         # Otra manera de visualizar las estadisticas medias del TEAM..
-        m1, m11, m12, m2, m3, m4, m41, m42, m43, m5, m6, m7 = st.columns((1,1,1,1,1,1,1,1,1,1,1,1))
+        m1, m11, m12, m2, m3, m4, m41, m42, m43, m5, m6, m7 = st.columns((1.1,1.1,1,0.5,0.5,1,1,1,1,1,1,1))
 
         # todf = pd.read_excel('DataforMock.xlsx',sheet_name = 'metrics')
         # to = todf[(todf['Hospital Attended']==hosp) & (todf['Metric']== 'Total Outstanding')]   
@@ -725,10 +728,10 @@ def teams_stats():
         # hl = todf[(todf['Hospital Attended']==hosp) & (todf['Metric']== 'Hours Lost to Handovers Over 15 Mins')]
         
         # m1.metric(label='PTS', value=df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values)
-        m1.metric("PTS Anotados", df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values, round(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values)-float(df_teams_stats.PTS.mean()),2))
+        m1.metric("PTS Anotados", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values),2)), round(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values)-float(df_teams_stats.PTS.mean()),2))
 
         # Pruebas para formular en .ipynb de Puntos totales y por Cuartos de los GAMES..
-        m11.metric("PTS Recibidos", round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values - df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values),2), \
+        m11.metric("PTS Recibidos", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values - df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values),2)), \
             round(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values - df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values)-float((df_teams_stats.PTS - df_teams_stats.PLUS_MINUS).mean()),2))
         
         m12.metric("NET_RATING(+/-)", df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values, round(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values)-float(df_teams_stats.PLUS_MINUS.mean()),2))
