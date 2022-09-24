@@ -1081,7 +1081,7 @@ def teams_stats_compare():
     fig.update_yaxes(categoryorder='total ascending')
     st.plotly_chart(fig)
 
-    # -- INI Prueba 01 - Select Teams for compare [] ---------
+    # -- INI Prueba 01 - Select Teams for compare [OK] ---------
     # ---- BackUP Prueba 01 ----------------------------------
     # # Gráfica de Radar con el DF agrupado por Team para obtener los promedios de cada uno de los Teams
     # df_teams_radar = df_games_full_01.iloc[3:5,[0,1,2,3]] # filas en posición 3 y 4
@@ -1114,7 +1114,7 @@ def teams_stats_compare():
         team_B = st.selectbox("Team B", df_games_full_01.index.to_list())
 
         # df_teams_radar = df_games_full_01.iloc[3:5,[0,1,2,3]] # filas en posición 3 y 4
-        df_teams_radar = df_games_full_01.loc[df_games_full_01.index.isin([team_A,team_B]),['PTS_QTR1','PTS_QTR2','PTS_QTR3','PTS_QTR4']] # filas en posición 3 y 4
+        df_teams_radar = df_games_full_01.loc[df_games_full_01.index.isin([team_A,team_B]),['PTS_QTR1','PTS_QTR2','PTS_QTR3','PTS_QTR4','PTS_OT1']] # filas en posición 3 y 4
 
         st.write(df_teams_radar)
     
@@ -1135,5 +1135,6 @@ def teams_stats_compare():
         fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 40])),
                                     title="Promedio Puntos por Cuartos y OT")
         st.plotly_chart(fig)
-  
+    
+    # -- FIN Prueba 01 - Select Teams for compare [OK] ---------
   
