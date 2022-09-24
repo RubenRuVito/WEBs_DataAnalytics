@@ -1132,7 +1132,7 @@ def teams_stats_compare():
                                             showlegend=True,)
                                             )
 
-        fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 40])),
+        fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 40], color='green')),
                                     title="Promedio Puntos por Cuartos y OT")
         st.plotly_chart(fig, use_container_width=True)
     
