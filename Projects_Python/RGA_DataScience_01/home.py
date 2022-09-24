@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
     if page == "Laboratorio":
 
-        lab01 = st.sidebar.radio("", ['Equipos','Jugadores'], label_visibility="collapsed")
+        lab01 = st.sidebar.radio("", ['Equipos','Jugadores']) #, label_visibility="collapsed")
         if lab01 == "Equipos":
             st.title("Análisis gráficos de comparación de las métricas medias de cada Equipo.")
             st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
