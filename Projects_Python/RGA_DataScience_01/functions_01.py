@@ -121,14 +121,16 @@ def players_stats():
         with col3:
             st.write("")
         
-        # st.markdown(f"<h2 style='text-align: left; color: white; font-family:commanders'>{player_select} STATS (KPIs) -\
-        #     {df_players_stats[df_players_stats.PLAYER_ID == id_player].TEAM_ABBREVIATION.values}</h2>", unsafe_allow_html=True)
-        st.markdown(f"<h2 style='text-align: left; color: #1569C7; font-family:commanders'>{player_select} -\
-            {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'TEAM_CITY') + ' ' + df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'TEAM_NAME')} \
-             - #{df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'JERSEY')} \
-             - {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'POSITION')}</h2>", unsafe_allow_html=True)
+        c1, c2, c3 = st.columns([1.3,1.2,1])
 
-        type_stats = st.radio("",("Totales","Por Game", "Por 100 Posesiones", "Por 36 Minutos"), horizontal=True)
+        with c1:
+            st.markdown(f"<h1 style='text-align: left; color: ; font-family:commanders'>&#9679 {player_select}</h1>",unsafe_allow_html=True) # - \
+                # Conferencia {df_team_info._get_value(0,'TEAM_CONFERENCE').upper() + ' [Rank ' + str(df_team_info._get_value(0,'CONF_RANK')) + 'º]'} - \
+                # División {df_team_info._get_value(0,'TEAM_DIVISION').upper() + ' [Rank ' + str(df_team_info._get_value(0,'DIV_RANK')) + 'º]'}</h2>",unsafe_allow_html=True)
+
+            # data_teams = endpoints.LeagueDashTeamStats(season=st.session_state.temporada).get_data_frames()
+            # df_teams = pd.DataFrame(data_teams[0])
+            type_stats = st.radio("",("Totales","Por Game", "Por 100 Posesiones", "Por 36 Minutos"), horizontal=True)
         # if type_stats == "Totales":
             # df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada).get_data_frames()[0])
         if type_stats == "Por Game":
@@ -137,6 +139,20 @@ def players_stats():
             df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="Per100Possessions").get_data_frames()[0])
         if type_stats == "Por 36 Minutos":
             df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="Per36").get_data_frames()[0])
+
+        with c2:
+            # st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>{team_select.upper()}</h2>",unsafe_allow_html=True)
+            st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 \
+                {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'TEAM_CITY') + ' ' + df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'TEAM_NAME')}</h2>",unsafe_allow_html=True)
+            st.write(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 \
+                #{df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'JERSEY') + ' &nbsp;&nbsp;&#9658 ' + df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'POSITION')}</h2>",unsafe_allow_html=True)
+            # st.write(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'POSITION')}</h2>",unsafe_allow_html=True)
+        
+        with c3:
+            st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 \
+                {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'LAST_AFFILIATION')}</h2>",unsafe_allow_html=True)
+            st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 \
+                {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'COUNTRY')}</h2>",unsafe_allow_html=True)
 
         if st.checkbox("Ver Tabla de Datos de Jugadores."):
             st.write(df_players_stats)
@@ -647,20 +663,29 @@ def teams_stats():
         #      - #{df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'JERSEY')} \
         #      - {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'POSITION')}</h2>", unsafe_allow_html=True)
 
-        st.markdown(f"<h2 style='text-align: left; color: #1569C7; font-family:commanders'>{team_select.upper()} - \
-            Conferencia {df_team_info._get_value(0,'TEAM_CONFERENCE').upper() + ' [Rank ' + str(df_team_info._get_value(0,'CONF_RANK')) + 'º]'} - \
-            División {df_team_info._get_value(0,'TEAM_DIVISION').upper() + ' [Rank ' + str(df_team_info._get_value(0,'DIV_RANK')) + 'º]'}</h2>",unsafe_allow_html=True)
+        c1, c2 = st.columns([1.5,2])
 
-        # data_teams = endpoints.LeagueDashTeamStats(season=st.session_state.temporada).get_data_frames()
-        # df_teams = pd.DataFrame(data_teams[0])
-        type_stats = st.radio("",("Totales","Por Game", "Por 100 Posesiones"), horizontal=True)
-        if type_stats == "Totales":
-            df_teams_stats = endpoints.LeagueDashTeamStats(season=st.session_state.temporada).get_data_frames()[0]
-        if type_stats == "Por Game":
-            df_teams_stats = endpoints.LeagueDashTeamStats(season=st.session_state.temporada, per_mode_detailed="PerGame").get_data_frames()[0]
-        if type_stats == "Por 100 Posesiones":
-            df_teams_stats = endpoints.LeagueDashTeamStats(season=st.session_state.temporada, per_mode_detailed="Per100Possessions").get_data_frames()[0]
+        with c1:
+            st.markdown(f"<h1 style='text-align: left; color: ; font-family:commanders'>&#9679 {team_select}</h1>",unsafe_allow_html=True) # - \
+                # Conferencia {df_team_info._get_value(0,'TEAM_CONFERENCE').upper() + ' [Rank ' + str(df_team_info._get_value(0,'CONF_RANK')) + 'º]'} - \
+                # División {df_team_info._get_value(0,'TEAM_DIVISION').upper() + ' [Rank ' + str(df_team_info._get_value(0,'DIV_RANK')) + 'º]'}</h2>",unsafe_allow_html=True)
 
+            # data_teams = endpoints.LeagueDashTeamStats(season=st.session_state.temporada).get_data_frames()
+            # df_teams = pd.DataFrame(data_teams[0])
+            type_stats = st.radio("",("Totales","Por Game", "Por 100 Posesiones"), horizontal=True)
+            if type_stats == "Totales":
+                df_teams_stats = endpoints.LeagueDashTeamStats(season=st.session_state.temporada).get_data_frames()[0]
+            if type_stats == "Por Game":
+                df_teams_stats = endpoints.LeagueDashTeamStats(season=st.session_state.temporada, per_mode_detailed="PerGame").get_data_frames()[0]
+            if type_stats == "Por 100 Posesiones":
+                df_teams_stats = endpoints.LeagueDashTeamStats(season=st.session_state.temporada, per_mode_detailed="Per100Possessions").get_data_frames()[0]
+
+        with c2:
+            # st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>{team_select.upper()}</h2>",unsafe_allow_html=True)
+            st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 Conferencia {df_team_info._get_value(0,'TEAM_CONFERENCE').upper() + ' - [Rank ' + str(df_team_info._get_value(0,'CONF_RANK')) + 'º]'}</h2>",unsafe_allow_html=True)
+            st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 División {df_team_info._get_value(0,'TEAM_DIVISION').upper() + ' - [Rank ' + str(df_team_info._get_value(0,'DIV_RANK')) + 'º]'}</h2>",unsafe_allow_html=True)
+
+        
         if st.checkbox("Ver Tablas de Datos del Jugador."):
             
             # st.dataframe(df_teams_stats)
