@@ -39,7 +39,7 @@ if __name__ == "__main__":
     my_logo = add_logo(logo_path="Projects_Python/RGA_DataScience_01/image/Nba_logo_PNG3-1.png", width=160, height=80)
     st.sidebar.image(my_logo)
 
-    st.sidebar.markdown("<h2 style='text-align: left; color: white; font-family:commanders'>SPORTS ANALYTICS.</h2>",unsafe_allow_html=True)
+    st.sidebar.markdown("<h2 style='text-align: left; color: ; font-family:commanders'>SPORTS ANALYTICS.</h2>",unsafe_allow_html=True)
 
     st.session_state.temporada = st.sidebar.selectbox('Temporada',('2022-23','2021-22','2020-21'))
 
