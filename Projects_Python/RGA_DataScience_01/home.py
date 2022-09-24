@@ -21,7 +21,6 @@ import matplotlib.pyplot as plt
 # from matplotlib import pyplot as plt
 import seaborn as sns
 from PIL import Image,ImageFilter,ImageEnhance
-from WEBs_DataAnalytics.Projects_Python.RGA_DataScience_01.functions_01 import teams_stats_compare
 
 import functions_01 as f01
 
