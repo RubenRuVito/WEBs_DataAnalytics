@@ -121,7 +121,7 @@ def players_stats():
         with col3:
             st.write("")
         
-        c1, c2, c3 = st.columns([1.3,1.2,1])
+        c1, c2, c3 = st.columns([1.4,1.2,1])
 
         with c1:
             st.markdown(f"<h1 style='text-align: left; color: ; font-family:commanders'>&#9679 {player_select}</h1>",unsafe_allow_html=True) # - \
