@@ -1107,7 +1107,7 @@ def teams_stats_compare():
     # st.plotly_chart(fig)
     # -- BackUP Prueba 01 ----------------------------------
 
-    c1, c2, c3 = st.columns([1,2,1.5])
+    c1, c2, c3 = st.columns([1.5,2,1.5])
 
     with c1:
         team_A = st.selectbox("Team A", df_games_full_01.index.to_list())
