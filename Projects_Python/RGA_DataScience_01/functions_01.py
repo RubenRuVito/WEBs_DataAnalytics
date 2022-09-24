@@ -1110,16 +1110,16 @@ def teams_stats_compare():
     c1, c2 = st.columns([1,2])
 
     with c1:
-        team_A = st.selectbox("Team A", df_games_full_01.TEAM_ABBREVIATION.to_list())
+        team_A = st.selectbox("Team A", df_games_full_01.index.to_list())
     with c2:
-        team_B = st.selectbox("Team B", df_games_full_01.TEAM_ABBREVIATION.to_list())
+        team_B = st.selectbox("Team B", df_games_full_01.index.to_list())
     
     # df_teams_radar = df_games_full_01.iloc[3:5,[0,1,2,3]] # filas en posición 3 y 4
-    df_teams_radar = df_games_full_01.loc[(df_games_full_01.TEAM_ABBREVIATION == team_A & \
-         df_games_full_01.TEAM_ABBREVIATION == team_B),['PTS_QTR1','PTS_QTR2','PTS_QTR3','PTS_QTR4']] # filas en posición 3 y 4
+    df_teams_radar = df_games_full_01.loc[(df_games_full_01.index == team_A & \
+         df_games_full_01.index == team_B),['PTS_QTR1','PTS_QTR2','PTS_QTR3','PTS_QTR4']] # filas en posición 3 y 4
 
     st.write(df_teams_radar)
-    
+
     fig = plygo.Figure()
 
     for ind in range(len(df_teams_radar.index.values)):
