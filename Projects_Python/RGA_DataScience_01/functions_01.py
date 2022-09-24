@@ -1111,28 +1111,29 @@ def teams_stats_compare():
 
     with c1:
         team_A = st.selectbox("Team A", df_games_full_01.index.to_list())
-    with c2:
         team_B = st.selectbox("Team B", df_games_full_01.index.to_list())
+
+        # df_teams_radar = df_games_full_01.iloc[3:5,[0,1,2,3]] # filas en posición 3 y 4
+        df_teams_radar = df_games_full_01.loc[df_games_full_01.index.isin([team_A,team_B]),['PTS_QTR1','PTS_QTR2','PTS_QTR3','PTS_QTR4']] # filas en posición 3 y 4
+
+        st.write(df_teams_radar)
     
-    # df_teams_radar = df_games_full_01.iloc[3:5,[0,1,2,3]] # filas en posición 3 y 4
-    df_teams_radar = df_games_full_01.loc[df_games_full_01.index.isin([team_A,team_B]),['PTS_QTR1','PTS_QTR2','PTS_QTR3','PTS_QTR4']] # filas en posición 3 y 4
+    with c2:
 
-    st.write(df_teams_radar)
+        fig = plygo.Figure()
 
-    fig = plygo.Figure()
+        for ind in range(len(df_teams_radar.index.values)):
+            print(ind)
+            fig.add_trace(plygo.Scatterpolar(r=df_teams_radar.iloc[ind].values,
+                                            theta=df_teams_radar.columns,
+                                            fill='toself',
+                                            #name="TypeWine-%s"%datasets.load_wine().target_names[ind],
+                                            name="Team-%s"%df_teams_radar.index[ind], # Recupera los rownames del dataframe..
+                                            showlegend=True,)
+                                            )
 
-    for ind in range(len(df_teams_radar.index.values)):
-        print(ind)
-        fig.add_trace(plygo.Scatterpolar(r=df_teams_radar.iloc[ind].values,
-                                        theta=df_teams_radar.columns,
-                                        fill='toself',
-                                        #name="TypeWine-%s"%datasets.load_wine().target_names[ind],
-                                        name="Team-%s"%df_teams_radar.index[ind], # Recupera los rownames del dataframe..
-                                        showlegend=True,)
-                                        )
-
-    fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 40])),
-                                title="Promedio Puntos por Cuartos y OT")
-    st.plotly_chart(fig)
+        fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 40])),
+                                    title="Promedio Puntos por Cuartos y OT")
+        st.plotly_chart(fig)
   
   
