@@ -1007,100 +1007,133 @@ def teams_stats():
             st.altair_chart(plot_line_chart, use_container_width=True)
 
 def teams_stats_compare():
-  st.write(os.getcwd())
-  df_games_full = pd.read_csv('Projects_Python/RGA_DataScience_01/data/df_games_qpoints_2021-22.csv', index_col=0)
-  st.write(df_games_full)
   
-  # Haciendo 2click en categoria de la leyenda, se aisla los datos de esa categoria..
-  fig = px.line(df_games_full, x='GAME_DATE_EST', y='PTS', color='TEAM_NICKNAME')
-  # https://plotly.com/python/figure-labels/
-  fig.update_layout(width=1200, height=500, font=dict(size=15), title='Puntuaciones por partido Temp.Regular(2021-22)')
-  st.plotly_chart(fig)
-  
-  st.write(print(df_games_full.info()))
-  st.write(df_games_full.info())
-  st.write(type(df_games_full.GAME_ID))
-  fig = px.line(df_games_full, x='GAME_ID', y='PTS', color='TEAM_NICKNAME')
-  fig.update_layout(width=1200, height=500, font=dict(size=15), title='Puntuaciones por partido Temp.Regular(2021-22)')
-  st.plotly_chart(fig)
-  
-  # Gráfica de Radar con 2 Equipos
-  
-  # Preparar 2 muestras de los Games, xa incluir en el metodo de grafica..
-  # Muestra las puntuaciones por cuarto para ese partido
-  # df_teams_radar = df_games_full.iloc[df_games_full.GAME_ID == 22100001, [4,8,9,10,11]] # filas en posición 3 y 4 y columnas "8..11"
-  # df_teams_radar = df_games_full.iloc[0:2, [4,8,9,10,11]]
-  
-  # df_teams_radar.columns
-  # df_teams_radar.index.values
-  # df_teams_radar.iloc[0].values # Retorna los valores de cada atributo/columna de la fila con indice "n"
+    st.write(os.getcwd())
+    df_games_full = pd.read_csv('Projects_Python/RGA_DataScience_01/data/df_games_qpoints_2021-22.csv', index_col=0)
+    st.write(df_games_full)
 
-  #fig = plygo.Figure()
+    # Haciendo 2click en categoria de la leyenda, se aisla los datos de esa categoria..
+    fig = px.line(df_games_full, x='GAME_DATE_EST', y='PTS', color='TEAM_NICKNAME')
+    # https://plotly.com/python/figure-labels/
+    fig.update_layout(width=1200, height=500, font=dict(size=15), title='Puntuaciones por partido Temp.Regular(2021-22)')
+    st.plotly_chart(fig)
 
-  #for ind in range(len(df_teams_radar.index.values)):
-  #    print(ind)
-  #    fig.add_trace(plygo.Scatterpolar(r=df_teams_radar.iloc[ind].values,
-  #                                    theta=df_teams_radar.iloc[:,[8,9,10,11].columns,
-  #                                    fill='toself',
-  #                                    #name="TypeWine-%s"%datasets.load_wine().target_names[ind],
-  #                                    name="Team-%s"%df_teams_radar.index[ind].iloc[:,4], # Recupera los rownames del dataframe..
-  #                                    showlegend=True,)
-  #                                    )
+    st.write(print(df_games_full.info()))
+    st.write(df_games_full.info())
+    st.write(type(df_games_full.GAME_ID))
+    fig = px.line(df_games_full, x='GAME_ID', y='PTS', color='TEAM_NICKNAME')
+    fig.update_layout(width=1200, height=500, font=dict(size=15), title='Puntuaciones por partido Temp.Regular(2021-22)')
+    st.plotly_chart(fig)
 
-  #fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 40])),
-  #                             title="Promedio Puntos por Cuartos y OT")
-  #st.plotly_chart(fig)
-  
-  # NUevo objet DF agrupado por equipos y utilizar el método de agregación del promedio o media de puntos en cada quarto y OT
-  df_games_full_01 = df_games_full.loc[:,['TEAM_ABBREVIATION','PTS_QTR1','PTS_QTR2','PTS_QTR3','PTS_QTR4','PTS_OT1','PTS_OT2','PTS_OT3','PTS']]. \
-                                  groupby('TEAM_ABBREVIATION').mean()
-  
-  st.write(df_games_full_01)
-  
-  fig = px.line(df_games_full_01)
-  # https://plotly.com/python/figure-labels/
-  fig.update_layout(width=1200, height=500, font=dict(size=15), title='Promedio de puntuaciones por partido, por cuartos y OT')
-  st.plotly_chart(fig)
-  
-  fig = px.bar(df_games_full_01.iloc[:,0:4])
-  fig.update_layout(width=1200, height=500, font=dict(size=19),
-                  title='Promedio Puntos por Cuarto de cada Team en Temp.Regular(2021-2022)')
-  st.plotly_chart(fig)
-  
-  fig = px.bar(df_games_full_01.iloc[:,7].sort_values(ascending=False))
-  fig.update_layout(width=1200, height=500, font=dict(size=19),
-                  title='Promedio Puntos por Cuarto de cada Team en Temp.Regular(2021-2022)')
-  st.plotly_chart(fig)
-  
-  # Grafica de Barras en Horizontal y ordenado de mayor a menor suma total de puntos por cuarto(seria la media de puntos x partido de cada team)
-  # Ojo a los textos de cada eje, xq si se solapan no se pintan..
-  fig = px.bar(df_games_full_01.iloc[:,0:4], orientation='h')
-  fig.update_layout(width=1100, height=800, font=dict(size=15),
-                  title='Promedio Puntos por Cuarto de cada Team en Temp.Regular(2021-2022)')
-  fig.update_yaxes(categoryorder='total ascending')
-  st.plotly_chart(fig)
-  
-  # Gráfica de Radar con el DF agrupado por Team para obtener los promedios de cada uno de los Teams
-  df_teams_radar = df_games_full_01.iloc[3:5,[0,1,2,3]] # filas en posición 3 y 4
+    # Gráfica de Radar con 2 Equipos
 
-  # df_teams_radar.columns
-  # df_teams_radar.index.values
-  # df_teams_radar.iloc[0].values # Retorna los valores de cada atributo/columna de la fila con indice "n"
+    # Preparar 2 muestras de los Games, xa incluir en el metodo de grafica..
+    # Muestra las puntuaciones por cuarto para ese partido
+    # df_teams_radar = df_games_full.iloc[df_games_full.GAME_ID == 22100001, [4,8,9,10,11]] # filas en posición 3 y 4 y columnas "8..11"
+    # df_teams_radar = df_games_full.iloc[0:2, [4,8,9,10,11]]
 
-  fig = plygo.Figure()
+    # df_teams_radar.columns
+    # df_teams_radar.index.values
+    # df_teams_radar.iloc[0].values # Retorna los valores de cada atributo/columna de la fila con indice "n"
 
-  for ind in range(len(df_teams_radar.index.values)):
-      print(ind)
-      fig.add_trace(plygo.Scatterpolar(r=df_teams_radar.iloc[ind].values,
-                                      theta=df_teams_radar.columns,
-                                      fill='toself',
-                                      #name="TypeWine-%s"%datasets.load_wine().target_names[ind],
-                                      name="Team-%s"%df_teams_radar.index[ind], # Recupera los rownames del dataframe..
-                                      showlegend=True,)
-                                      )
+    #fig = plygo.Figure()
 
-  fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 40])),
-                               title="Promedio Puntos por Cuartos y OT")
-  st.plotly_chart(fig)
+    #for ind in range(len(df_teams_radar.index.values)):
+    #    print(ind)
+    #    fig.add_trace(plygo.Scatterpolar(r=df_teams_radar.iloc[ind].values,
+    #                                    theta=df_teams_radar.iloc[:,[8,9,10,11].columns,
+    #                                    fill='toself',
+    #                                    #name="TypeWine-%s"%datasets.load_wine().target_names[ind],
+    #                                    name="Team-%s"%df_teams_radar.index[ind].iloc[:,4], # Recupera los rownames del dataframe..
+    #                                    showlegend=True,)
+    #                                    )
+
+    #fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 40])),
+    #                             title="Promedio Puntos por Cuartos y OT")
+    #st.plotly_chart(fig)
+
+    # NUevo objet DF agrupado por equipos y utilizar el método de agregación del promedio o media de puntos en cada quarto y OT
+    df_games_full_01 = df_games_full.loc[:,['TEAM_ABBREVIATION','PTS_QTR1','PTS_QTR2','PTS_QTR3','PTS_QTR4','PTS_OT1','PTS_OT2','PTS_OT3','PTS']]. \
+                                    groupby('TEAM_ABBREVIATION').mean()
+
+    st.write(df_games_full_01)
+
+    fig = px.line(df_games_full_01)
+    # https://plotly.com/python/figure-labels/
+    fig.update_layout(width=1200, height=500, font=dict(size=15), title='Promedio de puntuaciones por partido, por cuartos y OT')
+    st.plotly_chart(fig)
+
+    fig = px.bar(df_games_full_01.iloc[:,0:4])
+    fig.update_layout(width=1200, height=500, font=dict(size=19),
+                    title='Promedio Puntos por Cuarto de cada Team en Temp.Regular(2021-2022)')
+    st.plotly_chart(fig)
+
+    fig = px.bar(df_games_full_01.iloc[:,7].sort_values(ascending=False))
+    fig.update_layout(width=1200, height=500, font=dict(size=19),
+                    title='Promedio Puntos por Cuarto de cada Team en Temp.Regular(2021-2022)')
+    st.plotly_chart(fig)
+
+    # Grafica de Barras en Horizontal y ordenado de mayor a menor suma total de puntos por cuarto(seria la media de puntos x partido de cada team)
+    # Ojo a los textos de cada eje, xq si se solapan no se pintan..
+    fig = px.bar(df_games_full_01.iloc[:,0:4], orientation='h')
+    fig.update_layout(width=1100, height=800, font=dict(size=15),
+                    title='Promedio Puntos por Cuarto de cada Team en Temp.Regular(2021-2022)')
+    fig.update_yaxes(categoryorder='total ascending')
+    st.plotly_chart(fig)
+
+    # -- INI Prueba 01 - Select Teams for compare [] ---------
+    # ---- BackUP Prueba 01 ----------------------------------
+    # # Gráfica de Radar con el DF agrupado por Team para obtener los promedios de cada uno de los Teams
+    # df_teams_radar = df_games_full_01.iloc[3:5,[0,1,2,3]] # filas en posición 3 y 4
+
+    # # df_teams_radar.columns
+    # # df_teams_radar.index.values
+    # # df_teams_radar.iloc[0].values # Retorna los valores de cada atributo/columna de la fila con indice "n"
+
+    # fig = plygo.Figure()
+
+    # for ind in range(len(df_teams_radar.index.values)):
+    #     print(ind)
+    #     fig.add_trace(plygo.Scatterpolar(r=df_teams_radar.iloc[ind].values,
+    #                                     theta=df_teams_radar.columns,
+    #                                     fill='toself',
+    #                                     #name="TypeWine-%s"%datasets.load_wine().target_names[ind],
+    #                                     name="Team-%s"%df_teams_radar.index[ind], # Recupera los rownames del dataframe..
+    #                                     showlegend=True,)
+    #                                     )
+
+    # fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 40])),
+    #                             title="Promedio Puntos por Cuartos y OT")
+    # st.plotly_chart(fig)
+    # -- BackUP Prueba 01 ----------------------------------
+
+    c1, c2 = st.columns([1,2])
+
+    with c1:
+        team_A = st.selectbox("Team A", df_games_full_01.TEAM_ABBREVIATION.to_list())
+    with c2:
+        team_B = st.selectbox("Team B", df_games_full_01.TEAM_ABBREVIATION.to_list())
+    
+    # df_teams_radar = df_games_full_01.iloc[3:5,[0,1,2,3]] # filas en posición 3 y 4
+    df_teams_radar = df_games_full_01.loc[(df_games_full_01.TEAM_ABBREVIATION == team_A & \
+         df_games_full_01.TEAM_ABBREVIATION == team_B),['PTS_QTR1','PTS_QTR2','PTS_QTR3','PTS_QTR4']] # filas en posición 3 y 4
+
+    st.write(df_teams_radar)
+    
+    fig = plygo.Figure()
+
+    for ind in range(len(df_teams_radar.index.values)):
+        print(ind)
+        fig.add_trace(plygo.Scatterpolar(r=df_teams_radar.iloc[ind].values,
+                                        theta=df_teams_radar.columns,
+                                        fill='toself',
+                                        #name="TypeWine-%s"%datasets.load_wine().target_names[ind],
+                                        name="Team-%s"%df_teams_radar.index[ind], # Recupera los rownames del dataframe..
+                                        showlegend=True,)
+                                        )
+
+    fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 40])),
+                                title="Promedio Puntos por Cuartos y OT")
+    st.plotly_chart(fig)
   
   
