@@ -1107,7 +1107,7 @@ def teams_stats_compare():
     # st.plotly_chart(fig)
     # -- BackUP Prueba 01 ----------------------------------
 
-    c1, c2 = st.columns([1,2])
+    c1, c2, c3 = st.columns([1,2,1])
 
     with c1:
         team_A = st.selectbox("Team A", df_games_full_01.index.to_list())
@@ -1136,5 +1136,7 @@ def teams_stats_compare():
                                     title="Promedio Puntos por Cuartos y OT")
         st.plotly_chart(fig, use_container_width=True)
     
+    with c3:
+        st.write("")
     # -- FIN Prueba 01 - Select Teams for compare [OK] ---------
   
