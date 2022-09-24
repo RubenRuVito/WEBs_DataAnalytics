@@ -1115,7 +1115,7 @@ def teams_stats_compare():
         team_B = st.selectbox("Team B", df_games_full_01.index.to_list())
     
     # df_teams_radar = df_games_full_01.iloc[3:5,[0,1,2,3]] # filas en posición 3 y 4
-    df_teams_radar = df_games_full_01.loc[df_games_full_01.index.isin(team_A,team_B),['PTS_QTR1','PTS_QTR2','PTS_QTR3','PTS_QTR4']] # filas en posición 3 y 4
+    df_teams_radar = df_games_full_01.loc[df_games_full_01.index.isin([team_A,team_B]),['PTS_QTR1','PTS_QTR2','PTS_QTR3','PTS_QTR4']] # filas en posición 3 y 4
 
     st.write(df_teams_radar)
 
