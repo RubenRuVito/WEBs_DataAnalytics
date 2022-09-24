@@ -1134,7 +1134,7 @@ def teams_stats_compare():
 
         fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 40])),
                                     title="Promedio Puntos por Cuartos y OT")
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
     
     # -- FIN Prueba 01 - Select Teams for compare [OK] ---------
   
