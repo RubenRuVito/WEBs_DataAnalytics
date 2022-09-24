@@ -21,6 +21,7 @@ import matplotlib.pyplot as plt
 # from matplotlib import pyplot as plt
 import seaborn as sns
 from PIL import Image,ImageFilter,ImageEnhance
+from WEBs_DataAnalytics.Projects_Python.RGA_DataScience_01.functions_01 import teams_stats_compare
 
 import functions_01 as f01
 
@@ -46,53 +47,37 @@ if __name__ == "__main__":
     page = st.sidebar.selectbox(
         "Navegador de paginas:",
         [
-            "Intro. 'Sports Analytics'.",
-            "Equipos - Stats.",
-            "Jugadores - Stats.",
-            "Comparando Equipos.",
-            "Comparando Jugadores.",
-            "Jugadores - Scouting.",
-            "Estadísticas Historicas."
+            "Intro - Sports Analytics & Advanced Stats",
+            "Equipos - Stats",
+            "Jugadores - Stats",
+            "Scouting",
+            "Proyecciones",
+            "Estadísticas Históricas",
+            "Laboratorio"
         ]
     )
     
-    if page == "Intro. 'Sports Analytics'.": 
+    if page == "Intro - Sports Analytics & Advanced Stats": 
         st.title("Introducción al análisis de datos deportivos.")
         st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
         st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
-        # teams_stats()
 
-    #Second Page
-    if page == "Equipos - Stats.":
-        st.title("Estadisticas Equipos.")
+    if page == "Equipos - Stats":
+        st.title("Estadísticas Equipos.")
         st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
         st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
 
         f01.teams_stats()
     
-    if page == "Comparando Equipos.":
-        st.title("Análisis gráficos de comparación de las medidas de cada Equipo.")
-        st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
-        st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
-
-        f01.teams_stats_compare()
-
-    if page == "Jugadores - Stats.":
-        st.title("Players - Stats.")
+    if page == "Jugadores - Stats":
+        st.title("Estadísticas Jugadores.")
         st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
         st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
 
         f01.players_stats()
 
-    if page == "Comparando Jugadores.":
-        st.title("Análisis gráficos de comparación de las medidas de cada Jugador.")
-        st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
-        st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
-
-        f01.players_stats_compare()
-
-    if page == "Jugadores - Scouting.":
-        st.title("Análisis de Jugadores con tñecnocas de Machine Learning")
+    if page == "Scouting":
+        st.title("Análisis de Jugadores con tecnologías de Machine Learning")
         st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
         st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
         
@@ -100,3 +85,17 @@ if __name__ == "__main__":
         st.title("Análisis de los datos generados por la NBA a lo largo de su historia.")
         st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
         st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
+
+    if page == "Laboratorio":
+
+        lab01 = st.sidebar.radio("", ['Equipos','Jugadores'])
+        if lab01 == "Equipos":
+            st.title("Análisis gráficos de comparación de las métricas medias de cada Equipo.")
+            st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
+            st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
+            f01.teams_stats_compare()
+        if lab01 == "Jugadores":
+            st.title("Análisis gráficos de comparación de las medidas de cada Jugador.")
+            st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
+            st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
+            f01.players_stats_compare()
