@@ -121,42 +121,6 @@ def players_stats():
         with col3:
             st.write("")
         
-        c1, c2, c3 = st.columns([1.4,1.2,1])
-
-        with c1:
-            st.markdown(f"<h1 style='text-align: left; color: ; font-family:commanders'>&#9679 {player_select}</h1>",unsafe_allow_html=True) # - \
-                # Conferencia {df_team_info._get_value(0,'TEAM_CONFERENCE').upper() + ' [Rank ' + str(df_team_info._get_value(0,'CONF_RANK')) + 'º]'} - \
-                # División {df_team_info._get_value(0,'TEAM_DIVISION').upper() + ' [Rank ' + str(df_team_info._get_value(0,'DIV_RANK')) + 'º]'}</h2>",unsafe_allow_html=True)
-
-            # data_teams = endpoints.LeagueDashTeamStats(season=st.session_state.temporada).get_data_frames()
-            # df_teams = pd.DataFrame(data_teams[0])
-            type_stats = st.radio("",("Totales","Por Game", "Por 100 Posesiones", "Por 36 Minutos"), horizontal=True)
-        # if type_stats == "Totales":
-            # df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada).get_data_frames()[0])
-        if type_stats == "Por Game":
-            df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="PerGame").get_data_frames()[0])
-        if type_stats == "Por 100 Posesiones":
-            df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="Per100Possessions").get_data_frames()[0])
-        if type_stats == "Por 36 Minutos":
-            df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="Per36").get_data_frames()[0])
-
-        with c2:
-            # st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>{team_select.upper()}</h2>",unsafe_allow_html=True)
-            st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 \
-                {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'TEAM_CITY') + ' ' + df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'TEAM_NAME')}</h2>",unsafe_allow_html=True)
-            st.write(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 \
-                #{df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'JERSEY') + ' &nbsp;&nbsp;&#9658 ' + df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'POSITION')}</h2>",unsafe_allow_html=True)
-            # st.write(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'POSITION')}</h2>",unsafe_allow_html=True)
-        
-        with c3:
-            st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 \
-                {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'LAST_AFFILIATION')}</h2>",unsafe_allow_html=True)
-            st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 \
-                {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'COUNTRY')}</h2>",unsafe_allow_html=True)
-
-        if st.checkbox("Ver Tabla de Datos de Jugadores."):
-            st.write(df_players_stats)
-
         df_player_bio = endpoints.LeagueDashPlayerBioStats(season=st.session_state.temporada).get_data_frames()[0]
 
         # st.write(int(id_player))
@@ -170,6 +134,7 @@ def players_stats():
         # st.text([int(s) for s in re.findall(r'-?\d+\.?\d*', estatura)][0])
         # st.text([int(s) for s in re.findall(r'-?\d+\.?\d*', estatura)][1]*-1)
 
+        # Recupera los valores numéricos de un string..
         pies = [int(s) for s in re.findall(r'-?\d+\.?\d*', estatura)][0]
         pulgadas = [int(s) for s in re.findall(r'-?\d+\.?\d*', estatura)][1] * -1
 
@@ -191,337 +156,287 @@ def players_stats():
         m4.write(f'<h3>Peso: </h3>{round(int(df_player_bio[df_player_bio.PLAYER_ID == id_player].PLAYER_WEIGHT.values) * 0.45359237,2)} kg', unsafe_allow_html=True)
         m5.write(f'<h3>Universidad: </h3>{df_player_bio[df_player_bio.PLAYER_ID == id_player].COLLEGE.values}', unsafe_allow_html=True)
         m6.write(f'<h3>Año Draft: </h3>{df_player_bio[df_player_bio.PLAYER_ID == id_player].DRAFT_YEAR.values}', unsafe_allow_html=True)
-
-        st.text("------------------------------------------------------------------")
-
-        df_players_stats_adv = endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, measure_type_detailed_defense="Advanced").get_data_frames()[0]
-
-        m1, m11, m12, m13, m2, m3, m31, m32, m33, m5, m6, m7 = st.columns((1.2,1.2,1,1,0.5,0.5,1,1,1,1,1,1))
-    
-        m1.metric("PTS", "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].PTS.values),2)), \
-            "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].PTS.values)-float(df_players_stats.PTS.mean()),2)))
-            
-        # format(int(df_team_details._get_value(0, 'ARENACAPACITY')), ',d')
-        m11.metric("MINUTS", "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].MIN.values),2)), \
-            "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].MIN.values)-float(df_players_stats.MIN.mean()),2)))
-
-        m12.metric("+ / -", "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLUS_MINUS.values),2)), \
-            "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLUS_MINUS.values)-int(df_players_stats.PLUS_MINUS.mean()),2)))
         
-        m13.metric("NET_RATING", "{:,}".format(round(float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].NET_RATING.values),2)), \
-            "{:,}".format(round(float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].NET_RATING.values)-int(df_players_stats_adv.NET_RATING.mean()),2)))
-
-        m2.metric("WINS",str(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].W.values)), \
-            int(df_players_stats[df_players_stats.PLAYER_ID == id_player].W.values)-int(df_players_stats.W.mean()))
-            
-        m3.metric("LOST", str(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].L.values)), \
-            int(df_players_stats[df_players_stats.PLAYER_ID == id_player].L.values)-int(df_players_stats.L.mean()))
-
-        m31.metric('WL_PCT', str(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].W_PCT.values * 100),2))+'%', \
-            str(round((float(df_players_stats[df_players_stats.PLAYER_ID == id_player].W_PCT.values)-float(df_players_stats.W_PCT.mean())) * 100,2))+'%')
-
-        m32.metric("EFG_PCT(F)", str(round(float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].EFG_PCT.values *100),2))+'%', \
-            str(round((float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].EFG_PCT.values)-float(df_players_stats_adv.EFG_PCT.mean())) *100,2))+'%')
+        # -- INI Prueba visual 01 [OK] ---------
+        # ---- BackUP Prueba visual 01 -------
         
-        m33.metric("PIE(F)", str(round(float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].PIE.values *100),2))+'%', \
-            str(round((float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].PIE.values)-float(df_players_stats_adv.PIE.mean())) *100,2))+'%')
-        
-        m5.metric('FG_PCT', str(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG_PCT.values * 100),2))+'%', \
-            str(round((float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG_PCT.values)-float(df_players_stats.FG_PCT.mean())) * 100,2))+'%')
-        
-        m6.metric('FG3_PCT', str(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG3_PCT.values * 100),2))+'%', \
-            str(round((float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG3_PCT.values)-float(df_players_stats.FG3_PCT.mean())) * 100,2))+'%')
+        # # st.markdown(f"<h2 style='text-align: left; color: white; font-family:commanders'>{player_select} STATS (KPIs) -\
+        # #     {df_players_stats[df_players_stats.PLAYER_ID == id_player].TEAM_ABBREVIATION.values}</h2>", unsafe_allow_html=True)
+        # st.markdown(f"<h2 style='text-align: left; color: #1569C7; font-family:commanders'>{player_select} -\
+        #     {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'TEAM_CITY') + ' ' + df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'TEAM_NAME')} \
+        #      - #{df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'JERSEY')} \
+        #      - {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'POSITION')}</h2>", unsafe_allow_html=True)
 
-        m7.metric('FT_PCT', str(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FT_PCT.values * 100),2))+'%', \
-            str(round((float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FT_PCT.values)-float(df_players_stats.FT_PCT.mean())) * 100,2))+'%')
-
-        st.text("------------------------------------------------------------------")
-
-        c1,c2,c3 = st.columns([0.5,4,0.5]) # Entre corchetes se define que tamaño en ancho tendrá la columna, con 
-                                       # respecto a las demás..
+        # type_stats = st.radio("",("Totales","Por Game", "Por 100 Posesiones", "Por 36 Minutos"), horizontal=True)
+        # # if type_stats == "Totales":
+        #     # df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada).get_data_frames()[0])
+        # if type_stats == "Por Game":
+        #     df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="PerGame").get_data_frames()[0])
+        # if type_stats == "Por 100 Posesiones":
+        #     df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="Per100Possessions").get_data_frames()[0])
+        # if type_stats == "Por 36 Minutos":
+        #     df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="Per36").get_data_frames()[0])
         
+        # ---- BackUP Prueba visual 01 -------
+        
+        df_player_info = endpoints.CommonPlayerInfo(player_id=id_player).get_data_frames()[0]
+
+        c1, c2, c3 = st.columns([1.3,1.2,1])
+
         with c1:
-            st.write("<h3> ATAQUE. </h3>", unsafe_allow_html=True)
-            st.metric("OFF_RATING", df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].OFF_RATING.values, int(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].OFF_RATING.values)-int((df_players_stats_adv.OFF_RATING.mean())))
-            st.metric("FG_Made", df_players_stats[df_players_stats.PLAYER_ID == id_player].FGM.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].FGM.values)-int((df_players_stats.FGM.mean())))
-            st.metric("FG3_Convertidos", df_players_stats[df_players_stats.PLAYER_ID == id_player].FG3M.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG3M.values)-int((df_players_stats.FG3M.mean())))
-            # st.metric("FG3_Convertidos 02", int(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG3M.values) / int(df_players_stats[df_players_stats.PLAYER_ID == id_player].GP.values), int(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG3M.values)-int((df_players_stats.FG3M.mean())))
-            st.metric("FT_Made", df_players_stats[df_players_stats.PLAYER_ID == id_player].FTM.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].FTM.values)-int((df_players_stats.FTM.mean())))
-            st.metric("Rebotes", df_players_stats[df_players_stats.PLAYER_ID == id_player].OREB.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].OREB.values)-int((df_players_stats.OREB.mean())))
-            st.metric("Asistencias", df_players_stats[df_players_stats.PLAYER_ID == id_player].AST.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].AST.values)-int((df_players_stats.AST.mean())))
-            
+            st.markdown(f"<h1 style='text-align: left; color: ; font-family:commanders'>&#9679 {player_select}</h1>",unsafe_allow_html=True) # - \
+                # Conferencia {df_team_info._get_value(0,'TEAM_CONFERENCE').upper() + ' [Rank ' + str(df_team_info._get_value(0,'CONF_RANK')) + 'º]'} - \
+                # División {df_team_info._get_value(0,'TEAM_DIVISION').upper() + ' [Rank ' + str(df_team_info._get_value(0,'DIV_RANK')) + 'º]'}</h2>",unsafe_allow_html=True)
 
-            # st.write("<h3> DEFENSA. </h3>", unsafe_allow_html=True)
-            # st.metric("Rebotes", df_players_stats[df_players_stats.PLAYER_ID == id_player].DREB.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].DREB.values)-int((df_players_stats.DREB.mean())))
-            # st.metric("Perdidas", df_players_stats[df_players_stats.PLAYER_ID == id_player].TOV.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].TOV.values)-int((df_players_stats.TOV.mean())))
-            # st.metric("Robos", df_players_stats[df_players_stats.PLAYER_ID == id_player].STL.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].STL.values)-int((df_players_stats.STL.mean())))
-            # st.metric("Bloqueos", df_players_stats[df_players_stats.PLAYER_ID == id_player].BLK.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].BLK.values)-int((df_players_stats.BLK.mean())))
-            # st.metric("Faltas Personales", df_players_stats[df_players_stats.PLAYER_ID == id_player].PF.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PF.values)-int((df_players_stats.PF.mean())))
+            # data_teams = endpoints.LeagueDashTeamStats(season=st.session_state.temporada).get_data_frames()
+            # df_teams = pd.DataFrame(data_teams[0])
+            type_stats = st.radio("Modelo Estadístico:",("Totales","Por Game", "Por 100 Posesiones", "Por 36 Minutos"), horizontal=True)
+            # if type_stats == "Totales":
+            # df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada).get_data_frames()[0])
+            if type_stats == "Por Game":
+                df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="PerGame").get_data_frames()[0])
+            if type_stats == "Por 100 Posesiones":
+                df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="Per100Possessions").get_data_frames()[0])
+            if type_stats == "Por 36 Minutos":
+                df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, per_mode_detailed="Per36").get_data_frames()[0])
+
+            type_num_gplay = st.radio("Número mínimo de partidos jugados (Infiere directamente en medias más ajustadas):", \
+                ("All Players",">=5 Games Played", ">=10 Games Played"), horizontal=True)
+
+            # if type_num_gplay == "All Players":
+            #     df_players_stats.query()
+            if type_num_gplay == ">=5 Games Played":
+                df_players_stats.query("GP >= 5", inplace=True)
+            if type_num_gplay == ">=10 Games Played":
+                df_players_stats.query("GP >= 10", inplace=True)
 
         with c2:
-            # st.write(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLAYER_ID.values))
-            # df_player_stsyears = endpoints.PlayerGameLogs(player_id_nullable=int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLAYER_ID.values), season_nullable=st.session_state.temporada).get_data_frames()[0]
-            # df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=str(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLAYER_ID.values))).get_data_frames()[1]
-            if type_stats == "Totales":
-                df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=id_player).get_data_frames()[1]
-            if type_stats == "Por Game":
-                df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=id_player, per_mode_detailed="PerGame").get_data_frames()[1]
-            if type_stats == "Por 100 Posesiones":
-                df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=id_player, per_mode_detailed="Per100Possessions").get_data_frames()[1]
-            if type_stats == "Por 36 Minutos":
-                df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=id_player, per_mode_detailed="Per36").get_data_frames()[1]
-
-            if st.checkbox("Ver Tabla de Datos del Jugador."):
-                st.dataframe(df_player_stsyears)
-            
-            # Preparando datos para graficar..
-            # Ofensivas.
-            df_psy_off = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','FGM','FG3M','FTM','OREB','AST','PTS']].set_index('GROUP_VALUE')
-            df_psy_off = df_psy_off.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
-            df_psy_off_plot_altair = df_psy_off.reset_index().melt(df_psy_off.index.names, var_name='Offensive Measure', value_name='y')
-            # Defensivas.
-            df_psy_def = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','DREB','TOV','STL','BLK','PLUS_MINUS']].set_index('GROUP_VALUE')
-            df_psy_def = df_psy_def.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
-            df_psy_def_plot_altair = df_psy_def.reset_index().melt(df_psy_def.index.names, var_name='Defensive Measure', value_name='y')
-
-
-            type_graph = st.radio("Tipos de Gráficas:",("Plotly","Altair"), horizontal=True)
-            if type_graph == "Plotly":
-                # Probando Gráficas..
-                # st.dataframe(df_psy.reset_index())
-                # Ofensivo.
-                fig = px.line(df_psy_off.reset_index(), x=df_psy_off.reset_index().index, y=df_psy_off.columns.values, \
-                title='Progresión del Jugador - Métricas Ofensivas por Temporadas.', template='plotly_dark')
-                fig.update_layout(width=1000, height=400, font=dict(size=15), xaxis_title='Temporada', xaxis = dict(
-                        tickmode = 'array',
-                        tickvals = df_psy_off.reset_index().index,
-                        ticktext = df_psy_off.reset_index()['GROUP_VALUE']), \
-                    yaxis_title = "Count", \
-                    legend_title = "Ataque")
-                fig.update_traces(line=dict(width=3)) # Grosor de la linea
-                fig.update_traces(mode="markers+lines", hovertemplate=None)
-                fig.update_layout(hovermode="x unified")
-                st.plotly_chart(fig, config= {'displayModeBar': False}, use_container_width=True)
-
-                # Defensivo
-                # fig = px.line(df_psy.loc[:,['GROUP_VALUE','DREB','TOV','STL','BLK','PLUS_MINUS']], x=df_psy.index, y=df_psy.loc[:,['DREB','TOV','STL','BLK','PLUS_MINUS']].columns.values,
-                fig = px.line(df_psy_def.reset_index(), x=df_psy_def.reset_index().index, y=df_psy_def.columns.values, \
-                title='Progresión del Jugador - Métricas Defensivas por Temporadas.', template='plotly_dark')
-                fig.update_layout(width=1200, height=400, font=dict(size=15), xaxis_title='Temporada', xaxis = dict(
-                        tickmode = 'array',
-                        tickvals = df_psy_def.reset_index().index,
-                        ticktext = df_psy_def.reset_index()['GROUP_VALUE']), \
-                    yaxis_title = "Count", \
-                    legend_title = "Defensa")
-                fig.update_traces(line=dict(width=3)) # Grosor de la linea
-                fig.update_traces(mode="markers+lines", hovertemplate=None)
-                fig.update_layout(hovermode="x unified")
-                st.plotly_chart(fig, use_container_width=True)
-            
-            if type_graph == "Altair":
-
-                # Preparamos los datos para el input del tipo de gráficas "Altair"..
-                # ***Los jugadores que juegan en 2 o más equipos en una tempo (valor = "TOT"),
-                # - Se filtra la fila con el valor "TOT", xa no contabilizarla y en función de las metricas se SUM(), o MEAN()
-                # - Para estas graficas de métricas de cantidad en acciones defensivas u ofensivas, se utiliza el Sumarizar
-                # para la temporada que el jugador ha jugado en 2 o más equipo (Debido a un traspaso..evidentemente)
-                # Métricas Ofensivas.
-                # df_psy = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','FGM','FG3M','FTM','OREB','AST','PTS']].set_index('GROUP_VALUE')
-                # df_psy = df_psy.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
-                # df_psy_plot_altair = df_psy.reset_index().melt(df_psy.index.names, var_name='Offensive Measure', value_name='y')
-                
-                # st.dataframe(df_psy_plot_altair)
-
-                plot_line_chart = alt.Chart(df_psy_off_plot_altair) \
-                        .mark_line().encode(alt.X('GROUP_VALUE', title='Temporada'), \
-                        alt.Y('y', title='Count'), color='Ataque:N', \
-                        tooltip=[alt.Tooltip("GROUP_VALUE", title='Temporada'),"Ataque", \
-                        alt.Tooltip("y", title='Count')]).properties( \
-                            title='Prograsión del Jugador - Métricas Ofensivas por Temporadas.', width=1200, height=350).interactive()
-                
-                st.altair_chart(plot_line_chart, use_container_width=True)
-
-                # Métricas Defensivas.
-                # df_psy = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','DREB','TOV','STL','BLK','PLUS_MINUS']].set_index('GROUP_VALUE')
-                # df_psy = df_psy.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
-                # df_psy_plot_altair = df_psy.reset_index().melt(df_psy.index.names, var_name='Defensive Measure', value_name='y')
-                
-                # st.dataframe(df_psy_plot_altair)
-
-                plot_line_chart = alt.Chart(df_psy_def_plot_altair) \
-                        .mark_line().encode(alt.X('GROUP_VALUE', title='Temporada'), \
-                        alt.Y('y', title='Count'), color='Defensa:N', \
-                        tooltip=[alt.Tooltip("GROUP_VALUE", title='Temporada'),"Defensa", \
-                        alt.Tooltip("y", title='Count')]).properties( \
-                            title='Progresión del Jugador - Métricas Defensivas por Temporadas.', width=1200, height=350).interactive()
-
-                st.altair_chart(plot_line_chart, use_container_width=True)
-
+            # st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>{team_select.upper()}</h2>",unsafe_allow_html=True)
+            st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 \
+                {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'TEAM_CITY') + ' ' + df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'TEAM_NAME')}</h2>",unsafe_allow_html=True)
+            st.write(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 \
+                #{df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'JERSEY') + ' &nbsp;&nbsp;&#9658 ' + df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'POSITION')}</h2>",unsafe_allow_html=True)
+            # st.write(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'POSITION')}</h2>",unsafe_allow_html=True)
+        
         with c3:
-            # st.write(f"<h3> RANKINGS </h3>", unsafe_allow_html=True)  
-            st.write("<h3> DEFENSA. </h3>", unsafe_allow_html=True)
-            st.metric("DEF_RATING", df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].DEF_RATING.values, int(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].DEF_RATING.values)-int((df_players_stats_adv.DEF_RATING.mean())))
-            st.metric("Rebotes", df_players_stats[df_players_stats.PLAYER_ID == id_player].DREB.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].DREB.values)-int((df_players_stats.DREB.mean())))
-            st.metric("Perdidas", df_players_stats[df_players_stats.PLAYER_ID == id_player].TOV.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].TOV.values)-int((df_players_stats.TOV.mean())))
-            st.metric("Robos", df_players_stats[df_players_stats.PLAYER_ID == id_player].STL.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].STL.values)-int((df_players_stats.STL.mean())))
-            st.metric("Bloqueos", df_players_stats[df_players_stats.PLAYER_ID == id_player].BLK.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].BLK.values)-int((df_players_stats.BLK.mean())))
-            st.metric("Faltas Personales", df_players_stats[df_players_stats.PLAYER_ID == id_player].PF.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PF.values)-int((df_players_stats.PF.mean())))
+            st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 \
+                {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'LAST_AFFILIATION')}</h2>",unsafe_allow_html=True)
+            st.markdown(f"<h2 style='text-align: left; color: ; font-family:commanders'>&#9658 \
+                {df_player_info[df_player_info.PERSON_ID == id_player]._get_value(0, 'COUNTRY')}</h2>",unsafe_allow_html=True)
 
-# ------INI BackUp 01
-    # time.sleep(1)
-    # data_players = endpoints.leaguedashplayerstats.LeagueDashPlayerStats(season=st.session_state.temporada, timeout=40).get_data_frames()
-    # df_players = pd.DataFrame(data_players[0])
+        #-- FIN Prueba Visual 01 [OK] -------------- 
 
-    # # st.markdown(f"ESTADISTICAS POR JUGADORES - Temporada Regular ({st.session_state.temporada}).")
-    # if st.checkbox("Ver Tabla de Datos:"):
-    #         st.dataframe(df_players)
-    
-    # # st.write(df_players)
+        if st.checkbox("Ver Tabla de Datos de Jugadores."):
+            st.write(df_players_stats)
 
-    # players = df_players.PLAYER_NAME.tolist()
-    # # team_abbrev = df_players.TEAM_ABBREVIATION.tolist()
-    # player_select = st.sidebar.selectbox("Player", players)
+        st.text("------------------------------------------------------------------")
+        # st.text(df_players_stats.query(f"PLAYER_ID == {id_player}").values)
 
-    # # df_players.PLAYER_NAME
-    # # df_players.W_PCT.tolist()
+        if not df_players_stats.query(f"PLAYER_ID == {id_player}").empty:
 
-    # if player_select:
-
-    #     st.text(int(df_players[df_players.PLAYER_NAME == player_select].PLAYER_ID.values))
-    #     # player_img = add_logo3(logo_path="https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png", width=150, height=160)
-    #     player_img = add_logo3(logo_path=f"https://cdn.nba.com/headshots/nba/latest/1040x760/{int(df_players[df_players.PLAYER_NAME == player_select].PLAYER_ID.values)}.png", width=150, height=160)
-    #     # st.sidebar.image(player_img)
-
-    #     col1, col2, col3 = st.sidebar.columns([1,3,1])
-    #     with col1:
-    #         st.write("")
-    #     with col2:
-    #         st.image(player_img)
-    #     with col3:
-    #         st.write("")
-        
-    #     st.markdown(f"<h2 style='text-align: left; color: white; font-family:commanders'>{player_select} STATS (KPIs) -\
-    #         {df_players[df_players.PLAYER_NAME == player_select].TEAM_ABBREVIATION.values}</h2>", unsafe_allow_html=True)
-
-    #     df_player_bio = endpoints.leaguedashplayerbiostats.LeagueDashPlayerBioStats().get_data_frames()[0]
-        
-    #     if st.checkbox("Ver Tabla de Datos2:"):
-    #         st.dataframe(df_player_bio)
-        
-    #     m1, m2, m3, m4, m5, m6 = st.columns((1,1,1,1,1,1))
-
-    #     m1.metric("Edad:", df_player_bio[df_player_bio.PLAYER_NAME == player_select].AGE.values)
-    #     m2.metric("Estatura:", str(df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_HEIGHT.values)) # \
-    #         # + "'" + df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_HEIGHT.values.split("-")[1] + "''"))
-    #     m3.metric("Embergadura:", str(df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_HEIGHT_INCHES.values))
-    #     m4.metric("Peso:", str(df_player_bio[df_player_bio.PLAYER_NAME == player_select].PLAYER_WEIGHT.values))
-    #     m5.metric("Universidad:", str(df_player_bio[df_player_bio.PLAYER_NAME == player_select].COLLEGE.values))
-    #     m6.metric("Año Draft:", str(df_player_bio[df_player_bio.PLAYER_NAME == player_select].DRAFT_YEAR.values))
-
-    #     st.text("--------------------------------------")
-
-    #     m1, m2, m3, m4, m5, m6 = st.columns((1,1,1,1,1,1))
-    
-    #     # m1.metric(label='PTS', value=df_teams[df_teams.TEAM_NAME == team_select].PTS.values)
-    #     m1.metric("PTS", df_players[df_players.PLAYER_NAME == player_select].PTS.values, int(df_players[df_players.PLAYER_NAME == player_select].PTS.values)-int((df_players.PTS.mean())))
-        
-    #     m2.metric("Wins",str(int(df_players[df_players.PLAYER_NAME == player_select].W.values))+" Victorias", int(df_players[df_players.PLAYER_NAME == player_select].W.values)-int((df_players.W.mean())))
-        
-    #     m3.metric("Lost", str(int(df_players[df_players.PLAYER_NAME == player_select].L.values))+" Derrotas", int(df_players[df_players.PLAYER_NAME == player_select].L.values)-int((df_players.L.mean())))
-        
-    #     m4.metric('WL_PCT', str(float(df_players[df_players.PLAYER_NAME == player_select].W_PCT.values)), float(df_players[df_players.PLAYER_NAME == player_select].W_PCT.values)-float((df_players.W_PCT.mean())))
-        
-    #     m5.metric('FG_PCT', float(df_players[df_players.PLAYER_NAME == player_select].FG_PCT.values), float(df_players[df_players.PLAYER_NAME == player_select].FG_PCT.values)-float((df_players.FG_PCT.mean())))
-        
-    #     m6.metric('FG3_PCT', float(df_players[df_players.PLAYER_NAME == player_select].FG3_PCT.values), float(df_players[df_players.PLAYER_NAME == player_select].FG3_PCT.values)-float((df_players.FG3_PCT.mean())))
-
-    #     st.text("--------------------------------------")
-
-    #     c1,c2,c3 = st.columns([1,4,1]) # Entre corchetes se define que tamaño en ancho tendrá la columna, con 
-    #                                    # respecto a las demás..
-        
-    #     with c1:
-    #         # m1, m2, m3, m4, m5, m6 = st.columns()
-    
-    #         # m1.metric(label='PTS', value=df_teams[df_teams.TEAM_NAME == team_select].PTS.values)
-    #         st.metric(f"PTS [Media->{int(df_players.PTS.mean())}]", df_players[df_players.PLAYER_NAME == player_select].PTS.values, int(df_players[df_players.PLAYER_NAME == player_select].PTS.values)-int((df_players.PTS.mean())))
+            df_players_stats_adv = endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, measure_type_detailed_defense="Advanced").get_data_frames()[0]
+            df_players_stats_misc = endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, measure_type_detailed_defense="Misc").get_data_frames()[0]
             
-    #         st.metric("Wins",str(int(df_players[df_players.PLAYER_NAME == player_select].W.values))+" Victorias", int(df_players[df_players.PLAYER_NAME == player_select].W.values)-int((df_players.W.mean())))
+            # if type_num_gplay == "All Players":
+            #     df_players_stats.query()
+            if type_num_gplay == ">=5 Games Played":
+                df_players_stats_adv.query("GP >= 5", inplace=True)
+                df_players_stats_misc.query("GP >= 5", inplace=True)
+            if type_num_gplay == ">=10 Games Played":
+                df_players_stats_adv.query("GP >= 10", inplace=True)
+                df_players_stats_misc.query("GP >= 10", inplace=True)
+
+            m1, m11, m12, m13, m2, m3, m31, m32, m33, m5, m6, m7 = st.columns((1.2,1.2,1,1,0.5,0.5,1,1,1,1,1,1))
+        
+            m1.metric("PTS", "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].PTS.values),2)), \
+                "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].PTS.values)-float(df_players_stats.PTS.mean()),2)))
+                
+            # format(int(df_team_details._get_value(0, 'ARENACAPACITY')), ',d')
+            m11.metric("MINUTS", "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].MIN.values),2)), \
+                "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].MIN.values)-float(df_players_stats.MIN.mean()),2)))
+
+            m12.metric("+ / -", "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLUS_MINUS.values),2)), \
+                "{:,}".format(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLUS_MINUS.values)-int(df_players_stats.PLUS_MINUS.mean()),2)))
             
-    #         st.metric("Lost", str(int(df_players[df_players.PLAYER_NAME == player_select].L.values))+" Derrotas", int(df_players[df_players.PLAYER_NAME == player_select].L.values)-int((df_players.L.mean())))
+            m13.metric("NET_RATING", "{:,}".format(round(float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].NET_RATING.values),2)), \
+                "{:,}".format(round(float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].NET_RATING.values)-int(df_players_stats_adv.NET_RATING.mean()),2)))
 
-    #     with c2:
-    #         # st.write(int(df_players[df_players.PLAYER_NAME == player_select].PLAYER_ID.values))
-    #         # df_player_stsyears = endpoints.PlayerGameLogs(player_id_nullable=int(df_players[df_players.PLAYER_NAME == player_select].PLAYER_ID.values), season_nullable=st.session_state.temporada).get_data_frames()[0]
-    #         df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=str(int(df_players[df_players.PLAYER_NAME == player_select].PLAYER_ID.values))).get_data_frames()[1]
+            m2.metric("WINS",str(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].W.values)), \
+                int(df_players_stats[df_players_stats.PLAYER_ID == id_player].W.values)-int(df_players_stats.W.mean()))
+                
+            m3.metric("LOST", str(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].L.values)), \
+                int(df_players_stats[df_players_stats.PLAYER_ID == id_player].L.values)-int(df_players_stats.L.mean()))
+
+            m31.metric('WL_PCT', str(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].W_PCT.values * 100),2))+'%', \
+                str(round((float(df_players_stats[df_players_stats.PLAYER_ID == id_player].W_PCT.values)-float(df_players_stats.W_PCT.mean())) * 100,2))+'%')
+
+            m32.metric("EFG_PCT(F)", str(round(float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].EFG_PCT.values *100),2))+'%', \
+                str(round((float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].EFG_PCT.values)-float(df_players_stats_adv.EFG_PCT.mean())) *100,2))+'%')
             
-    #         if st.checkbox("Ver Tabla de Datos del Jugador."):
-    #             st.dataframe(df_player_stsyears)
-
-    #         # Preparamos los datos para el input del tipo de gráficas "Altair"..
-    #         # ***Los jugadores que juegan en 2 o más equipos en una tempo (valor = "TOT"),
-    #         # - Se filtra la fila con el valor "TOT", xa no contabilizarla y en función de las metricas se SUM(), o MEAN()
-    #         # - Para estas graficas de métricas de cantidad en acciones defensivas u ofensivas, se utiliza el Sumarizar
-    #         # para la temporada que el jugador ha jugado en 2 o más equipo (Debido a un traspaso..evidentemente)
+            m33.metric("PIE(F)", str(round(float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].PIE.values *100),2))+'%', \
+                str(round((float(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].PIE.values)-float(df_players_stats_adv.PIE.mean())) *100,2))+'%')
             
-    #         # Métricas Ofensivas.
-    #         df_psy = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','FGM','FG3M','FTM','OREB','AST','PTS']].set_index('GROUP_VALUE')
-    #         df_psy = df_psy.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
-    #         df_psy_plot_altair = df_psy.reset_index().melt(df_psy.index.names, var_name='Offensive Measure', value_name='y')
+            m5.metric('FG_PCT', str(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG_PCT.values * 100),2))+'%', \
+                str(round((float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG_PCT.values)-float(df_players_stats.FG_PCT.mean())) * 100,2))+'%')
             
-    #         # st.dataframe(df_psy_plot_altair)
+            m6.metric('FG3_PCT', str(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG3_PCT.values * 100),2))+'%', \
+                str(round((float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG3_PCT.values)-float(df_players_stats.FG3_PCT.mean())) * 100,2))+'%')
 
-    #         plot_line_chart = alt.Chart(df_psy_plot_altair) \
-    #                   .mark_line().encode(alt.X('GROUP_VALUE', title='Temporada'), \
-    #                   alt.Y('y', title='Count'), color='Offensive Measure:N', \
-    #                   tooltip=[alt.Tooltip("GROUP_VALUE", title='Temporada'),"Offensive Measure", \
-    #                   alt.Tooltip("y", title='Count')]).properties( \
-    #                     title='Métricas Ofensivas por Temporadas.').interactive()
+            m7.metric('FT_PCT', str(round(float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FT_PCT.values * 100),2))+'%', \
+                str(round((float(df_players_stats[df_players_stats.PLAYER_ID == id_player].FT_PCT.values)-float(df_players_stats.FT_PCT.mean())) * 100,2))+'%')
 
-    #         st.altair_chart(plot_line_chart, use_container_width=True)
+            st.text("------------------------------------------------------------------")
 
-    #         # Métricas Defensivas.
-    #         df_psy = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','DREB','TOV','STL','BLK','PLUS_MINUS']].set_index('GROUP_VALUE')
-    #         df_psy = df_psy.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
-    #         df_psy_plot_altair = df_psy.reset_index().melt(df_psy.index.names, var_name='Defensive Measure', value_name='y')
+            c1,c2,c3 = st.columns([0.5,4,0.5]) # Entre corchetes se define que tamaño en ancho tendrá la columna, con 
+                                        # respecto a las demás..
             
-    #         # st.dataframe(df_psy_plot_altair)
+            with c1:
+                st.write("<h3> ATAQUE. </h3>", unsafe_allow_html=True)
+                st.metric("OFF_RATING", df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].OFF_RATING.values, int(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].OFF_RATING.values)-int((df_players_stats_adv.OFF_RATING.mean())))
+                st.metric("FG_Made", df_players_stats[df_players_stats.PLAYER_ID == id_player].FGM.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].FGM.values)-int((df_players_stats.FGM.mean())))
+                st.metric("FG3_Convertidos", df_players_stats[df_players_stats.PLAYER_ID == id_player].FG3M.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG3M.values)-int((df_players_stats.FG3M.mean())))
+                # st.metric("FG3_Convertidos 02", int(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG3M.values) / int(df_players_stats[df_players_stats.PLAYER_ID == id_player].GP.values), int(df_players_stats[df_players_stats.PLAYER_ID == id_player].FG3M.values)-int((df_players_stats.FG3M.mean())))
+                st.metric("FT_Made", df_players_stats[df_players_stats.PLAYER_ID == id_player].FTM.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].FTM.values)-int((df_players_stats.FTM.mean())))
+                st.metric("Rebotes", df_players_stats[df_players_stats.PLAYER_ID == id_player].OREB.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].OREB.values)-int((df_players_stats.OREB.mean())))
+                st.metric("Asistencias", df_players_stats[df_players_stats.PLAYER_ID == id_player].AST.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].AST.values)-int((df_players_stats.AST.mean())))
+                
+                st.text("------------------")
+                st.write("<h3>MISCel </h3>", unsafe_allow_html=True)
 
-    #         plot_line_chart = alt.Chart(df_psy_plot_altair) \
-    #                   .mark_line().encode(alt.X('GROUP_VALUE', title='Temporada'), \
-    #                   alt.Y('y', title='Count'), color='Defensive Measure:N', \
-    #                   tooltip=[alt.Tooltip("GROUP_VALUE", title='Temporada'),"Defensive Measure", \
-    #                   alt.Tooltip("y", title='Count')]).properties( \
-    #                     title='Métricas Defensivas por Temporadas.').interactive()
+                st.metric("PTS_OFF_TOV", "{:,}".format(round(float(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].PTS_OFF_TOV.values),2)), \
+                    round(int(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].PTS_OFF_TOV.values)-float(df_players_stats_misc.PTS_OFF_TOV.mean()),2))
+                st.metric("PTS_2Chance", "{:,}".format(round(float(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].PTS_2ND_CHANCE.values),2)), \
+                    round(int(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].PTS_2ND_CHANCE.values)-float(df_players_stats_misc.PTS_2ND_CHANCE.mean()),2))
+                st.metric("PTS_FastBreak", "{:,}".format(round(float(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].PTS_FB.values),2)), \
+                    round(int(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].PTS_FB.values)-float(df_players_stats_misc.PTS_FB.mean()),2))
+                st.metric("PTS_inPAINT", "{:,}".format(round(float(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].PTS_PAINT.values),2)), \
+                    round(int(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].PTS_PAINT.values)-float(df_players_stats_misc.PTS_PAINT.mean()),2))
 
-    #         st.altair_chart(plot_line_chart, use_container_width=True)
+            with c2:
+                # st.write(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLAYER_ID.values))
+                # df_player_stsyears = endpoints.PlayerGameLogs(player_id_nullable=int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLAYER_ID.values), season_nullable=st.session_state.temporada).get_data_frames()[0]
+                # df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=str(int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PLAYER_ID.values))).get_data_frames()[1]
+                if type_stats == "Totales":
+                    df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=id_player).get_data_frames()[1]
+                if type_stats == "Por Game":
+                    df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=id_player, per_mode_detailed="PerGame").get_data_frames()[1]
+                if type_stats == "Por 100 Posesiones":
+                    df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=id_player, per_mode_detailed="Per100Possessions").get_data_frames()[1]
+                if type_stats == "Por 36 Minutos":
+                    df_player_stsyears = endpoints.PlayerDashboardByYearOverYear(player_id=id_player, per_mode_detailed="Per36").get_data_frames()[1]
 
-    #         # Probando Gráficas..
-    #         # st.dataframe(df_psy.reset_index())
+                if st.checkbox("Ver Tabla de Datos del Jugador."):
+                    st.dataframe(df_player_stsyears)
+                
+                # Preparando datos para graficar..
+                # En esta tabla cuando un jugador juega en 2 equipos la misma temp, se promedia en la fila "TOT",
+                # por ello la descartamos y agrupamos por años, para sumarizar la stats hechas en los difere. equipos..
+                # Ofensivas.
+                df_psy_off = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','FGM','FG3M','FTM','OREB','AST','PTS']].set_index('GROUP_VALUE')
+                df_psy_off = df_psy_off.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
+                df_psy_off_plot_altair = df_psy_off.reset_index().melt(df_psy_off.index.names, var_name='Offensive Measure', value_name='y')
+                # Defensivas.
+                df_psy_def = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','DREB','TOV','STL','BLK','PLUS_MINUS']].set_index('GROUP_VALUE')
+                df_psy_def = df_psy_def.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
+                df_psy_def_plot_altair = df_psy_def.reset_index().melt(df_psy_def.index.names, var_name='Defensive Measure', value_name='y')
 
-    #         # fig = px.line(df_psy.loc[:,['GROUP_VALUE','DREB','TOV','STL','BLK','PLUS_MINUS']], x=df_psy.index, y=df_psy.loc[:,['DREB','TOV','STL','BLK','PLUS_MINUS']].columns.values,
-    #         fig = px.line(df_psy.reset_index(), x=df_psy.reset_index().index, y=df_psy.columns.values, \
-    #           title='Métricas Defensivas por Temporadas.', template='plotly_dark')
-    #         fig.update_layout(width=1000, height=400, font=dict(size=15), xaxis_title='Temporada', xaxis = dict(
-    #                 tickmode = 'array',
-    #                 tickvals = df_psy.reset_index().index,
-    #                 ticktext = df_psy.reset_index()['GROUP_VALUE']), \
-    #             yaxis_title = "Count", \
-    #             legend_title = "Defensive Measure")
-    #         fig.update_traces(line=dict(width=3)) # Grosor de la linea
-    #         fig.update_traces(mode="markers+lines", hovertemplate=None)
-    #         fig.update_layout(hovermode="x unified")
-    #         st.plotly_chart(fig, use_container_width=True)
 
-    #     with c3:  
-    #         st.metric('WL_PCT', str(float(df_players[df_players.PLAYER_NAME == player_select].W_PCT.values)), float(df_players[df_players.PLAYER_NAME == player_select].W_PCT.values)-float((df_players.W_PCT.mean())))
-            
-    #         st.metric('FG_PCT', float(df_players[df_players.PLAYER_NAME == player_select].FG_PCT.values), float(df_players[df_players.PLAYER_NAME == player_select].FG_PCT.values)-float((df_players.FG_PCT.mean())))
-            
-    #         st.metric('FG3_PCT', float(df_players[df_players.PLAYER_NAME == player_select].FG3_PCT.values), float(df_players[df_players.PLAYER_NAME == player_select].FG3_PCT.values)-float((df_players.FG3_PCT.mean())))
-# --------- Fin Backup 01 ----------
+                type_graph = st.radio("Tipos de Gráficas:",("Plotly","Altair"), horizontal=True)
+                if type_graph == "Plotly":
+                    # Probando Gráficas..
+                    # st.dataframe(df_psy.reset_index())
+                    # Ofensivo.
+                    fig = px.line(df_psy_off.reset_index(), x=df_psy_off.reset_index().index, y=df_psy_off.columns.values, \
+                    title='Progresión del Jugador - Métricas Ofensivas por Temporadas.', template='plotly_dark')
+                    fig.update_layout(width=1000, height=400, font=dict(size=15), xaxis_title='Temporada', xaxis = dict(
+                            tickmode = 'array',
+                            tickvals = df_psy_off.reset_index().index,
+                            ticktext = df_psy_off.reset_index()['GROUP_VALUE']), \
+                        yaxis_title = "Count", \
+                        legend_title = "Ataque")
+                    fig.update_traces(line=dict(width=3)) # Grosor de la linea
+                    fig.update_traces(mode="markers+lines", hovertemplate=None)
+                    fig.update_layout(hovermode="x unified")
+                    st.plotly_chart(fig, config= {'displayModeBar': False}, use_container_width=True)
+
+                    # Defensivo
+                    # fig = px.line(df_psy.loc[:,['GROUP_VALUE','DREB','TOV','STL','BLK','PLUS_MINUS']], x=df_psy.index, y=df_psy.loc[:,['DREB','TOV','STL','BLK','PLUS_MINUS']].columns.values,
+                    fig = px.line(df_psy_def.reset_index(), x=df_psy_def.reset_index().index, y=df_psy_def.columns.values, \
+                    title='Progresión del Jugador - Métricas Defensivas por Temporadas.', template='plotly_dark')
+                    fig.update_layout(width=1200, height=400, font=dict(size=15), xaxis_title='Temporada', xaxis = dict(
+                            tickmode = 'array',
+                            tickvals = df_psy_def.reset_index().index,
+                            ticktext = df_psy_def.reset_index()['GROUP_VALUE']), \
+                        yaxis_title = "Count", \
+                        legend_title = "Defensa")
+                    fig.update_traces(line=dict(width=3)) # Grosor de la linea
+                    fig.update_traces(mode="markers+lines", hovertemplate=None)
+                    fig.update_layout(hovermode="x unified")
+                    st.plotly_chart(fig, use_container_width=True)
+                
+                if type_graph == "Altair":
+
+                    # Preparamos los datos para el input del tipo de gráficas "Altair"..
+                    # ***Los jugadores que juegan en 2 o más equipos en una tempo (valor = "TOT"),
+                    # - Se filtra la fila con el valor "TOT", xa no contabilizarla y en función de las metricas se SUM(), o MEAN()
+                    # - Para estas graficas de métricas de cantidad en acciones defensivas u ofensivas, se utiliza el Sumarizar
+                    # para la temporada que el jugador ha jugado en 2 o más equipo (Debido a un traspaso..evidentemente)
+                    
+                    # Métricas Ofensivas.
+                    # df_psy = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','FGM','FG3M','FTM','OREB','AST','PTS']].set_index('GROUP_VALUE')
+                    # df_psy = df_psy.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
+                    # df_psy_plot_altair = df_psy.reset_index().melt(df_psy.index.names, var_name='Offensive Measure', value_name='y')
+                    
+                    plot_line_chart = alt.Chart(df_psy_off_plot_altair) \
+                            .mark_line().encode(alt.X('GROUP_VALUE', title='Temporada'), \
+                            alt.Y('y', title='Count'), color='Ataque:N', \
+                            tooltip=[alt.Tooltip("GROUP_VALUE", title='Temporada'),"Ataque", \
+                            alt.Tooltip("y", title='Count')]).properties( \
+                                title='Prograsión del Jugador - Métricas Ofensivas por Temporadas.', width=1200, height=350).interactive()
+                    
+                    st.altair_chart(plot_line_chart, use_container_width=True)
+
+                    # Métricas Defensivas.
+                    # df_psy = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','DREB','TOV','STL','BLK','PLUS_MINUS']].set_index('GROUP_VALUE')
+                    # df_psy = df_psy.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
+                    # df_psy_plot_altair = df_psy.reset_index().melt(df_psy.index.names, var_name='Defensive Measure', value_name='y')
+                    
+                    plot_line_chart = alt.Chart(df_psy_def_plot_altair) \
+                            .mark_line().encode(alt.X('GROUP_VALUE', title='Temporada'), \
+                            alt.Y('y', title='Count'), color='Defensa:N', \
+                            tooltip=[alt.Tooltip("GROUP_VALUE", title='Temporada'),"Defensa", \
+                            alt.Tooltip("y", title='Count')]).properties( \
+                                title='Progresión del Jugador - Métricas Defensivas por Temporadas.', width=1200, height=350).interactive()
+
+                    st.altair_chart(plot_line_chart, use_container_width=True)
+
+            with c3:
+                # st.write(f"<h3> RANKINGS </h3>", unsafe_allow_html=True)  
+                st.write("<h3> DEFENSA. </h3>", unsafe_allow_html=True)
+                st.metric("DEF_RATING", df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].DEF_RATING.values, int(df_players_stats_adv[df_players_stats_adv.PLAYER_ID == id_player].DEF_RATING.values)-int((df_players_stats_adv.DEF_RATING.mean())))
+                st.metric("Rebotes", df_players_stats[df_players_stats.PLAYER_ID == id_player].DREB.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].DREB.values)-int((df_players_stats.DREB.mean())))
+                st.metric("Perdidas", df_players_stats[df_players_stats.PLAYER_ID == id_player].TOV.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].TOV.values)-int((df_players_stats.TOV.mean())))
+                st.metric("Robos", df_players_stats[df_players_stats.PLAYER_ID == id_player].STL.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].STL.values)-int((df_players_stats.STL.mean())))
+                st.metric("Bloqueos", df_players_stats[df_players_stats.PLAYER_ID == id_player].BLK.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].BLK.values)-int((df_players_stats.BLK.mean())))
+                st.metric("Faltas Personales", df_players_stats[df_players_stats.PLAYER_ID == id_player].PF.values, int(df_players_stats[df_players_stats.PLAYER_ID == id_player].PF.values)-int((df_players_stats.PF.mean())))
+
+                st.text("------------------")
+                st.write("<h3>OPP_MISCel </h3>", unsafe_allow_html=True)
+
+                st.metric("PTS_OFF_TOV", "{:,}".format(round(float(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].OPP_PTS_OFF_TOV.values),2)), \
+                    round(int(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].OPP_PTS_OFF_TOV.values)-float(df_players_stats_misc.OPP_PTS_OFF_TOV.mean()),2))
+                st.metric("PTS_2Chance", "{:,}".format(round(float(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].OPP_PTS_2ND_CHANCE.values),2)), \
+                    round(int(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].OPP_PTS_2ND_CHANCE.values)-float(df_players_stats_misc.OPP_PTS_2ND_CHANCE.mean()),2))
+                st.metric("PTS_FastBreak", "{:,}".format(round(float(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].OPP_PTS_FB.values),2)), \
+                    round(int(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].OPP_PTS_FB.values)-float(df_players_stats_misc.OPP_PTS_FB.mean()),2))
+                st.metric("PTS_inPAINT", "{:,}".format(round(float(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].OPP_PTS_PAINT.values),2)), \
+                    round(int(df_players_stats_misc[df_players_stats_misc.PLAYER_ID == id_player].OPP_PTS_PAINT.values)-float(df_players_stats_misc.OPP_PTS_PAINT.mean()),2))
+
+        else:
+            st.markdown(f"<h3 style='text-align: left; color: ; font-family:commanders'>&#9658; NO DATA (Games Played inferior al seleccionado [Seleccione 'Todos los Jugadores']</h3>",unsafe_allow_html=True)
 
 def players_stats_compare():
+    
     st.markdown(f"ESTADISTICAS POR JUGADORES - Temporada Regular ({st.session_state.temporada}).")
 
     # DATA (Scrapping con funciones que raspan de "basketball-reference.com")
@@ -725,73 +640,68 @@ def teams_stats():
         # m2.write(f'<h3>Estatura: </h3>{str(df_player_bio.loc[df_player_bio.PLAYER_ID == id_player, "PLAYER_HEIGHT"].values), estatura, estatura2}', unsafe_allow_html=True)
         m1.write(f"<h3>Ciudad: {df_team_details._get_value(0, 'CITY')}</h3>", unsafe_allow_html=True)
         m1.write(f"<h3>Estadio: {df_team_details._get_value(0, 'ARENA')}</h3>", unsafe_allow_html=True)
-        # m1.write(f"<h3>Capacidad: {format(int(df_team_details._get_value(0, 'ARENACAPACITY')), ',d')} asientos</h3>", unsafe_allow_html=True)
+
+        # La Api xa algunos equipos no tiene la info y retorna un "None", x lo que hay q tratarlo..
         m1.write(f"<h3>Capacidad: {'NoData' if df_team_details._get_value(0, 'ARENACAPACITY') is None else format(int(df_team_details._get_value(0, 'ARENACAPACITY')), ',d') } asientos</h3>", unsafe_allow_html=True)
 
-        # m4, m5, m6 = st.sidebar.columns((1,1,1))
-
         m1.write(f"<h3>Dueño: {df_team_details._get_value(0, 'OWNER')}</h3>", unsafe_allow_html=True)
-        m1.write(f"<h3>Manager General: {df_team_details._get_value(0, 'GENERALMANAGER')}</h3>", unsafe_allow_html=True)
+        m1.write(f"<h3>General Manager: {df_team_details._get_value(0, 'GENERALMANAGER')}</h3>", unsafe_allow_html=True)
         m1.write(f"<h3>Entrenador: {df_team_details._get_value(0, 'HEADCOACH')}</h3>", unsafe_allow_html=True)
 
         st.text("------------------------------------------------------------------")
-        # type_stats = st.radio("",("Totals","Per Game"), horizontal=True)
         
         # Pruebas..
         # st.text(df_teams_stats.PTS.sum())
         # st.text(df_teams_stats.PTS.mean())
         # st.text(df_teams_stats.PLUS_MINUS.mean())
         # st.text((df_teams_stats.PTS - df_teams_stats.PLUS_MINUS).mean())
+        
         df_teams_stats_adv = endpoints.LeagueDashTeamStats(season=st.session_state.temporada, measure_type_detailed_defense="Advanced").get_data_frames()[0]
-
+        df_teams_stats_4factors = endpoints.LeagueDashTeamStats(season=st.session_state.temporada, measure_type_detailed_defense="Four Factors").get_data_frames()[0]
+        # a "Misc" Hay que incluirle los if de "totals", "PerGame"..etc
+        if type_stats == "Totales":
+            df_teams_stats_misc = endpoints.LeagueDashTeamStats(season=st.session_state.temporada, \
+                measure_type_detailed_defense="Misc", per_mode_detailed="Totals").get_data_frames()[0]
+        if type_stats == "Por Game":
+            df_teams_stats_misc = endpoints.LeagueDashTeamStats(season=st.session_state.temporada, \
+                measure_type_detailed_defense="Misc", per_mode_detailed="PerGame").get_data_frames()[0]
+        if type_stats == "Por 100 Posesiones":
+            df_teams_stats_misc = endpoints.LeagueDashTeamStats(season=st.session_state.temporada, \
+                measure_type_detailed_defense="Misc", per_mode_detailed="Per100Possessions").get_data_frames()[0]
 
         # Otra manera de visualizar las estadisticas medias del TEAM..
         m1, m11, m12, m2, m3, m4, m41, m42, m43, m5, m6, m7 = st.columns((1.1,1.1,1,0.5,0.5,1,1,1,1,1,1,1))
-
-        # todf = pd.read_excel('DataforMock.xlsx',sheet_name = 'metrics')
-        # to = todf[(todf['Hospital Attended']==hosp) & (todf['Metric']== 'Total Outstanding')]   
-        # ch = todf[(todf['Hospital Attended']==hosp) & (todf['Metric']== 'Current Handover Average Mins')]   
-        # hl = todf[(todf['Hospital Attended']==hosp) & (todf['Metric']== 'Hours Lost to Handovers Over 15 Mins')]
-        
+ 
         # m1.metric(label='PTS', value=df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values)
-        m1.metric("PTS Anotados", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values),2)), round(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values)-float(df_teams_stats.PTS.mean()),2))
+        m1.metric("PTS Anotados", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values),2)), \
+            round(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values)-float(df_teams_stats.PTS.mean()),2))
 
         # Pruebas para formular en .ipynb de Puntos totales y por Cuartos de los GAMES..
+        # ***Los PTS Recibidos Por 100 Posesiones y el DEF_Rating deverían ser iguales, xo el valor de  la tabla de "Advanced"
+        # en "nba.stats" tienen mal hecho el calculo y difiere en 0.1 al compararlo con PTS_Recibidos en 100posesiones = PTS Anotados - PLUS_MiNUS
         m11.metric("PTS Recibidos", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values - df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values),2)), \
             round(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PTS.values - df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values)-float((df_teams_stats.PTS - df_teams_stats.PLUS_MINUS).mean()),2))
-        
-        m12.metric("NET_RATING(+/-)", df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values, round(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values)-float(df_teams_stats.PLUS_MINUS.mean()),2))
-
-        # m2.metric(label='Wins',value=str(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W.values))+" Victorias") #, delta = str(int(ch['Previous']))+' Compared to 1 hour ago', delta_color = 'inverse')
-        m2.metric("WINS",str(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W.values)), int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W.values)-int((df_teams_stats.W.mean())))
-        # m3.metric(label='Lost',value=str(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].L.values)) +" Derrotas") #, delta = str(int(hl['Previous']))+' Compared to yesterday')
-        m3.metric("LOST", str(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].L.values)), int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].L.values)-int((df_teams_stats.L.mean())))
-        # m4.metric(label='WL_PCT',value=str(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W_PCT.values))) #, delta = str(int(to['Previous']))+' Compared to 1 hour ago', delta_color = 'inverse')
+        # ***El Plus_Minus Por 100 Posesiones y el Net_Rating es el mismo resultado...
+        m12.metric("NET_RATING(+/-)", df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values, \
+            round(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PLUS_MINUS.values)-float(df_teams_stats.PLUS_MINUS.mean()),2))
+        m2.metric("WINS",str(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W.values)), \
+            int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W.values)-int((df_teams_stats.W.mean())))
+        m3.metric("LOST", str(int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].L.values)), \
+            int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].L.values)-int((df_teams_stats.L.mean())))
         m4.metric('WL_PCT', str(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W_PCT.values * 100),2))+'%', \
-            str(round((float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W_PCT.values)-float(df_teams_stats.W_PCT.mean()))*100,2))+'%')
-        # m5.metric(label='FG_PCT',value=str(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG_PCT.values)))
-        
+            str(round((float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].W_PCT.values)-float(df_teams_stats.W_PCT.mean()))*100,2))+'%')        
         m41.metric("PACE", str(float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].PACE.values)), \
             str(round((float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].PACE.values)-float(df_teams_stats_adv.PACE.mean())) *100,2)))
-
         m42.metric("EFG_PCT(F)", str(round(float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].EFG_PCT.values *100),2))+'%', \
-            str(round((float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].EFG_PCT.values)-float(df_teams_stats_adv.EFG_PCT.mean())) *100,2))+'%')
-        
+            str(round((float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].EFG_PCT.values)-float(df_teams_stats_adv.EFG_PCT.mean())) *100,2))+'%')        
         m43.metric("PIE(F)", str(round(float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].PIE.values *100),2))+'%', \
             str(round((float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].PIE.values)-float(df_teams_stats_adv.PIE.mean())) *100,2))+'%')
-        
         m5.metric('FG_PCT', str(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG_PCT.values * 100),2))+'%', \
             str(round((float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG_PCT.values)-float(df_teams_stats.FG_PCT.mean()))*100,2))+'%')
-        #  m6.metric(label='FG3_PCT',value=str(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG3_PCT.values)))
         m6.metric('FG3_PCT', str(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG3_PCT.values * 100),2))+'%', \
             str(round((float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG3_PCT.values)-float(df_teams_stats.FG3_PCT.mean()))*100,2))+'%')
-
         m7.metric('FT_PCT', str(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FT_PCT.values * 100),2))+'%', \
             str(round((float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FT_PCT.values)-float(df_teams_stats.FT_PCT.mean()))*100,2))+'%')
-
-        # INfo Stadisticas generales a lo largo de todas las temporadas en activo
-        # data_team = endpoints.teamyearbyyearstats.TeamYearByYearStats(team_id=df_teams_stats[df_teams_stats.TEAM_ID == id_team].TEAM_ID.values) # ID Team Seleccionado
-        # df_team = data_team.team_stats.get_data_frame() # Se utiliza uno de los metodos de la libreria xa convertirlo en DFrame..
 
         st.text("------------------------------------------------------------------")
 
@@ -799,19 +709,52 @@ def teams_stats():
                                        # respecto a las demás..
         
         with c1:
-            st.write("<h3> ATAQUE. </h3>", unsafe_allow_html=True)
+            st.write("<h3>ATAQUE </h3>", unsafe_allow_html=True)
 
-            st.metric("OFF_RATING", df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].OFF_RATING.values, int(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].OFF_RATING.values)-int((df_teams_stats_adv.OFF_RATING.mean())))
-            st.metric("FG_Made", df_teams_stats[df_teams_stats.TEAM_ID == id_team].FGM.values, int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FGM.values)-int((df_teams_stats.FGM.mean())))
-            st.metric("FG3_Convertidos", df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG3M.values, int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG3M.values)-int((df_teams_stats.FG3M.mean())))
+            st.metric("OFF_RATING", "{:,}".format(round(float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].OFF_RATING.values),2)), \
+                round(float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].OFF_RATING.values)-float(df_teams_stats_adv.OFF_RATING.mean()),2))
+            st.metric("FG_Made", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FGM.values),2)), \
+                round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FGM.values)-float(df_teams_stats.FGM.mean()),2))
+            st.metric("FG3_Convertidos", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG3M.values),2)), \
+                round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG3M.values)-float(df_teams_stats.FG3M.mean()),2))
             # st.metric("FG3_Convertidos 02", int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG3M.values) / int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].GP.values), int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FG3M.values)-int((df_teams_stats.FG3M.mean())))
-            st.metric("FT_Made", df_teams_stats[df_teams_stats.TEAM_ID == id_team].FTM.values, int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FTM.values)-int((df_teams_stats.FTM.mean())))
-            st.metric("Rebotes", df_teams_stats[df_teams_stats.TEAM_ID == id_team].OREB.values, int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].OREB.values)-int((df_teams_stats.OREB.mean())))
-            st.metric("Asistencias", df_teams_stats[df_teams_stats.TEAM_ID == id_team].AST.values, int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].AST.values)-int((df_teams_stats.AST.mean())))
+            st.metric("FT_Made", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FTM.values),2)), \
+                round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].FTM.values)-float(df_teams_stats.FTM.mean()),2))
+            st.metric("Rebotes", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].OREB.values),2)), \
+                round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].OREB.values)-float(df_teams_stats.OREB.mean()),2))
+            st.metric("Asistencias", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].AST.values),2)), \
+                round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].AST.values)-float(df_teams_stats.AST.mean()),2))
+            
+            st.text("------------------")
+            st.write("<h3>4_FACTORS </h3>", unsafe_allow_html=True)
+
+            st.metric("EFG_PCT", str(round(float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].EFG_PCT.values *100),2))+'%', \
+                str(round((float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].EFG_PCT.values)-float(df_teams_stats_4factors.EFG_PCT.mean())) *100,2))+'%')
+            st.metric("FTA_RATE", df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].FTA_RATE.values, \
+                str(round((float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].FTA_RATE.values)-float(df_teams_stats_4factors.FTA_RATE.mean())) *100,2))+'%')
+            st.metric("TOV_PCT", str(round(float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].TM_TOV_PCT.values *100),2))+'%', \
+                str(round((float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].TM_TOV_PCT.values)-float(df_teams_stats_4factors.TM_TOV_PCT.mean())) *100,2))+'%')
+            st.metric("OREB_PCT", str(round(float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].OREB_PCT.values *100),2))+'%', \
+                str(round((float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].OREB_PCT.values)-float(df_teams_stats_4factors.OREB_PCT.mean())) *100,2))+'%')
+
+            st.text("------------------")
+            st.write("<h3>MISCel </h3>", unsafe_allow_html=True)
+
+            st.metric("PTS_OFF_TOV", "{:,}".format(round(float(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].PTS_OFF_TOV.values),2)), \
+                round(int(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].PTS_OFF_TOV.values)-float(df_teams_stats_misc.PTS_OFF_TOV.mean()),2))
+            st.metric("PTS_2Chance", "{:,}".format(round(float(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].PTS_2ND_CHANCE.values),2)), \
+                round(int(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].PTS_2ND_CHANCE.values)-float(df_teams_stats_misc.PTS_2ND_CHANCE.mean()),2))
+            st.metric("PTS_FastBreak", "{:,}".format(round(float(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].PTS_FB.values),2)), \
+                round(int(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].PTS_FB.values)-float(df_teams_stats_misc.PTS_FB.mean()),2))
+            st.metric("PTS_inPAINT", "{:,}".format(round(float(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].PTS_PAINT.values),2)), \
+                round(int(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].PTS_PAINT.values)-float(df_teams_stats_misc.PTS_PAINT.mean()),2))
         
 
         with c2:
-
+            
+            # El metodo utilizado xa recuperar estadisticas de un equipo en todas sus regular season,
+            # solo se pueden obtener las "Totales" y las "PerGame", ya que las stas advanced se empizan
+            # a recoger a partir del 1996-97, y se utiliza "TeamDashboardByYearOverYear()"
             if type_stats == "Totales":
                 df_team_stats_years = endpoints.TeamYearByYearStats(team_id=id_team).get_data_frames()[0]
             if type_stats == "Por Game" or type_stats == "Por 100 Posesiones" :
@@ -820,26 +763,8 @@ def teams_stats():
             
             if st.checkbox("Ver Tabla de Datos del Jugador."):
                 st.write(df_team_stats_years)
-                # st.write(df_team_stats_years.loc[:,['YEAR','WINS','LOSSES']].set_index('YEAR'))
-                # st.text(df_team_stats_years.loc[:,['WINS','LOSSES']].columns.values)
-            
-             # Preparando datos para graficar..
-            # Ofensivas.
-            # df_tsy_off = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','FGM','FG3M','FTM','OREB','AST','PTS']].set_index('GROUP_VALUE')
-            # df_psy_off = df_psy_off.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
-            # df_psy_off_plot_altair = df_psy_off.reset_index().melt(df_psy_off.index.names, var_name='Offensive Measure', value_name='y')
-            # # Defensivas.
-            # df_psy_def = df_player_stsyears.loc[df_player_stsyears.TEAM_ABBREVIATION != 'TOT',['GROUP_VALUE','DREB','TOV','STL','BLK','PLUS_MINUS']].set_index('GROUP_VALUE')
-            # df_psy_def = df_psy_def.groupby(by='GROUP_VALUE').sum() # Para este caso de métricas de cantidad de acciones del juego Ofensivas se Sumariza
-            # df_psy_def_plot_altair = df_psy_def.reset_index().melt(df_psy_def.index.names, var_name='Defensive Measure', value_name='y')
-
-            # NO CONSIGO QUE GRAFIQUE TODOS LOS AÑOS
-            #fig = px.line(df_team_stats_years, x='YEAR', y=('WINS','LOSSSES'), color='TEAM_NAME')
-            #fig = px.line(df_team_stats_years.loc[:,['YEAR','WINS','LOSSES']].set_index('YEAR')) # # OK
-            #fig = px.line(df_team_stats_years.loc[:,['YEAR','WINS','LOSSES']], x='YEAR')
-            # fig = px.line(df_team_stats_years, x=str('YEAR'),  y=df_team_stats_years.loc[:,['WINS','LOSSES']].columns.values, hover_data={'YEAR':"%Y"}) # OK
-            # fig.update_layout(width=1200, height=500, font=dict(size=15), title='Historico WINS/LOST')
-            # st.plotly_chart(fig, use_container_width=True)
+                
+            # Preparando datos para graficar..
 
             # CONSEGUIDOO!! https://stackoverflow.com/questions/60525196/python-pandas-and-plotly-having-trouble-with-dates-and-display
             # Anotaciones en el gráfico.
@@ -895,72 +820,48 @@ def teams_stats():
             fig.update_layout(hovermode="x unified")
             st.plotly_chart(fig, config= {'displayModeBar': False}, use_container_width=True)
 
-            # df_team01 = df_team_stats_years.loc[:,['YEAR','WINS','LOSSES']]
-            # st.write(df_team01)
-
-            # fig = px.line(df_team01, x=df_team01.index, y=df_team01.loc[:,['WINS','LOSSES']].columns.values,
-            #       title='Número de Wins/Lost por Temporada.', template='plotly_dark')
-            # fig.update_layout(width=1200, height=500, font=dict(size=15), xaxis_title='Temporada', xaxis = dict(
-            #         tickmode = 'array',
-            #         tickvals = df_team01.index,
-            #         ticktext = df_team01["YEAR"]),
-            #     yaxis_title = "Count",
-            #     legend_title = "Leyenda")
-            # fig.update_traces(line=dict(width=3)) # Grosor de la linea
-            # fig.update_traces(mode="markers+lines", hovertemplate=None)
-            # fig.update_layout(hovermode="x unified")
-            # st.plotly_chart(fig, use_container_width=False)
-
-            # fig = px.line(df_team01, x=df_team01.index, y=df_team01.loc[:,['WINS','LOSSES']].columns.values,
-            #       title='Número de Wins/Lost por Temporada.', template='simple_white')
-            # fig.add_annotation(
-            #     x=26,
-            #     y=68,
-            #     #xref="Temporada",
-            #     #yref="value",
-            #     text="ANILLO Celtics",
-            #     showarrow=True,
-            #     font=dict(
-            #         family="Courier New, monospace",
-            #         size=16,
-            #         color="#ffffff"
-            #         ),
-            #     align="center",
-            #     arrowhead=2,
-            #     arrowsize=1,
-            #     arrowwidth=2,
-            #     arrowcolor="#ff7f0e",
-            #     ax=20,
-            #     ay=-30,
-            #     bordercolor="#c7c7c7",
-            #     borderwidth=2,
-            #     borderpad=4,
-            #     bgcolor="#ff7f0e",
-            #     opacity=0.8
-            # )
-            # fig.update_layout(width=1200, height=500, font=dict(size=15), xaxis_title='Temporada', xaxis = dict(
-            #     tickmode = 'array',
-            #     tickvals = df_team01.index,
-            #     ticktext = df_team01["YEAR"]))
-            # fig.update_traces(line=dict(width=5)) # Grosor de la linea
-            # st.plotly_chart(fig, config= {'displayModeBar': False})
-            #                             #   'displaylogo': False,
-            #                             #   'scrollZoom': False,
-            #                             #   'editable': True,
-            #                             #   'showLink':False,})
-        
         with c3:
-            st.write("<h3> DEFENSA. </h3>", unsafe_allow_html=True)
+            
+            st.write("<h3>DEFENSA </h3>", unsafe_allow_html=True)
 
-            st.metric("DEF_RATING", df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].DEF_RATING.values, int(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].DEF_RATING.values)-int((df_teams_stats_adv.DEF_RATING.mean())))
-            st.metric("Rebotes", df_teams_stats[df_teams_stats.TEAM_ID == id_team].DREB.values, int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].DREB.values)-int((df_teams_stats.DREB.mean())))
-            st.metric("Perdidas", df_teams_stats[df_teams_stats.TEAM_ID == id_team].TOV.values, int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].TOV.values)-int((df_teams_stats.TOV.mean())))
-            st.metric("Robos", df_teams_stats[df_teams_stats.TEAM_ID == id_team].STL.values, int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].STL.values)-int((df_teams_stats.STL.mean())))
-            st.metric("Bloqueos", df_teams_stats[df_teams_stats.TEAM_ID == id_team].BLK.values, int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].BLK.values)-int((df_teams_stats.BLK.mean())))
-            st.metric("Faltas Personales", df_teams_stats[df_teams_stats.TEAM_ID == id_team].PF.values, int(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PF.values)-int((df_teams_stats.PF.mean())))
-        
+            st.metric("DEF_RATING", "{:,}".format(round(float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].DEF_RATING.values),2)), \
+                round(float(df_teams_stats_adv[df_teams_stats_adv.TEAM_ID == id_team].DEF_RATING.values)-float(df_teams_stats_adv.DEF_RATING.mean()),2))
+            st.metric("Rebotes", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].DREB.values),2)), \
+                round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].DREB.values)-float(df_teams_stats.DREB.mean()),2))
+            st.metric("Perdidas", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].TOV.values),2)), \
+                round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].TOV.values)-float(df_teams_stats.TOV.mean()),2))
+            st.metric("Robos", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].STL.values),2)), \
+                round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].STL.values)-float(df_teams_stats.STL.mean()),2))
+            st.metric("Bloqueos", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].BLK.values),2)), \
+                round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].BLK.values)-float(df_teams_stats.BLK.mean()),2))
+            st.metric("Faltas Personales", "{:,}".format(round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PF.values),2)), \
+                round(float(df_teams_stats[df_teams_stats.TEAM_ID == id_team].PF.values)-float(df_teams_stats.PF.mean()),2))
 
+            st.text("-----------------")
+            st.write("<h3>OPP_4FACTORS </h3>", unsafe_allow_html=True)
 
+            st.metric("EFG_PCT", str(round(float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].OPP_EFG_PCT.values *100),2))+'%', \
+                str(round((float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].OPP_EFG_PCT.values)-float(df_teams_stats_4factors.OPP_EFG_PCT.mean())) *100,2))+'%')
+            st.metric("FTA_RATE", df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].OPP_FTA_RATE.values, \
+                str(round((float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].OPP_FTA_RATE.values)-float(df_teams_stats_4factors.OPP_FTA_RATE.mean())) *100,2))+'%')
+            st.metric("TOV_PCT", str(round(float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].OPP_TOV_PCT.values *100),2))+'%', \
+                str(round((float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].OPP_TOV_PCT.values)-float(df_teams_stats_4factors.OPP_TOV_PCT.mean())) *100,2))+'%')
+            st.metric("OREB_PCT", str(round(float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].OPP_OREB_PCT.values *100),2))+'%', \
+                str(round((float(df_teams_stats_4factors[df_teams_stats_4factors.TEAM_ID == id_team].OPP_OREB_PCT.values)-float(df_teams_stats_4factors.OPP_OREB_PCT.mean())) *100,2))+'%')
+
+            st.text("------------------")
+            st.write("<h3>OPP_MISCel </h3>", unsafe_allow_html=True)
+
+            st.metric("PTS_OFF_TOV", "{:,}".format(round(float(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].OPP_PTS_OFF_TOV.values),2)), \
+                round(int(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].OPP_PTS_OFF_TOV.values)-float(df_teams_stats_misc.OPP_PTS_OFF_TOV.mean()),2))
+            st.metric("PTS_2Chance", "{:,}".format(round(float(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].PTS_2ND_CHANCE.values),2)), \
+                round(int(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].OPP_PTS_2ND_CHANCE.values)-float(df_teams_stats_misc.OPP_PTS_2ND_CHANCE.mean()),2))
+            st.metric("PTS_FastBreak", "{:,}".format(round(float(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].OPP_PTS_FB.values),2)), \
+                round(int(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].OPP_PTS_FB.values)-float(df_teams_stats_misc.OPP_PTS_FB.mean()),2))
+            st.metric("PTS_inPAINT", "{:,}".format(round(float(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].OPP_PTS_PAINT.values),2)), \
+                round(int(df_teams_stats_misc[df_teams_stats_misc.TEAM_ID == id_team].OPP_PTS_PAINT.values)-float(df_teams_stats_misc.OPP_PTS_PAINT.mean()),2))
+
+        st.text("--------------------------------------------------------------------")
 
         chart1, chart2 = st.columns(2)
 
