@@ -9,5 +9,5 @@ plotly
 altair
 sklearn
 statsmodels
-streamlit
+streamlit=1.10.0
 nba_api
