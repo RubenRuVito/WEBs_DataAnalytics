@@ -62,16 +62,16 @@ if __name__ == "__main__":
         st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
 
     if page == "Equipos - Stats":
-        st.title("Estadísticas Equipos.")
-        st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
-        st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
+        # st.title("Estadísticas Equipos.")
+        # st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
+        # st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
 
         f01.teams_stats()
     
     if page == "Jugadores - Stats":
-        st.title("Estadísticas Jugadores.")
-        st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
-        st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
+        # st.title("Estadísticas Jugadores.")
+        # st.write("- Recuperar los datos y estadisticas de TEAMS y PLAYERS.")
+        # st.write("- Los datos se obtienen en diferentes dimensiones y tipos debido a los metodos de la APi.")
 
         f01.players_stats()
 
