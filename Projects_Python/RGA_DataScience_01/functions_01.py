@@ -94,7 +94,8 @@ def get_players_stats(season: str, stat_type: str, header: int = 0, filter_games
 
 def players_stats():
 
-    df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada).get_data_frames()[0])
+    time.sleep(1)
+    df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, timeout=40).get_data_frames()[0])
     players_names = df_players_stats.PLAYER_NAME.tolist()
     # team_abbrev = df_players.TEAM_ABBREVIATION.tolist()
     players_names.sort()
