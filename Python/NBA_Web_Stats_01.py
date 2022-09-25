@@ -14,6 +14,17 @@ from nba_api.stats import endpoints
 from nba_api.stats.static import players
 from nba_api.stats.static import teams
 
+custom_headers = {
+    'Host': 'stats.nba.com',
+    'Connection': 'keep-alive',
+    'Cache-Control': 'max-age=0',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Accept-Language': 'en-US,en;q=0.9',
+}
+
 
 def main():
     st.title("PRACTICAS CON STREAMLIT Y NBA_API")
@@ -41,7 +52,7 @@ def main():
 def teams_stats():
     # Estadisticas generales por equipos en la tempRegular actual..
     time.sleep(1)
-    df_teams = pd.DataFrame(endpoints.LeagueDashTeamStats(timeout=20).get_data_frames()[0])
+    df_teams = pd.DataFrame(endpoints.LeagueDashTeamStats(proxy='127.0.0.1:80', headers=custom_headers, timeout=50).get_data_frames()[0])
     # time.sleep(1)
     # df_teams = pd.DataFrame(data_teams[0])
 
@@ -51,7 +62,7 @@ def teams_stats():
 def players_stats():
 
     time.sleep(1)
-    df_players = pd.DataFrame(endpoints.LeagueDashPlayerStats(timeout=40).get_data_frames()[0])
+    df_players = pd.DataFrame(endpoints.LeagueDashPlayerStats(proxy='127.0.0.1:80', headers=custom_headers, timeout=50).get_data_frames()[0])
     # time.sleep(1)
     # df_players = pd.DataFrame(data_players[0])
 
