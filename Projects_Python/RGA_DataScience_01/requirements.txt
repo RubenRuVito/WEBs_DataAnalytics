@@ -1,6 +1,5 @@
 numpy
 pandas
-urllib
 re
 # math
 cufflinks
