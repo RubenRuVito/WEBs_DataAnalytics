@@ -96,6 +96,7 @@ def players_stats():
 
     time.sleep(1)
     df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada).get_data_frames()[0])
+    time.sleep(1)
     players_names = df_players_stats.PLAYER_NAME.tolist()
     # team_abbrev = df_players.TEAM_ABBREVIATION.tolist()
     players_names.sort()
@@ -108,7 +109,9 @@ def players_stats():
         id_player = int(df_players_stats[df_players_stats.PLAYER_NAME == player_select].PLAYER_ID.values)
         # st.text(int(df_players_stats[df_players_stats.PLAYER_NAME == player_select].PLAYER_ID.values))
 
+        time.sleep(1)
         df_player_info = endpoints.CommonPlayerInfo(player_id=id_player).get_data_frames()[0]
+        time.sleep(1)
         
         # player_img = add_logo3(logo_path="https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png", width=150, height=160)
         player_img = add_logo3(logo_path=f"https://cdn.nba.com/headshots/nba/latest/1040x760/{int(df_players_stats[df_players_stats.PLAYER_NAME == player_select].PLAYER_ID.values)}.png", width=150, height=160)
