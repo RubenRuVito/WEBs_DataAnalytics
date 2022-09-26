@@ -95,8 +95,7 @@ def get_players_stats(season: str, stat_type: str, header: int = 0, filter_games
 def players_stats():
 
     time.sleep(1)
-    df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada, timeout=200).get_data_frames()[0])
-    time.sleep(1)
+    df_players_stats = pd.DataFrame(endpoints.LeagueDashPlayerStats(season=st.session_state.temporada).get_data_frames()[0])
     players_names = df_players_stats.PLAYER_NAME.tolist()
     # team_abbrev = df_players.TEAM_ABBREVIATION.tolist()
     players_names.sort()
@@ -563,9 +562,9 @@ def teams_stats():
             st.write("")
         
         # df_team_details = endpoints.TeamDetails(team_id=df_teams[df_teams.full_name == team_select].id).get_data_frames()[0]
-        df_team_details = endpoints.TeamDetails(team_id=id_team, timeout=20).get_data_frames()[0]
-        df_team_info = endpoints.TeamInfoCommon(team_id=id_team, season_nullable=st.session_state.temporada, timeout=20).get_data_frames()[0]
-        df_team_info1 = endpoints.TeamInfoCommon(team_id=id_team, season_nullable=st.session_state.temporada, timeout=20).get_data_frames()[1]
+        df_team_details = endpoints.TeamDetails(team_id=id_team).get_data_frames()[0]
+        df_team_info = endpoints.TeamInfoCommon(team_id=id_team, season_nullable=st.session_state.temporada).get_data_frames()[0]
+        df_team_info1 = endpoints.TeamInfoCommon(team_id=id_team, season_nullable=st.session_state.temporada).get_data_frames()[1]
 
         # st.sidebar.markdown(f"<h1 style='text-align: left; color: white; font-family:commanders'>Fundada: { df_team_details._get_value(0, 'YEARFOUNDED') }</h1>", unsafe_allow_html=True)
         # st.sidebar.markdown(f"<h1 style='text-align: left; color: white; font-family:commanders'>Ciudad: { df_team_details._get_value(0, 'CITY') }</h1>", unsafe_allow_html=True)

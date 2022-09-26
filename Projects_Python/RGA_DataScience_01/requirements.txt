@@ -1,5 +1,7 @@
 numpy
 pandas
+urllib
+re
 # math
 cufflinks
 lxml
@@ -9,5 +11,5 @@ plotly
 altair
 sklearn
 statsmodels
-streamlit==1.12.0
+streamlit==1.10.0
 nba_api
