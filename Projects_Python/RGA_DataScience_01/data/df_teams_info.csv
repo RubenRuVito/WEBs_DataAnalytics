@@ -1,0 +1,61 @@
+,TEAM_ID,SEASON_YEAR,TEAM_CITY,TEAM_NAME,TEAM_ABBREVIATION,TEAM_CONFERENCE,TEAM_DIVISION,TEAM_CODE,TEAM_SLUG,W,L,PCT,CONF_RANK,DIV_RANK,MIN_YEAR,MAX_YEAR
+0,1610612766,2021-22,Charlotte,Hornets,CHA,East,Southeast,hornets,hornets,43,39,0.524,10,3,1988,2022
+1,1610612766,2020-21,Charlotte,Hornets,CHA,East,Southeast,hornets,hornets,33,39,0.458,10,4,1988,2022
+2,1610612765,2021-22,Detroit,Pistons,DET,East,Central,pistons,pistons,23,59,0.28,14,5,1948,2022
+3,1610612765,2020-21,Detroit,Pistons,DET,East,Central,pistons,pistons,20,52,0.278,15,5,1948,2022
+4,1610612764,2021-22,Washington,Wizards,WAS,East,Southeast,wizards,wizards,35,47,0.427,12,4,1961,2022
+5,1610612764,2020-21,Washington,Wizards,WAS,East,Southeast,wizards,wizards,34,38,0.472,8,3,1961,2022
+6,1610612763,2021-22,Memphis,Grizzlies,MEM,West,Southwest,grizzlies,grizzlies,56,26,0.683,2,1,1995,2022
+7,1610612763,2020-21,Memphis,Grizzlies,MEM,West,Southwest,grizzlies,grizzlies,38,34,0.528,8,2,1995,2022
+8,1610612762,2021-22,Utah,Jazz,UTA,West,Northwest,jazz,jazz,49,33,0.598,5,1,1974,2022
+9,1610612762,2020-21,Utah,Jazz,UTA,West,Northwest,jazz,jazz,52,20,0.722,1,1,1974,2022
+10,1610612761,2021-22,Toronto,Raptors,TOR,East,Atlantic,raptors,raptors,48,34,0.585,5,3,1995,2022
+11,1610612761,2020-21,Toronto,Raptors,TOR,East,Atlantic,raptors,raptors,27,45,0.375,12,5,1995,2022
+12,1610612760,2021-22,Oklahoma City,Thunder,OKC,West,Northwest,thunder,thunder,24,58,0.293,14,5,1967,2022
+13,1610612760,2020-21,Oklahoma City,Thunder,OKC,West,Northwest,thunder,thunder,22,50,0.306,14,5,1967,2022
+14,1610612759,2021-22,San Antonio,Spurs,SAS,West,Southwest,spurs,spurs,34,48,0.415,10,4,1976,2022
+15,1610612759,2020-21,San Antonio,Spurs,SAS,West,Southwest,spurs,spurs,33,39,0.458,10,3,1976,2022
+16,1610612758,2021-22,Sacramento,Kings,SAC,West,Pacific,kings,kings,30,52,0.366,12,5,1948,2022
+17,1610612758,2020-21,Sacramento,Kings,SAC,West,Pacific,kings,kings,31,41,0.431,12,5,1948,2022
+18,1610612757,2021-22,Portland,Trail Blazers,POR,West,Northwest,blazers,blazers,27,55,0.329,13,4,1970,2022
+19,1610612757,2020-21,Portland,Trail Blazers,POR,West,Northwest,blazers,blazers,42,30,0.583,6,3,1970,2022
+20,1610612756,2021-22,Phoenix,Suns,PHX,West,Pacific,suns,suns,64,18,0.78,1,1,1968,2022
+21,1610612756,2020-21,Phoenix,Suns,PHX,West,Pacific,suns,suns,51,21,0.708,2,1,1968,2022
+22,1610612755,2021-22,Philadelphia,76ers,PHI,East,Atlantic,sixers,sixers,51,31,0.622,4,2,1949,2022
+23,1610612755,2020-21,Philadelphia,76ers,PHI,East,Atlantic,sixers,sixers,49,23,0.681,1,1,1949,2022
+24,1610612754,2021-22,Indiana,Pacers,IND,East,Central,pacers,pacers,25,57,0.305,13,4,1976,2022
+25,1610612754,2020-21,Indiana,Pacers,IND,East,Central,pacers,pacers,34,38,0.472,9,2,1976,2022
+26,1610612753,2021-22,Orlando,Magic,ORL,East,Southeast,magic,magic,22,60,0.268,15,5,1989,2022
+27,1610612753,2020-21,Orlando,Magic,ORL,East,Southeast,magic,magic,21,51,0.292,14,5,1989,2022
+28,1610612752,2021-22,New York,Knicks,NYK,East,Atlantic,knicks,knicks,37,45,0.451,11,5,1946,2022
+29,1610612752,2020-21,New York,Knicks,NYK,East,Atlantic,knicks,knicks,41,31,0.569,4,3,1946,2022
+30,1610612751,2021-22,Brooklyn,Nets,BKN,East,Atlantic,nets,nets,44,38,0.537,7,4,1976,2022
+31,1610612751,2020-21,Brooklyn,Nets,BKN,East,Atlantic,nets,nets,48,24,0.667,2,2,1976,2022
+32,1610612750,2021-22,Minnesota,Timberwolves,MIN,West,Northwest,timberwolves,timberwolves,46,36,0.561,7,3,1989,2022
+33,1610612750,2020-21,Minnesota,Timberwolves,MIN,West,Northwest,timberwolves,timberwolves,23,49,0.319,13,4,1989,2022
+34,1610612749,2021-22,Milwaukee,Bucks,MIL,East,Central,bucks,bucks,51,31,0.622,3,1,1968,2022
+35,1610612749,2020-21,Milwaukee,Bucks,MIL,East,Central,bucks,bucks,46,26,0.639,3,1,1968,2022
+36,1610612748,2021-22,Miami,Heat,MIA,East,Southeast,heat,heat,53,29,0.646,1,1,1988,2022
+37,1610612748,2020-21,Miami,Heat,MIA,East,Southeast,heat,heat,40,32,0.556,6,2,1988,2022
+38,1610612747,2021-22,Los Angeles,Lakers,LAL,West,Pacific,lakers,lakers,33,49,0.402,11,4,1948,2022
+39,1610612747,2020-21,Los Angeles,Lakers,LAL,West,Pacific,lakers,lakers,42,30,0.583,7,3,1948,2022
+40,1610612746,2021-22,LA,Clippers,LAC,West,Pacific,clippers,clippers,42,40,0.512,9,3,1970,2022
+41,1610612746,2020-21,LA,Clippers,LAC,West,Pacific,clippers,clippers,47,25,0.653,4,2,1970,2022
+42,1610612745,2021-22,Houston,Rockets,HOU,West,Southwest,rockets,rockets,20,62,0.244,15,5,1967,2022
+43,1610612745,2020-21,Houston,Rockets,HOU,West,Southwest,rockets,rockets,17,55,0.236,15,5,1967,2022
+44,1610612744,2021-22,Golden State,Warriors,GSW,West,Pacific,warriors,warriors,53,29,0.646,3,2,1946,2022
+45,1610612744,2020-21,Golden State,Warriors,GSW,West,Pacific,warriors,warriors,39,33,0.542,9,4,1946,2022
+46,1610612743,2021-22,Denver,Nuggets,DEN,West,Northwest,nuggets,nuggets,48,34,0.585,6,2,1976,2022
+47,1610612743,2020-21,Denver,Nuggets,DEN,West,Northwest,nuggets,nuggets,47,25,0.653,3,2,1976,2022
+48,1610612742,2021-22,Dallas,Mavericks,DAL,West,Southwest,mavericks,mavericks,52,30,0.634,4,2,1980,2022
+49,1610612742,2020-21,Dallas,Mavericks,DAL,West,Southwest,mavericks,mavericks,42,30,0.583,5,1,1980,2022
+50,1610612741,2021-22,Chicago,Bulls,CHI,East,Central,bulls,bulls,46,36,0.561,6,2,1966,2022
+51,1610612741,2020-21,Chicago,Bulls,CHI,East,Central,bulls,bulls,31,41,0.431,11,3,1966,2022
+52,1610612740,2021-22,New Orleans,Pelicans,NOP,West,Southwest,pelicans,pelicans,36,46,0.439,8,3,2002,2022
+53,1610612740,2020-21,New Orleans,Pelicans,NOP,West,Southwest,pelicans,pelicans,31,41,0.431,11,4,2002,2022
+54,1610612739,2021-22,Cleveland,Cavaliers,CLE,East,Central,cavaliers,cavaliers,44,38,0.537,9,3,1970,2022
+55,1610612739,2020-21,Cleveland,Cavaliers,CLE,East,Central,cavaliers,cavaliers,22,50,0.306,13,4,1970,2022
+56,1610612738,2021-22,Boston,Celtics,BOS,East,Atlantic,celtics,celtics,51,31,0.622,2,1,1946,2022
+57,1610612738,2020-21,Boston,Celtics,BOS,East,Atlantic,celtics,celtics,36,36,0.5,7,4,1946,2022
+58,1610612737,2021-22,Atlanta,Hawks,ATL,East,Southeast,hawks,hawks,43,39,0.524,8,2,1949,2022
+59,1610612737,2020-21,Atlanta,Hawks,ATL,East,Southeast,hawks,hawks,41,31,0.569,5,1,1949,2022
