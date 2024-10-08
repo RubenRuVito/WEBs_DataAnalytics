@@ -2,7 +2,7 @@ seaborn
 numpy
 pandas
 streamlit
-sklearn
+scikit-learn
 plotly
 tensorflow
 cufflinks
